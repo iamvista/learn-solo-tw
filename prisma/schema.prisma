@@ -1,0 +1,519 @@
+// prisma/schema.prisma
+// 課程平台資料庫架構
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== 用戶系統 ====================
+
+enum UserRole {
+  USER // 一般學員
+  EDITOR // 編輯者（僅內容管理）
+  ADMIN // 管理員（全權限）
+}
+
+model User {
+  id               String    @id @default(cuid())
+  name             String?
+  phone            String?
+  email            String    @unique
+  emailVerified    DateTime?
+  image            String?
+  password         String? // 用於 Credentials 登入，bcrypt 加密
+  role             UserRole  @default(USER)
+  isGuest          Boolean   @default(false)
+  guestActivatedAt DateTime?
+  guestSource      String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  // 登入安全欄位
+  failedLoginCount  Int       @default(0)
+  lockedUntil       DateTime?
+  lastLoginAt       DateTime?
+  lastFailedLoginAt DateTime?
+
+  // Relations
+  accounts              Account[]
+  sessions              Session[]
+  purchases             Purchase[]
+  progress              LessonProgress[]
+  lessonComments        LessonComment[]
+  lessonCommentsDeleted LessonComment[]        @relation("LessonCommentDeletedBy")
+  guestActivationTokens GuestActivationToken[]
+  passwordResetTokens   PasswordResetToken[]
+
+  // 管理員操作日誌
+  adminLogs AdminLog[]
+
+  // 觀看時間紀錄
+  watchTimeLogs WatchTimeLog[]
+
+  @@index([phone])
+  @@index([isGuest])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ==================== 課程系統 ====================
+
+enum CourseStatus {
+  DRAFT // 草稿
+  PUBLISHED // 已發佈
+  UNLISTED // 隱藏（僅連結可見）
+}
+
+enum LessonStatus {
+  PUBLISHED // 已發佈（預設）
+  COMING_SOON // 製作中
+}
+
+model Course {
+  id          String  @id @default(cuid())
+  title       String
+  subtitle    String?
+  slug        String  @unique
+  description String? @db.Text
+  coverImage  String?
+
+  // 定價
+  price            Int       @default(0) // 原價（以新台幣計，單位：元）
+  salePrice        Int? // 促銷價
+  saleEndAt        DateTime? // 促銷截止日期
+  saleLabel        String? // 促銷說明文字（如「開工優惠」「限時早鳥」）
+  saleCycleEnabled Boolean   @default(false) // 是否啟用永久促銷循環
+  saleCycleDays    Int? // 循環天數（啟用循環模式時使用）
+  showCountdown    Boolean   @default(true) // 是否在銷售頁顯示倒數時鐘
+
+  // Stripe Product/Price
+  stripeProductId   String? // Stripe Product ID (prod_xxx)
+  stripePriceId     String? // 原價 Price ID (price_xxx)
+  stripeSalePriceId String? // 促銷價 Price ID (price_xxx)
+
+  // SEO
+  seoTitle    String?
+  seoDesc     String? @db.Text
+  seoKeywords String?
+
+  // OG / Social（與 SEO 分開管理）
+  ogDescription String? @db.Text
+  ogImage       String?
+
+  // 銷售頁設定
+  landingPageMode String? // "react" | "html"，null 視為 "react"
+  landingPageSlug String? // React 模式：對應 components/main/landing/pages/{slug}.tsx
+  landingPageHtml String? @db.Text // HTML 模式：直接存 HTML 內容
+
+  // JSON-LD 結構化資料
+  instructorName  String? // 講師名稱
+  instructorTitle String? // 講師職稱
+  instructorDesc  String? @db.Text // 講師簡介
+  courseWorkload  String? // 課程時長（ISO 8601，如 "PT2H30M"）
+  ratingValue     String? // 評分值（如 "5"）
+  ratingCount     String? // 評分數量（如 "400"）
+
+  // 購買通知
+  notifyAdminOnPurchase Boolean @default(false) // 有人購買時是否寄 Email 通知管理員
+
+  status    CourseStatus @default(DRAFT)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  // Relations
+  chapters      Chapter[]
+  purchases     Purchase[]
+  welcomeEmail  CourseWelcomeEmail?
+  emailDelivery EmailDeliveryLog[]
+}
+
+model Chapter {
+  id        String   @id @default(cuid())
+  courseId  String
+  title     String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons Lesson[]
+
+  @@index([courseId])
+}
+
+model Lesson {
+  id        String  @id @default(cuid())
+  chapterId String
+  title     String
+  content   String? @db.Text // Markdown 內容
+
+  // Cloudflare Stream
+  videoId       String? // Cloudflare Stream Video ID
+  videoDuration Int? // 影片長度（秒）
+
+  isFree    Boolean  @default(false) // 是否免費試閱
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 單元狀態
+  status LessonStatus @default(PUBLISHED)
+
+  // 製作中 (COMING_SOON) 設定
+  comingSoonTitle       String? // Modal 標題（預設使用單元標題）
+  comingSoonDescription String?   @db.Text // Modal 說明文字
+  comingSoonImage       String? // 預覽圖片 URL
+  comingSoonDate        DateTime? // 預計上線日期
+
+  // Relations
+  chapter       Chapter          @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  progress      LessonProgress[]
+  comments      LessonComment[]
+  watchTimeLogs WatchTimeLog[]
+
+  @@index([chapterId])
+}
+
+// ==================== 課程評論/留言 ====================
+
+model LessonComment {
+  id          String  @id @default(cuid())
+  lessonId    String
+  userId      String
+  content     String  @db.Text
+  isAnonymous Boolean @default(false)
+
+  // 管理者已讀狀態
+  isRead Boolean @default(false)
+
+  // 軟刪除（後台可追蹤匿名留言者真實身份）
+  deletedAt DateTime?
+  deletedBy String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  deletedByUser User? @relation("LessonCommentDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([lessonId, createdAt])
+  @@index([userId, createdAt])
+}
+
+model LessonProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  lessonId    String
+  completed   Boolean  @default(false)
+  watchedSec  Int      @default(0) // 觀看秒數
+  lastWatchAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([userId])
+  @@index([lessonId])
+}
+
+// 用戶觀看時間紀錄（每分鐘心跳）
+model WatchTimeLog {
+  id        String   @id @default(cuid())
+  userId    String
+  lessonId  String
+  startedAt DateTime // 此心跳區間的開始時間
+  duration  Int      // 此區間的有效觀看秒數（通常為 60）
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([lessonId, createdAt])
+  @@index([userId, lessonId, createdAt])
+}
+
+// ==================== 金流系統 ====================
+
+enum OrderStatus {
+  PENDING // 待付款
+  PAID // 已付款
+  FAILED // 付款失敗
+  REFUNDED // 已退款
+  CANCELLED // 已取消
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  APPLE_PAY
+  GOOGLE_PAY
+  ATM
+  CVS // 超商代碼
+}
+
+enum EmailDeliveryType {
+  COURSE_WELCOME
+}
+
+enum EmailDeliveryStatus {
+  PENDING
+  SENT
+  FAILED
+  SKIPPED
+}
+
+model Order {
+  id       String @id @default(cuid())
+  orderNo  String @unique // 內部訂單編號
+  userId   String
+  courseId String
+
+  amount         Int // 實際付款金額
+  originalAmount Int // 原始金額
+
+  status         OrderStatus    @default(PENDING)
+  paymentMethod  PaymentMethod?
+  paymentGateway String? // 'stripe' | 'payuni'
+
+  // 金流閘道相關（Stripe: session/paymentIntent; PAYUNi: orderNo/TradeNo）
+  stripeSessionId       String? // Gateway Session/Trade ID
+  stripePaymentIntentId String? // Gateway Payment Reference ID（退款用）
+  stripeResponse        Json? // Gateway 回傳資料
+
+  paidAt       DateTime?
+  refundedAt   DateTime?
+  refundReason String?
+
+  // 用戶端資訊（供 Meta CAPI 歸因使用）
+  clientIpAddress String? // 建立訂單時的用戶 IP
+  clientUserAgent String? // 建立訂單時的用戶 User-Agent
+
+  // UTM 歸因追蹤
+  utmSource   String? // 廣告來源（meta, google, etc.）
+  utmMedium   String? // 媒介（cpc, social, email, etc.）
+  utmCampaign String? // 活動名稱
+  utmContent  String? // 廣告內容
+  utmTerm     String? // 關鍵字
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 不直接關聯 User 和 Course，避免刪除問題
+  @@index([userId])
+  @@index([courseId])
+  @@index([orderNo])
+  @@index([stripeSessionId])
+}
+
+model Purchase {
+  id       String  @id @default(cuid())
+  userId   String
+  courseId String
+  orderId  String? // 關聯訂單（手動授權時可為 null）
+
+  grantedBy String? // 手動授權的管理員 ID
+  expiresAt DateTime? // 權限過期時間（null = 永久）
+  revokedAt DateTime? // 撤銷時間
+
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
+}
+
+model CourseWelcomeEmail {
+  id              String   @id @default(cuid())
+  courseId         String   @unique
+  enabled          Boolean  @default(false)
+  subjectTemplate  String
+  markdownTemplate String   @db.Text
+  updatedBy        String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([enabled])
+}
+
+model EmailDeliveryLog {
+  id                String              @id @default(cuid())
+  type              EmailDeliveryType
+  status            EmailDeliveryStatus @default(PENDING)
+  orderId           String?
+  userId            String?
+  courseId          String?
+  toEmail           String
+  subject           String
+  providerMessageId String?
+  errorMessage      String?             @db.Text
+  sentAt            DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  course Course? @relation(fields: [courseId], references: [id], onDelete: SetNull)
+
+  @@unique([type, orderId])
+  @@index([courseId, createdAt])
+  @@index([userId, createdAt])
+  @@index([status, createdAt])
+}
+
+model GuestActivationToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([expiresAt])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([expiresAt])
+}
+
+// ==================== 媒體資源 ====================
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  ATTACHMENT
+}
+
+model Media {
+  id           String    @id @default(cuid())
+  type         MediaType
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int // bytes
+  url          String
+
+  // Cloudflare Stream 專用
+  cfStreamId String? // Cloudflare Stream UID
+  cfStatus   String? // ready, pending, error
+  duration   Int? // 影片長度（秒）
+  thumbnail  String? // 縮圖 URL
+
+  uploadedBy String? // 上傳者 User ID
+  createdAt  DateTime @default(now())
+
+  @@index([type])
+  @@index([cfStreamId])
+}
+
+// ==================== 系統設定 ====================
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== 管理員日誌 ====================
+
+enum AdminAction {
+  CREATE_COURSE
+  UPDATE_COURSE
+  DELETE_COURSE
+  CREATE_LESSON
+  UPDATE_LESSON
+  DELETE_LESSON
+  GRANT_ACCESS
+  REVOKE_ACCESS
+  PROCESS_REFUND
+  UPDATE_USER_ROLE
+  UPDATE_SETTINGS
+}
+
+model AdminLog {
+  id         String      @id @default(cuid())
+  adminId    String
+  action     AdminAction
+  targetType String? // Course, User, Order, etc.
+  targetId   String?
+  details    Json? // 額外資訊
+  ipAddress  String?
+  createdAt  DateTime    @default(now())
+
+  admin User @relation(fields: [adminId], references: [id])
+
+  @@index([adminId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+// ==================== 登入嘗試紀錄 ====================
+
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  email     String
+  ipAddress String
+  success   Boolean
+  userAgent String?  @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([email, createdAt])
+  @@index([ipAddress, createdAt])
+  @@index([createdAt])
+}

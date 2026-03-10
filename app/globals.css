@@ -1,0 +1,672 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@source "../node_modules/streamdown/dist/*.js";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+/* VibeFlow Design System - Light Mode Only */
+:root {
+  --radius: 0.75rem;
+
+  /* VibeFlow Core Palette */
+  --background: #F8FAFC;           /* 冰川白 - 背景主色 */
+  --foreground: #0F172A;           /* 板岩深藍 - 文字深色 */
+
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #0F172A;
+
+  --primary: #6366F1;              /* 智能靛藍 - 品牌主色 */
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #F1F5F9;
+  --secondary-foreground: #0F172A;
+
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;     /* 石板灰 - 輔助灰色 */
+
+  --accent: #10B981;               /* 生命翠綠 - 強調色 */
+  --accent-foreground: #FFFFFF;
+
+  --destructive: #EF4444;
+
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #6366F1;
+
+  /* Chart Colors */
+  --chart-1: #6366F1;
+  --chart-2: #10B981;
+  --chart-3: #F59E0B;
+  --chart-4: #8B5CF6;
+  --chart-5: #EC4899;
+
+  /* Sidebar */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #0F172A;
+  --sidebar-primary: #6366F1;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F1F5F9;
+  --sidebar-accent-foreground: #0F172A;
+  --sidebar-border: #E2E8F0;
+  --sidebar-ring: #6366F1;
+
+  /* VibeFlow Custom Properties */
+  --vf-highlight: #F59E0B;         /* 靈感琥珀 - 點睛色/CTA */
+  --vf-glass-bg: rgba(255, 255, 255, 0.7);
+  --vf-glass-border: rgba(255, 255, 255, 0.3);
+}
+
+/* Admin Dark Mode */
+.admin-dark {
+  --background: #111113;
+  --foreground: #ECECEC;
+
+  --card: #1C1C1E;
+  --card-foreground: #ECECEC;
+
+  --popover: #1C1C1E;
+  --popover-foreground: #ECECEC;
+
+  --primary: #F5A524;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #252528;
+  --secondary-foreground: #ECECEC;
+
+  --muted: #252528;
+  --muted-foreground: #8E8E93;
+
+  --accent: #34D399;
+  --accent-foreground: #FFFFFF;
+
+  --destructive: #FF453A;
+
+  --border: #333336;
+  --input: #333336;
+  --ring: #F5A524;
+
+  --chart-1: #F5A524;
+  --chart-2: #34D399;
+  --chart-3: #5AC8FA;
+  --chart-4: #BF5AF2;
+  --chart-5: #FF6482;
+
+  --sidebar: #161618;
+  --sidebar-foreground: #ECECEC;
+  --sidebar-primary: #F5A524;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #252528;
+  --sidebar-accent-foreground: #ECECEC;
+  --sidebar-border: #333336;
+  --sidebar-ring: #F5A524;
+
+  --vf-highlight: #FBBF24;
+  --vf-glass-bg: rgba(28, 28, 30, 0.7);
+  --vf-glass-border: rgba(51, 51, 54, 0.3);
+
+  /* Override hardcoded colors used in admin components */
+  color-scheme: dark;
+}
+
+/* Admin Dark Mode - override hardcoded Tailwind colors */
+/* Use attribute selectors for Tailwind v4 compatibility */
+
+/* bg-white */
+.admin-dark [class*="bg-white"] {
+  background-color: var(--card) !important;
+}
+
+/* bg-[#FAFAFA], bg-[#F5F5F5] */
+.admin-dark [class*="bg-[#FAFAFA]"],
+.admin-dark [class*="bg-[#F5F5F5]"] {
+  background-color: var(--secondary) !important;
+}
+
+/* text-[#0A0A0A], text-[#0F172A] */
+.admin-dark [class*="text-[#0A0A0A]"],
+.admin-dark [class*="text-[#0F172A]"] {
+  color: var(--foreground) !important;
+}
+
+/* text-[#525252], text-[#64748B] */
+.admin-dark [class*="text-[#525252]"],
+.admin-dark [class*="text-[#64748B]"] {
+  color: var(--muted-foreground) !important;
+}
+
+/* text-[#A3A3A3] */
+.admin-dark [class*="text-[#A3A3A3]"] {
+  color: var(--muted-foreground) !important;
+}
+
+/* border-[#E5E5E5], border-[#E2E8F0] */
+.admin-dark [class*="border-[#E5E5E5]"],
+.admin-dark [class*="border-[#E2E8F0]"] {
+  border-color: var(--border) !important;
+}
+
+/* hover states */
+.admin-dark [class*="hover:bg-[#FAFAFA]"]:hover {
+  background-color: var(--secondary) !important;
+}
+
+.admin-dark [class*="hover:text-[#0A0A0A]"]:hover {
+  color: var(--foreground) !important;
+}
+
+/* focus states */
+.admin-dark [class*="focus:bg-[#FAFAFA]"]:focus {
+  background-color: var(--secondary) !important;
+}
+
+/* Brand primary color */
+.admin-dark [class*="bg-[#F5A524]"] {
+  background-color: var(--primary) !important;
+}
+
+.admin-dark [class*="text-[#F5A524]"] {
+  color: var(--primary) !important;
+}
+
+/* dividers */
+.admin-dark [class*="divide-[#E5E5E5]"] > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--border) !important;
+}
+
+/* amber/green alert overrides for dark mode */
+.admin-dark [class*="bg-amber-50"] {
+  background-color: rgba(245, 158, 11, 0.1) !important;
+}
+.admin-dark [class*="border-amber-200"] {
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+.admin-dark [class*="text-amber-700"] {
+  color: #fbbf24 !important;
+}
+.admin-dark [class*="bg-green-50"] {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+}
+.admin-dark [class*="border-green-200"] {
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+.admin-dark [class*="text-green-700"] {
+  color: #34d399 !important;
+}
+
+/* red alerts */
+.admin-dark [class*="bg-red-50"] {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+.admin-dark [class*="border-red-200"] {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+.admin-dark [class*="text-red-700"] {
+  color: #f87171 !important;
+}
+
+/* blue alerts */
+.admin-dark [class*="bg-blue-50"] {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+.admin-dark [class*="border-blue-200"] {
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+.admin-dark [class*="text-blue-700"] {
+  color: #60a5fa !important;
+}
+
+/* yellow alerts */
+.admin-dark [class*="bg-yellow-50"] {
+  background-color: rgba(234, 179, 8, 0.1) !important;
+}
+.admin-dark [class*="border-yellow-200"] {
+  border-color: rgba(234, 179, 8, 0.3) !important;
+}
+.admin-dark [class*="text-yellow-700"] {
+  color: #facc15 !important;
+}
+
+/* hover:bg-[#E09000] (brand hover) */
+.admin-dark [class*="hover:bg-[#E09000]"]:hover {
+  background-color: color-mix(in srgb, var(--primary), #000 15%) !important;
+}
+
+/* placeholder text color */
+.admin-dark [class*="placeholder:text-[#A3A3A3]"]::placeholder {
+  color: var(--muted-foreground) !important;
+}
+
+/* Form inputs */
+.admin-dark input,
+.admin-dark textarea,
+.admin-dark select {
+  background-color: var(--secondary) !important;
+  color: var(--foreground) !important;
+  border-color: var(--border) !important;
+}
+
+.admin-dark input::placeholder,
+.admin-dark textarea::placeholder {
+  color: var(--muted-foreground) !important;
+}
+
+/* focus:border-[#F5A524] override */
+.admin-dark [class*="focus:border-[#F5A524]"]:focus {
+  border-color: var(--primary) !important;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* VibeFlow Glass Effect Utility */
+@layer utilities {
+  .glass {
+    backdrop-filter: blur(8px);
+    background: var(--vf-glass-bg);
+    border: 1px solid var(--vf-glass-border);
+  }
+
+  .glass-strong {
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Vibe Indicator Animation */
+@keyframes vibe-pulse {
+  0%, 100% {
+    background-color: #6366F1;
+    box-shadow: 0 0 8px #6366F1;
+  }
+  50% {
+    background-color: #10B981;
+    box-shadow: 0 0 8px #10B981;
+  }
+}
+
+.vibe-indicator {
+  animation: vibe-pulse 4s ease-in-out infinite;
+}
+
+/* Hero Animation - Shimmer Effect */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+/* Hero Animation - Border Spin Effect */
+@keyframes border-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-border-spin {
+  animation: border-spin 3s linear infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Testimonial Marquee Animation — 向右滾動（3 份複製，移動 1/3） */
+@keyframes marquee-right {
+  0% { transform: translateX(-33.333%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-marquee {
+  animation: marquee-right var(--marquee-duration, 50s) linear infinite;
+}
+
+/* Streamdown Markdown 樣式 */
+.prose h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #0A0A0A;
+}
+
+.prose h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #0A0A0A;
+  border-bottom: 1px solid #E5E5E5;
+  padding-bottom: 0.5rem;
+}
+
+.prose h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #0A0A0A;
+}
+
+.prose p {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.75;
+  color: #525252;
+}
+
+.prose a {
+  color: #F5A524;
+  text-decoration: none;
+}
+
+.prose a:hover {
+  text-decoration: underline;
+}
+
+.prose strong {
+  font-weight: 600;
+  color: #0A0A0A;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+.prose code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875em;
+  color: #F5A524;
+  background-color: #F5F5F5;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+}
+
+.prose pre {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #FAFAFA;
+  border: 1px solid #E5E5E5;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  color: #525252;
+}
+
+.prose li::marker {
+  color: #A3A3A3;
+}
+
+.prose blockquote {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  border-left: 4px solid #F5A524;
+  color: rgba(82, 82, 82, 0.8);
+  font-style: italic;
+}
+
+.prose hr {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: none;
+  border-top: 1px solid #E5E5E5;
+}
+
+.prose img {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  max-width: 100%;
+}
+
+.prose table {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.prose th {
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: #0A0A0A;
+  border-bottom: 2px solid #E5E5E5;
+}
+
+.prose td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #E5E5E5;
+  color: #525252;
+}
+
+.prose tr:hover {
+  background-color: #FAFAFA;
+}
+
+/* ==================== Milkdown Editor ==================== */
+
+/* Timestamp Chip - 時間膠囊樣式 */
+.milkdown-timestamp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  margin: 0 2px;
+  border-radius: 9999px;
+  border: 1.5px solid #E5E5E5;
+  background: #FAFAFA;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #525252;
+  cursor: default;
+  user-select: none;
+  vertical-align: middle;
+  line-height: 1.4;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.milkdown-timestamp-chip:hover {
+  background: #F5F5F5;
+  border-color: #F5A524;
+  color: #0A0A0A;
+}
+
+.milkdown-timestamp-icon {
+  font-size: 0.625rem;
+  color: #F5A524;
+}
+
+/* Milkdown Editor Wrapper */
+.milkdown-editor-wrapper .milkdown {
+  outline: none;
+}
+
+.milkdown-editor-wrapper .milkdown .editor {
+  outline: none;
+  min-height: 360px;
+}
+
+/* Remove default milkdown theme borders */
+.milkdown-editor-wrapper .milkdown {
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Admin dark mode overrides for milkdown */
+.admin-dark .milkdown-timestamp-chip {
+  border-color: #333336;
+  background: #252528;
+  color: #8E8E93;
+}
+
+.admin-dark .milkdown-timestamp-chip:hover {
+  background: #333336;
+  border-color: #F5A524;
+  color: #ECECEC;
+}
+
+/* Milkdown editor content in dark mode */
+.admin-dark .milkdown-editor-wrapper {
+  background-color: var(--card) !important;
+  border-color: var(--border) !important;
+  color: var(--foreground) !important;
+}
+
+/* 直接覆蓋 milkdown-editor-wrapper 下所有文字元素（不依賴 .prose 層級） */
+.admin-dark .milkdown-editor-wrapper h1,
+.admin-dark .milkdown-editor-wrapper h2,
+.admin-dark .milkdown-editor-wrapper h3,
+.admin-dark .milkdown-editor-wrapper h4 {
+  color: var(--foreground) !important;
+}
+
+.admin-dark .milkdown-editor-wrapper h2 {
+  border-bottom-color: var(--border) !important;
+}
+
+.admin-dark .milkdown-editor-wrapper p,
+.admin-dark .milkdown-editor-wrapper li,
+.admin-dark .milkdown-editor-wrapper blockquote {
+  color: var(--muted-foreground) !important;
+}
+
+.admin-dark .milkdown-editor-wrapper strong {
+  color: var(--foreground) !important;
+}
+
+.admin-dark .milkdown-editor-wrapper a {
+  color: var(--primary) !important;
+}
+
+.admin-dark .milkdown-editor-wrapper code {
+  color: var(--primary) !important;
+  background-color: var(--secondary) !important;
+}
+
+.admin-dark .milkdown-editor-wrapper pre {
+  background-color: var(--secondary) !important;
+  border-color: var(--border) !important;
+}
+
+.admin-dark .milkdown-editor-wrapper hr {
+  border-color: var(--border) !important;
+}
+
+.admin-dark .milkdown-editor-wrapper li::marker {
+  color: var(--muted-foreground) !important;
+}
+
+.admin-dark .milkdown-editor-wrapper blockquote {
+  border-left-color: var(--primary) !important;
+}
+
+/* Milkdown 內部 ProseMirror 的 contenteditable 也要套用前景色 */
+.admin-dark .milkdown-editor-wrapper .milkdown,
+.admin-dark .milkdown-editor-wrapper [contenteditable] {
+  color: var(--foreground) !important;
+  caret-color: var(--foreground) !important;
+}
