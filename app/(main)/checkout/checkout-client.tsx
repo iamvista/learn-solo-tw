@@ -152,7 +152,7 @@ export function CheckoutClient({
       }
 
       // 訪客用戶：將 PostHog 匿名 ID 與新建的 userId 關聯
-      // 確保前台的 $pageview、cta_clicked、checkout_initiated 等事件
+      // 確保前臺的 $pageview、cta_clicked、checkout_initiated 等事件
       // 可以與 server-side 的 payment_succeeded 事件在漏斗中正確串接
       if (!user.isLoggedIn && result.userId) {
         posthog.identify(result.userId, {
@@ -386,7 +386,7 @@ export function CheckoutClient({
           <div className="mt-4 flex items-center justify-center gap-2 text-xs text-[#A3A3A3]">
             <ShieldCheck className="h-3.5 w-3.5" />
             <span>
-              下一步將連至第三方金流平台，您所有的交易資訊皆獲得安全保護。
+              下一步將連至第三方金流平臺，您所有的交易資訊皆獲得安全保護。
             </span>
           </div>
         </div>

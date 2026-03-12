@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ActivateAccountClient } from './activate-account-client'
 
 export const metadata: Metadata = {
-  title: '啟用帳號 | 課程平台',
+  title: '啟用帳號 | 課程平臺',
   description: '設定密碼並啟用您的課程帳號',
 }
 

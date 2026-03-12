@@ -1,6 +1,6 @@
 // components/admin/settings/layout-settings-form.tsx
 // Header / Footer 版面設定表單
-// 以視覺化左右分區排列，模擬實際前台呈現
+// 以視覺化左右分區排列，模擬實際前臺呈現
 
 'use client'
 

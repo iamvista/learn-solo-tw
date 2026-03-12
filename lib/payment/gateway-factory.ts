@@ -68,7 +68,7 @@ export function createGatewayFromSettings(
   const { merchantId, hashKey, hashIV, testMode } = settings.payuni
 
   if (!merchantId || !hashKey || !hashIV) {
-    throw new Error('PAYUNi 金流設定不完整，請至後台設定商店代號、Hash Key 和 Hash IV')
+    throw new Error('PAYUNi 金流設定不完整，請至後臺設定商店代號、Hash Key 和 Hash IV')
   }
 
   return new PayUniGateway({ merchantId, hashKey, hashIV, testMode })

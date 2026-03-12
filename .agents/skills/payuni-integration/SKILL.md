@@ -14,7 +14,7 @@ description: PAYUNi 統一金流串接指南。在 Next.js (App Router) + TypeSc
 
 ## 前置準備
 
-從 PAYUNi 商家後台取得：
+從 PAYUNi 商家後臺取得：
 - **MerID**: 商店代號（如 `U00000000`）
 - **Hash Key**: 32 字元
 - **Hash IV**: 16 字元

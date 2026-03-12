@@ -1,5 +1,5 @@
 // lib/actions/public-courses.ts
-// 前台課程相關 Server Actions
+// 前臺課程相關 Server Actions
 // 提供公開課程列表查詢功能
 
 'use server'

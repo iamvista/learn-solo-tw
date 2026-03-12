@@ -70,10 +70,10 @@ async function getSenderName(): Promise<string> {
     const siteName = await prisma.siteSetting.findUnique({
       where: { key: SETTING_KEYS.SITE_NAME },
     })
-    return setting?.value || siteName?.value || 'Course Platform'
+    return setting?.value || siteName?.value || '自由人學院'
   } catch (error) {
     console.error('取得發送者名稱失敗:', error)
-    return 'Course Platform'
+    return '自由人學院'
   }
 }
 
@@ -87,13 +87,13 @@ async function getEmailBranding(): Promise<EmailBranding> {
     const appUrl = getAppUrl()
 
     return {
-      siteName: siteName?.value || 'Course Platform',
+      siteName: siteName?.value || '自由人學院',
       siteLogo: siteLogo?.value || `${appUrl}/icon.png`,
     }
   } catch {
     const appUrl = getAppUrl()
     return {
-      siteName: 'Course Platform',
+      siteName: '自由人學院',
       siteLogo: `${appUrl}/icon.png`,
     }
   }

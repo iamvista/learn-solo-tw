@@ -1,5 +1,5 @@
 // lib/actions/course-welcome-email.ts
-// 課程歡迎信後台管理 Server Actions
+// 課程歡迎信後臺管理 Server Actions
 
 'use server'
 

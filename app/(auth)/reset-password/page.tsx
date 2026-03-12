@@ -4,7 +4,7 @@ import { ResetPasswordForm } from '@/components/forms/reset-password-form'
 import { AuthPageWrapper } from '@/components/auth/auth-page-wrapper'
 
 export const metadata: Metadata = {
-  title: '重設密碼 | 課程平台',
+  title: '重設密碼 | 課程平臺',
   description: '設定您的新密碼',
 }
 

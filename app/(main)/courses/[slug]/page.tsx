@@ -57,7 +57,7 @@ export async function generateMetadata({
   const courseUrl = `${baseUrl}/courses/${slug}`
   const { siteName } = await getPublicSiteSettings()
 
-  // 優先使用管理後台設定的 SEO 內容，fallback 到自動生成
+  // 優先使用管理後臺設定的 SEO 內容，fallback 到自動生成
   const title = course.seoTitle || `${course.title} | ${siteName}`
   const description = course.seoDesc ||
     `${course.description || course.title}。${priceText}`
@@ -77,7 +77,7 @@ export async function generateMetadata({
       type: 'website',
       locale: 'zh_TW',
       url: courseUrl,
-      siteName: `${siteName} 課程平台`,
+      siteName: `${siteName} 課程平臺`,
       title: course.title,
       description: ogDescription,
       images: ogImage

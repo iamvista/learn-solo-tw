@@ -95,7 +95,7 @@ export function SetupClient({ user }: SetupClientProps) {
         // 傳入物件才會觸發 JWT callback 的 trigger: 'update'
         // 使 JWT 從 DB 讀取最新的 ADMIN 角色並更新 cookie
         await updateSession({ role: 'ADMIN' })
-        toast.success('系統初始化完成！歡迎使用後台管理系統')
+        toast.success('系統初始化完成！歡迎使用後臺管理系統')
         // 使用硬導向確保瀏覽器帶著更新後的 JWT cookie 發起請求
         window.location.href = '/admin'
       } else {
@@ -141,7 +141,7 @@ export function SetupClient({ user }: SetupClientProps) {
               </div>
               <div className="space-y-2">
                 <h2 className="text-2xl font-bold text-[#0A0A0A]">
-                  歡迎使用課程平台！
+                  歡迎使用課程平臺！
                 </h2>
                 <p className="text-[#525252] max-w-md mx-auto">
                   嗨 {user.name || user.email}，讓我們花幾分鐘完成基本設定，幫助你快速開始使用。
@@ -170,7 +170,7 @@ export function SetupClient({ user }: SetupClientProps) {
                       })}
                     </ul>
                     <p className="text-xs text-[#A3A3A3] pt-2 border-t border-[#F5F5F5]">
-                      所有項目都可以跳過，之後隨時可以在「後台設定」頁面中修改。
+                      所有項目都可以跳過，之後隨時可以在「後臺設定」頁面中修改。
                     </p>
                   </div>
                 </CardContent>
@@ -250,7 +250,7 @@ export function SetupClient({ user }: SetupClientProps) {
                     >
                       <p className="font-semibold text-[#0A0A0A]">PAYUNi 統一金流</p>
                       <p className="text-xs text-[#525252] mt-1">
-                        台灣在地金流，支援信用卡、超商代碼、ATM
+                        臺灣在地金流，支援信用卡、超商代碼、ATM
                       </p>
                     </button>
                   </div>
@@ -334,7 +334,7 @@ export function SetupClient({ user }: SetupClientProps) {
                     className="border-[#E5E5E5] font-mono text-sm"
                   />
                   <p className="text-xs text-[#A3A3A3]">
-                    在 Google Analytics 後台 → 管理 → 資料串流中找到，格式為 G- 開頭
+                    在 Google Analytics 後臺 → 管理 → 資料串流中找到，格式為 G- 開頭
                   </p>
                 </div>
 

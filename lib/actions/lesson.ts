@@ -1,5 +1,5 @@
 // lib/actions/lesson.ts
-// 課程單元前台 Server Actions
+// 課程單元前臺 Server Actions
 // 提供單元內容取得、存取權限檢查、相鄰單元取得
 
 'use server'

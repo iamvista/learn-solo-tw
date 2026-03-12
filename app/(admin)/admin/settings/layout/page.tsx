@@ -3,7 +3,7 @@ import { LayoutSettingsForm } from '@/components/admin/settings/layout-settings-
 import { SettingsNav } from '@/components/admin/settings/settings-nav'
 
 export const metadata = {
-  title: '版面設定 | 後台',
+  title: '版面設定 | 後臺',
 }
 
 export default async function LayoutSettingsPage() {

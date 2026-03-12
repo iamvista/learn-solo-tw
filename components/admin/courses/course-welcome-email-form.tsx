@@ -213,7 +213,7 @@ export function CourseWelcomeEmailForm({
                 模板內容與可用關鍵字
               </CardTitle>
               <CardDescription className="text-[#525252]">
-                後台只需填 Markdown
+                後臺只需填 Markdown
                 文案，寄送時系統會自動套用固定版型（灰底＋白色圓角容器）。
               </CardDescription>
             </CardHeader>

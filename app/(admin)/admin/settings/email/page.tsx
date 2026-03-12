@@ -7,7 +7,7 @@ import { EmailSettingsForm } from '@/components/admin/settings/email-settings-fo
 import { SettingsNav } from '@/components/admin/settings/settings-nav'
 
 export const metadata = {
-  title: 'Email 設定 | 後台管理',
+  title: 'Email 設定 | 後臺管理',
 }
 
 export default async function EmailSettingsPage() {

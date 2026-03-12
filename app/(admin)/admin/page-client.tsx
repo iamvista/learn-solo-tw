@@ -1,5 +1,5 @@
 // app/(admin)/admin/page-client.tsx
-// 後台儀表板客戶端元件
+// 後臺儀表板客戶端元件
 // 每張圖表卡片有獨立的時間選擇器
 
 'use client'
@@ -251,7 +251,7 @@ export function DashboardPageClient({
       {/* 歡迎訊息 */}
       <div>
         <h2 className="text-2xl font-bold text-[#0A0A0A]">歡迎回來，{userName}</h2>
-        <p className="text-[#525252] mt-1">這是您的課程平台營運概況</p>
+        <p className="text-[#525252] mt-1">這是您的課程平臺營運概況</p>
       </div>
 
       {/* 統計卡片 */}

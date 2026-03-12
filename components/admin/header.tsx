@@ -1,5 +1,5 @@
 // components/admin/header.tsx
-// 後台頂部導覽列元件
+// 後臺頂部導覽列元件
 // 包含用戶資訊和登出功能
 
 'use client'
@@ -45,7 +45,7 @@ export function Header({ user }: HeaderProps) {
       <div className="flex items-center gap-4">
         <MobileNav userRole={user.role} />
         <h1 className="text-lg font-semibold text-foreground hidden lg:block">
-          後台管理系統
+          後臺管理系統
         </h1>
       </div>
 

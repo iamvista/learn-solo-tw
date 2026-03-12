@@ -1,8 +1,8 @@
-本檔案為針對 Agent 的開發指南，適用於此通用型線上課程販售平台。
+本檔案為針對 Agent 的開發指南，適用於此通用型線上課程販售平臺。
 
 ## Project Overview
 
-通用型線上課程販售平台 — 使用 Next.js 15 + Prisma 7 建構，支援 Google/Apple OAuth 登入、PayUni 金流、Cloudflare Stream 影片串流。可直接部署為獨立的課程銷售業務。
+通用型線上課程販售平臺 — 使用 Next.js 15 + Prisma 7 建構，支援 Google/Apple OAuth 登入、PayUni 金流、Cloudflare Stream 影片串流。可直接部署為獨立的課程銷售業務。
 
 ## Common Commands
 
@@ -37,9 +37,9 @@ pnpm admin:init <email>     # 將用戶升級為 ADMIN 角色
 - **Form**: React Hook Form + Zod
 
 ### Route Groups (App Router)
-- `app/(admin)/admin/` — 後台管理（需 ADMIN 或 EDITOR 角色）
+- `app/(admin)/admin/` — 後臺管理（需 ADMIN 或 EDITOR 角色）
 - `app/(auth)/` — 認證頁面（登入、註冊）
-- `app/(main)/` — 前台公開頁面
+- `app/(main)/` — 前臺公開頁面
 - `app/(setup)/` — 初始設定流程
 - `app/api/` — API Routes
 
@@ -65,8 +65,8 @@ pnpm admin:init <email>     # 將用戶升級為 ADMIN 角色
 
 ### UI Components
 - `components/ui/` — shadcn/ui 基礎元件
-- `components/admin/` — 後台專用元件
-- `components/main/` — 前台元件
+- `components/admin/` — 後臺專用元件
+- `components/main/` — 前臺元件
 - `components/layouts/` — Layout 元件
 
 ### Path Aliases
@@ -83,13 +83,13 @@ pnpm admin:init <email>     # 將用戶升級為 ADMIN 角色
 
 ### Video Streaming（影片串流）
 - 影片託管於 Cloudflare Stream
-- 透過 TUS 協議在後台媒體中心上傳
+- 透過 TUS 協議在後臺媒體中心上傳
 - 播放使用 Cloudflare Stream Player + Signed URLs
 - 觀看進度透過 `/api/lesson-progress` API 追蹤
 
 ## 銷售頁系統（Landing Page）
 
-這是本平台最具彈性的設計之一。每個課程都可以擁有完全客製化的銷售頁。
+這是本平臺最具彈性的設計之一。每個課程都可以擁有完全客製化的銷售頁。
 
 ### 運作機制
 
@@ -98,7 +98,7 @@ pnpm admin:init <email>     # 將用戶升級為 ADMIN 角色
    - 元件放在 `components/main/landing/pages/{slug}.tsx`
    - 透過 `loader.ts` 動態載入
    - 沒有對應元件時，自動 fallback 到 `default.tsx`
-3. **自訂 HTML 模式**：直接在後台貼入 HTML，SSR 渲染
+3. **自訂 HTML 模式**：直接在後臺貼入 HTML，SSR 渲染
 
 ### 建立新銷售頁的方式
 
@@ -107,7 +107,7 @@ pnpm admin:init <email>     # 將用戶升級為 ADMIN 角色
 AI 會自動：
 - 在 `components/main/landing/pages/{slug}.tsx` 建立元件
 - 在 `loader.ts` 註冊該元件
-- 使用平台提供的共用元件（`StickyCTA`、`FreeCourseCTA`、`FAQSection` 等）
+- 使用平臺提供的共用元件（`StickyCTA`、`FreeCourseCTA`、`FAQSection` 等）
 - 根據課程性質設計適合的版面與文案
 
 ### 銷售頁元件結構
@@ -147,7 +147,7 @@ components/main/landing/
 4. **必須包含 `StickyCTA`**：浮動購買按鈕，確保用戶隨時可以購買
 5. **動畫**：使用 `framer-motion` 的 `motion` 元件，搭配 `whileInView` 做滾動觸發
 
-## 後台管理系統
+## 後臺管理系統
 
 ### 課程管理流程
 1. 新增課程：`/admin/courses/new`
@@ -155,7 +155,7 @@ components/main/landing/
 3. 編輯課程內容：`/admin/courses/[id]/curriculum`（章節與單元）
 4. 課程列表：`/admin/courses`
 
-### 後台路由一覽
+### 後臺路由一覽
 | 路由 | 說明 |
 |------|------|
 | `/admin` | Dashboard（統計概覽） |
@@ -168,7 +168,7 @@ components/main/landing/
 | `/admin/analytics` | 銷售分析 |
 | `/admin/settings` | 系統設定 |
 
-### 前台路由一覽
+### 前臺路由一覽
 | 路由 | 說明 |
 |------|------|
 | `/` | 首頁（課程列表） |
@@ -184,10 +184,10 @@ components/main/landing/
 - 使用 `@/*` 路徑別名匯入
 - Server Actions 放在 `lib/actions/` 目錄
 - Zod 驗證放在 `lib/validations/` 目錄
-- 前台元件放 `components/main/`，後台元件放 `components/admin/`
+- 前臺元件放 `components/main/`，後臺元件放 `components/admin/`
 
 ### 樣式規範
 - 使用 Tailwind CSS，不使用 CSS Modules
-- 品牌色彩由平台擁有者自行定義，定義在 `app/globals.css` 的 CSS 變數中（`--primary`、`--foreground` 等）
+- 品牌色彩由平臺擁有者自行定義，定義在 `app/globals.css` 的 CSS 變數中（`--primary`、`--foreground` 等）
 - 開發新元件時，**優先使用 CSS 變數**（如 `text-primary`、`bg-primary`），避免寫死 hex 色碼
 - 若需要參考現有銷售頁元件的樣式，以該元件實際使用的顏色為準，但理解這些是可被替換的品牌色

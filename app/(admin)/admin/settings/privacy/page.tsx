@@ -6,7 +6,7 @@ import { SettingsNav } from '@/components/admin/settings/settings-nav'
 import { PrivacyEditorClient } from './client'
 
 export const metadata = {
-  title: '隱私權政策 | 後台設定',
+  title: '隱私權政策 | 後臺設定',
 }
 
 export default async function PrivacySettingsPage() {

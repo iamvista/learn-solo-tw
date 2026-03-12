@@ -1,6 +1,6 @@
 // lib/analytics-settings.ts
 // 從資料庫讀取分析追蹤相關設定（GA、PostHog）
-// 用於前台 script 注入和 PostHog 初始化
+// 用於前臺 script 注入和 PostHog 初始化
 
 import { prisma } from '@/lib/prisma'
 import { SETTING_KEYS } from '@/lib/validations/settings'

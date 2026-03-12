@@ -262,7 +262,7 @@ export function StockTrackerApp() {
               </div>
               <div className="flex flex-col flex-1">
                 <p className="text-white text-sm font-bold">2330</p>
-                <p className="text-gray-500 text-[10px] font-medium uppercase">台積電</p>
+                <p className="text-gray-500 text-[10px] font-medium uppercase">臺積電</p>
               </div>
               <div className="w-16 h-8">
                 <svg className="w-full h-full" viewBox="0 0 100 40">

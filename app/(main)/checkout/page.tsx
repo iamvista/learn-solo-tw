@@ -12,7 +12,7 @@ import { getPublicSiteSettings } from '@/lib/site-settings-public'
 import { MetaPixelAddToCart, MetaPixelInitiateCheckout } from '@/components/common/meta-pixel-events'
 
 export const metadata: Metadata = {
-  title: '結帳 | 課程平台',
+  title: '結帳 | 課程平臺',
   description: '完成您的課程購買',
 }
 

@@ -28,8 +28,8 @@ export default async function CommentsPage({ params }: CommentsPageProps) {
           <ul className="text-sm text-[#525252] list-disc pl-5 space-y-2">
             <li>左側選擇有留言的單元，即可管理該單元的留言。</li>
             <li>紅色數字表示未讀留言，點擊後自動標記為已讀。</li>
-            <li>匿名留言在前台只會顯示「學員」，但後台會顯示真實身份。</li>
-            <li>刪除為軟刪除：前台不再顯示，但仍保留追蹤資訊。</li>
+            <li>匿名留言在前臺只會顯示「學員」，但後臺會顯示真實身份。</li>
+            <li>刪除為軟刪除：前臺不再顯示，但仍保留追蹤資訊。</li>
           </ul>
         </div>
       }

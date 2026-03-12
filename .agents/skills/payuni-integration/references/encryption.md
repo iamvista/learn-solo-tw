@@ -269,7 +269,7 @@ export function createPayUniServiceFromSettings(
   const { merchantId, hashKey, hashIV, testMode } = settings.payuni;
 
   if (!merchantId || !hashKey || !hashIV) {
-    throw new Error("PAYUNi 設定不完整，請至後台設定商店代號、Hash Key 和 Hash IV");
+    throw new Error("PAYUNi 設定不完整，請至後臺設定商店代號、Hash Key 和 Hash IV");
   }
 
   const apiUrl = testMode

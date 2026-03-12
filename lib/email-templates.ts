@@ -13,7 +13,7 @@ export interface EmailBranding {
 
 function getEmailBranding(branding?: Partial<EmailBranding>): EmailBranding {
   return {
-    siteName: branding?.siteName || 'Course Platform',
+    siteName: branding?.siteName || '自由人學院',
     siteLogo: branding?.siteLogo || `${appUrl}/icon.png`,
   }
 }

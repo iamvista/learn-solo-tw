@@ -9,7 +9,7 @@ import { AuthPageWrapper } from '@/components/auth/auth-page-wrapper'
 import { getPublicSiteSettings } from '@/lib/site-settings-public'
 
 export const metadata: Metadata = {
-  title: '登入 | 課程平台',
+  title: '登入 | 課程平臺',
   description: '登入您的帳號以開始學習線上課程',
 }
 

@@ -1,5 +1,5 @@
 // components/admin/sidebar.tsx
-// 後台側邊導覽列元件
+// 後臺側邊導覽列元件
 // 支援折疊模式與 hover 展開功能，含深色模式切換按鈕
 
 "use client";

@@ -114,7 +114,7 @@ export async function GET(request: NextRequest) {
       },
     })
 
-    // 前台：匿名留言一律隱去真實名稱/頭像
+    // 前臺：匿名留言一律隱去真實名稱/頭像
     const serialized = comments.map((c) => ({
       id: c.id,
       lessonId: c.lessonId,

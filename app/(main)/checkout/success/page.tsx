@@ -9,7 +9,7 @@ import { prisma } from "@/lib/prisma";
 import { MetaPixelPurchase } from "@/components/common/meta-pixel-events";
 
 export const metadata: Metadata = {
-  title: "付款成功 | 課程平台",
+  title: "付款成功 | 課程平臺",
   description: "恭喜您完成購買！",
 };
 

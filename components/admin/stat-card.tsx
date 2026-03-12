@@ -1,5 +1,5 @@
 // components/admin/stat-card.tsx
-// 後台統計卡片元件
+// 後臺統計卡片元件
 // 用於儀表板顯示各項統計數據
 "use client";
 

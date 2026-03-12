@@ -7,7 +7,7 @@ import { SiteSettingsForm } from '@/components/admin/settings/site-settings-form
 import { SettingsNav } from '@/components/admin/settings/settings-nav'
 
 export const metadata = {
-  title: '系統設定 | 後台管理',
+  title: '系統設定 | 後臺管理',
 }
 
 export default async function SettingsPage() {

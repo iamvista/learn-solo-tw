@@ -556,7 +556,7 @@ export function CourseForm({ course, mode }: CourseFormProps) {
                           顯示倒數時鐘
                         </FormLabel>
                         <FormDescription className="text-[#A3A3A3]">
-                          開啟後，前台銷售頁將顯示優惠倒數計時器
+                          開啟後，前臺銷售頁將顯示優惠倒數計時器
                         </FormDescription>
                       </div>
                       <FormControl>
@@ -621,7 +621,7 @@ export function CourseForm({ course, mode }: CourseFormProps) {
                           顯示倒數時鐘
                         </FormLabel>
                         <FormDescription className="text-[#A3A3A3]">
-                          關閉後，前台銷售頁將不會顯示優惠倒數計時器，但促銷價格仍然有效
+                          關閉後，前臺銷售頁將不會顯示優惠倒數計時器，但促銷價格仍然有效
                         </FormDescription>
                       </div>
                       <FormControl>

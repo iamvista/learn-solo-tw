@@ -6,7 +6,7 @@ import { SettingsNav } from '@/components/admin/settings/settings-nav'
 import { TermsEditorClient } from './client'
 
 export const metadata = {
-  title: '服務條款 | 後台設定',
+  title: '服務條款 | 後臺設定',
 }
 
 export default async function TermsSettingsPage() {

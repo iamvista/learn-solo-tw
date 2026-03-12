@@ -48,7 +48,7 @@ export const WELCOME_EMAIL_VARIABLES: WelcomeEmailVariable[] = [
   {
     token: '{{購買日期}}',
     label: '購買日期',
-    description: '付款成功日期（台北時區）',
+    description: '付款成功日期（臺北時區）',
     example: '2026/02/18',
   },
 ]
@@ -73,7 +73,7 @@ export const DEFAULT_WELCOME_EMAIL_SUBJECT = '歡迎加入《{{課程名稱}}》
 
 export const DEFAULT_WELCOME_EMAIL_MARKDOWN = `嗨，{{用戶名稱}} 你好！
 
-我是課程平台團隊，先祝你一切順利。
+我是課程平臺團隊，先祝你一切順利。
 
 感謝你購買 **{{課程名稱}}**，歡迎正式加入我們！
 
@@ -84,7 +84,7 @@ export const DEFAULT_WELCOME_EMAIL_MARKDOWN = `嗨，{{用戶名稱}} 你好！
 
 購買日期：{{購買日期}}
 
-課程平台團隊`
+課程平臺團隊`
 
 function replaceTokenAll(input: string, token: string, value: string): string {
   return input.split(token).join(value)

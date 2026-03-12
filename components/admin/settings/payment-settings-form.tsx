@@ -255,7 +255,7 @@ export function PaymentSettingsForm({
               </Button>
             </div>
             <p className="text-xs text-[#A3A3A3]">
-              請在 PAYUNi 商家後台設定以上 Return URL 和 Notify URL
+              請在 PAYUNi 商家後臺設定以上 Return URL 和 Notify URL
             </p>
           </div>
         </CardContent>
@@ -337,7 +337,7 @@ export function PaymentSettingsForm({
         <CardHeader>
           <CardTitle className="text-[#0A0A0A]">相關資源</CardTitle>
           <CardDescription className="text-[#525252]">
-            PAYUNi 開發文件和後台連結
+            PAYUNi 開發文件和後臺連結
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">

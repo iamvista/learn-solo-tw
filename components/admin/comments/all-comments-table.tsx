@@ -1,5 +1,5 @@
 // components/admin/comments/all-comments-table.tsx
-// 後台：完整留言列表（所有課程/章節/單元）
+// 後臺：完整留言列表（所有課程/章節/單元）
 
 'use client'
 
@@ -275,7 +275,7 @@ export function AllCommentsTable({
           <DialogHeader>
             <DialogTitle className="text-[#0A0A0A]">確認刪除留言</DialogTitle>
             <DialogDescription className="text-[#525252]">
-              此操作會將留言標記為已刪除，前台不再顯示。
+              此操作會將留言標記為已刪除，前臺不再顯示。
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

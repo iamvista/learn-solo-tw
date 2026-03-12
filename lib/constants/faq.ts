@@ -15,7 +15,7 @@ export const courseFAQs: FAQItem[] = [
   {
     question: '需要什麼設備才能上這堂課？',
     answer:
-      '你需要一台 Mac 電腦（MacBook 或 iMac 皆可）。因為 iOS App 開發必須使用 Apple 的 Xcode 開發工具，而 Xcode 只能在 macOS 上執行，這是 Apple 官方的限制。如果你目前使用 Windows 或 Linux，建議先取得一台 Mac 再開始課程。',
+      '你需要一臺 Mac 電腦（MacBook 或 iMac 皆可）。因為 iOS App 開發必須使用 Apple 的 Xcode 開發工具，而 Xcode 只能在 macOS 上執行，這是 Apple 官方的限制。如果你目前使用 Windows 或 Linux，建議先取得一臺 Mac 再開始課程。',
   },
   {
     question: '遇到問題真的有人可以問嗎？',

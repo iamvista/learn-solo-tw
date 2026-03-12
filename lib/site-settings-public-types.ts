@@ -30,11 +30,11 @@ export interface PublicSiteSettings {
 }
 
 export const PUBLIC_SITE_DEFAULTS: PublicSiteSettings = {
-  siteName: 'Course Platform',
+  siteName: '自由人學院',
   siteLogo: '/icon.png',
   contactEmail: 'support@example.com',
-  brandDisplayName: 'Course Platform',
-  brandSubtitle: 'Learning System',
+  brandDisplayName: '自由人學院',
+  brandSubtitle: '自由人學院',
   googleLoginEnabled: false,
   appleLoginEnabled: false,
   headerLeftLinks: [],

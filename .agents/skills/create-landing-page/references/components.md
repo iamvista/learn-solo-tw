@@ -134,7 +134,7 @@ interface HeroSectionProps {
 
 - **特性**：shadcn Accordion，資料源 `lib/constants/faq.ts`
 - **文案寫死**：FAQ 全是 iOS 課程相關
-- **底部**：聯絡信箱來自後台設定（`contactEmail`）
+- **底部**：聯絡信箱來自後臺設定（`contactEmail`）
 - **Props**：無
 
 ### `CoursePreviewVideo` — 講師承諾影片

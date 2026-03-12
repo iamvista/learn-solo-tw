@@ -165,7 +165,7 @@ export function CafeMapApp() {
             <div className="mb-1.5 flex items-start justify-between">
               <div>
                 <h2 className="text-sm font-bold tracking-tight text-white">貓咪真可愛咖啡廳</h2>
-                <p className="mt-0.5 text-[10px] text-white/60">台北市大安區忠孝東路四段 101 號</p>
+                <p className="mt-0.5 text-[10px] text-white/60">臺北市大安區忠孝東路四段 101 號</p>
               </div>
               <div className="flex flex-col items-end">
                 <div className="flex items-center gap-0.5 text-[#13c8ec]">

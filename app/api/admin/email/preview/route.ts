@@ -26,7 +26,7 @@ export async function GET(request: Request) {
 
   const appUrl = getAppUrl()
   const branding = {
-    siteName: siteName?.value || 'Course Platform',
+    siteName: siteName?.value || '自由人學院',
     siteLogo: siteLogo?.value || `${appUrl}/icon.png`,
   }
 

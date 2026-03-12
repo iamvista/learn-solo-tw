@@ -1,5 +1,5 @@
 // app/(main)/page.tsx
-// 前台首頁
+// 前臺首頁
 // Solo Academy Design System - 官網首頁佈局：Hero + 課程列表
 
 import type { Metadata } from 'next'
@@ -14,9 +14,9 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: {
-    absolute: '線上課程平台',
+    absolute: '線上課程平臺',
   },
-  description: '探索課程、購買學習並追蹤進度的線上課程平台。',
+  description: '探索課程、購買學習並追蹤進度的線上課程平臺。',
   alternates: {
     canonical: getAppUrl(),
   },
@@ -27,22 +27,22 @@ const appUrl = getAppUrl()
 const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Course Platform',
+  name: '自由人學院',
   url: appUrl,
   logo: `${appUrl}/icon.png`,
-  description: '線上課程平台',
+  description: '線上課程平臺',
 }
 
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: '線上課程平台',
+  name: '線上課程平臺',
   url: appUrl,
   description: '探索課程並開始學習',
   inLanguage: 'zh-TW',
   publisher: {
     '@type': 'Organization',
-    name: 'Course Platform',
+    name: '自由人學院',
   },
 }
 

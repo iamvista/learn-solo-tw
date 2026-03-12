@@ -51,7 +51,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(siteSettingsSchema) as any,
     defaultValues: {
-      siteName: initialSettings[SETTING_KEYS.SITE_NAME] || '我的課程平台',
+      siteName: initialSettings[SETTING_KEYS.SITE_NAME] || '我的課程平臺',
       siteLogo: initialSettings[SETTING_KEYS.SITE_LOGO] || '',
       contactEmail: initialSettings[SETTING_KEYS.CONTACT_EMAIL] || '',
       brandDisplayName: initialSettings[SETTING_KEYS.BRAND_DISPLAY_NAME] || '',
@@ -168,7 +168,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="我的課程平台"
+                          placeholder="我的課程平臺"
                           className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                         />
@@ -367,7 +367,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                         />
                       </FormControl>
                       <FormDescription className="text-[#A3A3A3]">
-                        在 Google Analytics 後台 → 管理 → 資料串流 → 網頁串流中找到，格式為 G- 開頭（例如 G-ABC123XYZ）
+                        在 Google Analytics 後臺 → 管理 → 資料串流 → 網頁串流中找到，格式為 G- 開頭（例如 G-ABC123XYZ）
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -403,7 +403,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                         />
                       </FormControl>
                       <FormDescription className="text-[#A3A3A3]">
-                        在 PostHog 後台 → Settings → Project → Project API Key 中找到，以 phc_ 開頭。這是用來收集前台用戶行為數據的 Key。
+                        在 PostHog 後臺 → Settings → Project → Project API Key 中找到，以 phc_ 開頭。這是用來收集前臺用戶行為數據的 Key。
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -454,7 +454,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                         />
                       </FormControl>
                       <FormDescription className="text-[#A3A3A3]">
-                        在 PostHog 後台 → 右上角個人頭像 → Settings → Personal API Keys 中建立，以 phx_ 開頭。這是用來在後台儀表板查詢分析數據（例如轉換漏斗）的進階功能，不填也可以正常追蹤用戶行為。
+                        在 PostHog 後臺 → 右上角個人頭像 → Settings → Personal API Keys 中建立，以 phx_ 開頭。這是用來在後臺儀表板查詢分析數據（例如轉換漏斗）的進階功能，不填也可以正常追蹤用戶行為。
                       </FormDescription>
                       <FormMessage />
                     </FormItem>

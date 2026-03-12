@@ -1,5 +1,5 @@
 // app/(main)/layout.tsx
-// 前台頁面佈局
+// 前臺頁面佈局
 // 包含 Header、Footer 和 Session Provider
 
 import { SessionProvider } from '@/components/providers/session-provider'

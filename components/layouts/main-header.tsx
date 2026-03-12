@@ -1,5 +1,5 @@
 // components/layouts/main-header.tsx
-// 前台網站 Header 元件
+// 前臺網站 Header 元件
 // 極簡黑白灰設計 + #C41E3A 強調色
 // 符合 Solo Academy Design System
 

@@ -1,5 +1,5 @@
 // lib/contexts/admin-theme-context.tsx
-// 管理後台主題 Context
+// 管理後臺主題 Context
 // 管理深色/淺色模式切換，僅影響 admin 區域
 
 'use client'

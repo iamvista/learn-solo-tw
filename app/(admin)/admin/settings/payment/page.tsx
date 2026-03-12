@@ -7,7 +7,7 @@ import { PaymentSettingsForm } from "@/components/admin/settings/payment-setting
 import { SettingsNav } from "@/components/admin/settings/settings-nav";
 
 export const metadata = {
-  title: "金流設定 | 後台管理",
+  title: "金流設定 | 後臺管理",
 };
 
 export default async function PaymentSettingsPage() {

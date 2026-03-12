@@ -56,7 +56,7 @@ const statusConfig: Record<
   UNLISTED: { label: '隱藏', variant: 'outline' },
 }
 
-// 格式化金額為新台幣格式
+// 格式化金額為新臺幣格式
 function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('zh-TW', {
     style: 'currency',

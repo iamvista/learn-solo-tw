@@ -7,7 +7,7 @@ const resourceCards = [
   {
     id: 1,
     title: 'SaaS 與 AI 的未來',
-    summary: 'AI 摘要指出，垂直型 SaaS 平台正在整合 LLM 來自動化利基工作流程...',
+    summary: 'AI 摘要指出，垂直型 SaaS 平臺正在整合 LLM 來自動化利基工作流程...',
     tags: ['#saas', '#ai', '#科技'],
   },
   {

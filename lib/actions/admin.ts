@@ -1,5 +1,5 @@
 // lib/actions/admin.ts
-// 後台管理 Server Actions
+// 後臺管理 Server Actions
 // 提供儀表板統計數據查詢
 
 'use server'

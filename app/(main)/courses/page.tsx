@@ -1,5 +1,5 @@
 // app/(main)/courses/page.tsx
-// 前台課程列表頁面
+// 前臺課程列表頁面
 // Solo Academy Design System - 極簡白黑風格
 
 import type { Metadata } from 'next'

@@ -1,5 +1,5 @@
 // app/(admin)/admin/page.tsx
-// 後台儀表板頁面
+// 後臺儀表板頁面
 // 取得所有統計數據並傳入客戶端元件渲染
 
 import { auth } from '@/lib/auth'

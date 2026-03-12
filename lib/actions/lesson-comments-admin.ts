@@ -1,5 +1,5 @@
 // lib/actions/lesson-comments-admin.ts
-// 單元留言/評論 - 後台管理 Server Actions
+// 單元留言/評論 - 後臺管理 Server Actions
 
 'use server'
 

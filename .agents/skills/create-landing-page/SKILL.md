@@ -47,7 +47,7 @@ description: >
 
 1. 元件已建立在 `components/main/landing/pages/{slug}.tsx`
 2. 已在 `loader.ts` 註冊
-3. 後台「課程管理 → 課程資訊 → 銷售頁設定」：模式選「React 元件」，Slug 填 `{slug}`（與課程 slug 相同可留空）
+3. 後臺「課程管理 → 課程資訊 → 銷售頁設定」：模式選「React 元件」，Slug 填 `{slug}`（與課程 slug 相同可留空）
 
 ## 免費 vs 付費 CTA 行為
 

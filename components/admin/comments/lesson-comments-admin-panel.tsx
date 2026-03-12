@@ -222,7 +222,7 @@ export function LessonCommentsAdminPanel() {
           <DialogHeader>
             <DialogTitle className="text-[#0A0A0A]">確認刪除留言</DialogTitle>
             <DialogDescription className="text-[#525252]">
-              此操作會將留言標記為已刪除，前台不再顯示。
+              此操作會將留言標記為已刪除，前臺不再顯示。
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

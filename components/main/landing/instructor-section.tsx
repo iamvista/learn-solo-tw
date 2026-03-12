@@ -18,7 +18,7 @@ const credentials = [
   {
     icon: BookOpen,
     title: "AI 技術暢銷書作者",
-    description: "著有《從零開始，打造一個生成式AI平台》，曾榮登博客來與天龍書局當日暢銷榜。",
+    description: "著有《從零開始，打造一個生成式AI平臺》，曾榮登博客來與天龍書局當日暢銷榜。",
   },
   {
     icon: Rocket,

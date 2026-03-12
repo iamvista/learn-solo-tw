@@ -1,5 +1,5 @@
 // app/(admin)/admin/layout.tsx
-// 後台管理系統 Layout
+// 後臺管理系統 Layout
 // 包含側邊欄、頂部導覽和權限檢查
 
 import { redirect } from 'next/navigation'
@@ -10,7 +10,7 @@ import { checkNeedsSetup } from '@/lib/actions/setup'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: '後台管理',
+  title: '後臺管理',
 }
 
 interface AdminLayoutProps {

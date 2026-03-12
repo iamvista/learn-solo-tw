@@ -8,7 +8,7 @@ import { RegisterForm } from '@/components/forms/register-form'
 import { AuthPageWrapper } from '@/components/auth/auth-page-wrapper'
 
 export const metadata: Metadata = {
-  title: '註冊 | 課程平台',
+  title: '註冊 | 課程平臺',
   description: '建立新帳號開始學習線上課程',
 }
 

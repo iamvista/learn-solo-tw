@@ -17,7 +17,7 @@ export default async function SetupPage() {
   const needsSetup = await checkNeedsSetup()
 
   if (!needsSetup) {
-    // 已有管理員，檢查當前用戶是否有權限進入後台
+    // 已有管理員，檢查當前用戶是否有權限進入後臺
     const session = await auth()
     const role = session?.user?.role
     if (role === 'ADMIN' || role === 'EDITOR') {

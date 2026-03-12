@@ -9,7 +9,7 @@ import { requireAdminAuth } from '@/lib/require-admin'
 import type { PaymentMethod } from '@prisma/client'
 
 /**
- * 將 UTC 時間轉換為台灣時區 (UTC+8) 的日期字串 "YYYY-MM-DD"
+ * 將 UTC 時間轉換為臺灣時區 (UTC+8) 的日期字串 "YYYY-MM-DD"
  * 避免凌晨 0:00-8:00 的活動被歸類到前一天
  */
 function toTWDateString(date: Date): string {
@@ -17,7 +17,7 @@ function toTWDateString(date: Date): string {
 }
 
 /**
- * 將 UTC 時間轉換為台灣時區的小時 key "YYYY-MM-DD HH:00"
+ * 將 UTC 時間轉換為臺灣時區的小時 key "YYYY-MM-DD HH:00"
  */
 function toTWHourKey(date: Date): string {
   const d = toTWDateString(date)
@@ -215,7 +215,7 @@ export async function getDailySales(
     current.setDate(current.getDate() + 1)
   }
 
-  // 統計每日數據（使用台灣時區）
+  // 統計每日數據（使用臺灣時區）
   orders.forEach((order) => {
     if (order.paidAt) {
       const dateStr = toTWDateString(order.paidAt)
@@ -428,7 +428,7 @@ export async function getUserGrowthTrend(days: number = 30): Promise<UserGrowthD
     orderBy: { createdAt: 'asc' },
   })
 
-  // 建立日期範圍（使用台灣時區）
+  // 建立日期範圍（使用臺灣時區）
   const dateMap = new Map<string, number>()
   const current = new Date(startDate)
   const now = new Date()
@@ -438,7 +438,7 @@ export async function getUserGrowthTrend(days: number = 30): Promise<UserGrowthD
     current.setDate(current.getDate() + 1)
   }
 
-  // 統計每日新增用戶（使用台灣時區）
+  // 統計每日新增用戶（使用臺灣時區）
   newUsers.forEach((user) => {
     const dateStr = toTWDateString(user.createdAt)
     const existing = dateMap.get(dateStr)
@@ -461,7 +461,7 @@ export async function getUserGrowthTrend(days: number = 30): Promise<UserGrowthD
 }
 
 /**
- * 平台完課率統計
+ * 平臺完課率統計
  */
 export interface PlatformCompletionStats {
   totalPurchases: number
@@ -471,7 +471,7 @@ export interface PlatformCompletionStats {
 }
 
 /**
- * 取得平台整體完課率統計
+ * 取得平臺整體完課率統計
  */
 export async function getPlatformCompletionStats(): Promise<PlatformCompletionStats> {
   await requireAdminAuth()
@@ -651,14 +651,14 @@ function getGranularity(days: number): Granularity {
 }
 
 /**
- * 將日期轉為指定精度的 key（使用台灣時區）
+ * 將日期轉為指定精度的 key（使用臺灣時區）
  */
 function toGranularityKey(date: Date, granularity: Granularity): string {
   if (granularity === 'hourly') {
     return toTWHourKey(date)
   }
   if (granularity === 'weekly') {
-    // 取該週的週一作為 key（基於台灣時區的日期）
+    // 取該週的週一作為 key（基於臺灣時區的日期）
     const twDateStr = toTWDateString(date)
     const d = new Date(twDateStr + 'T00:00:00+08:00')
     const day = d.getDay()

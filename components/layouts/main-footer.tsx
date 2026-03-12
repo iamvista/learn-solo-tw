@@ -1,6 +1,6 @@
 // components/layouts/main-footer.tsx
-// 前台網站 Footer 元件
-// 極簡黑白灰設計，支援後台動態設定
+// 前臺網站 Footer 元件
+// 極簡黑白灰設計，支援後臺動態設定
 
 import Link from 'next/link'
 import { icons } from 'lucide-react'

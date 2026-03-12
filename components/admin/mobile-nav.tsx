@@ -1,5 +1,5 @@
 // components/admin/mobile-nav.tsx
-// 後台行動版導覽元件
+// 後臺行動版導覽元件
 // 使用 Sheet 元件實現側邊滑出選單
 
 'use client'

@@ -423,7 +423,7 @@ export async function getEmailSettings(): Promise<{
   const resendApiKey = process.env.RESEND_API_KEY || "";
 
   return {
-    senderName: senderNameSetting?.value || "Course Platform",
+    senderName: senderNameSetting?.value || "自由人學院",
     fromEmail,
     isConfigured: !!resendApiKey,
   };
