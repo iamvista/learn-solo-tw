@@ -36,7 +36,7 @@ export default function DefaultLanding({
               <p className="mt-4 text-lg text-[#525252]">{course.subtitle}</p>
             )}
             {purchaseStatus.firstLessonId && (
-              <Button asChild size="lg" className="mt-8 rounded-full bg-[#F5A524] px-8 text-base font-semibold text-white hover:bg-[#E09000]">
+              <Button asChild size="lg" className="mt-8 rounded-full bg-[#C41E3A] px-8 text-base font-semibold text-white hover:bg-[#A01830]">
                 <Link href={`/courses/${course.slug}/lessons/${purchaseStatus.firstLessonId}`}>
                   進入課程 <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
@@ -75,7 +75,7 @@ export default function DefaultLanding({
             {isFree ? (
               <FreeCourseCTA courseId={course.id} courseSlug={course.slug} isLoggedIn={isLoggedIn} />
             ) : (
-              <Button asChild size="lg" className="rounded-full bg-[#F5A524] px-8 py-6 text-base font-semibold text-white hover:bg-[#E09000]">
+              <Button asChild size="lg" className="rounded-full bg-[#C41E3A] px-8 py-6 text-base font-semibold text-white hover:bg-[#A01830]">
                 <Link href={`/checkout?courseId=${course.id}`}>
                   立即加入課程 <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
@@ -86,7 +86,7 @@ export default function DefaultLanding({
           {/* 價格資訊 */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm">
             {isFree ? (
-              <span className="font-semibold text-[#F5A524]">限時免費</span>
+              <span className="font-semibold text-[#C41E3A]">限時免費</span>
             ) : (
               <>
                 {isOnSale && (
@@ -96,7 +96,7 @@ export default function DefaultLanding({
               </>
             )}
             {!isFree && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#F5A524]/30 bg-[#F5A524]/5 px-3 py-1 text-sm font-semibold text-[#F5A524]">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C41E3A]/30 bg-[#C41E3A]/5 px-3 py-1 text-sm font-semibold text-[#C41E3A]">
                 <Shield className="h-3.5 w-3.5" />
                 7 日退費保證
               </span>
@@ -109,17 +109,17 @@ export default function DefaultLanding({
       <section className="border-t border-[#F5F5F5] bg-[#FAFAFA] py-10">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-8 px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-[#525252]">
-            <BookOpen className="h-4 w-4 text-[#F5A524]" />
+            <BookOpen className="h-4 w-4 text-[#C41E3A]" />
             {course.lessonCount} 個單元
           </div>
           {course.totalDuration > 0 && (
             <div className="flex items-center gap-2 text-sm text-[#525252]">
-              <Clock className="h-4 w-4 text-[#F5A524]" />
+              <Clock className="h-4 w-4 text-[#C41E3A]" />
               {Math.round(course.totalDuration / 60)} 分鐘
             </div>
           )}
           <div className="flex items-center gap-2 text-sm text-[#525252]">
-            <CheckCircle2 className="h-4 w-4 text-[#F5A524]" />
+            <CheckCircle2 className="h-4 w-4 text-[#C41E3A]" />
             永久觀看
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function DefaultLanding({
             {isFree ? (
               <FreeCourseCTA courseId={course.id} courseSlug={course.slug} isLoggedIn={isLoggedIn} />
             ) : (
-              <Button asChild size="lg" className="rounded-full bg-[#F5A524] px-8 py-6 text-base font-semibold text-white hover:bg-[#E09000]">
+              <Button asChild size="lg" className="rounded-full bg-[#C41E3A] px-8 py-6 text-base font-semibold text-white hover:bg-[#A01830]">
                 <Link href={`/checkout?courseId=${course.id}`}>
                   立即加入課程 <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>

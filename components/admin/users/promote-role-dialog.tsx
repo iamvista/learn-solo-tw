@@ -144,7 +144,7 @@ export function PromoteRoleDialog({
             className={
               isDemoting
                 ? 'bg-red-500 hover:bg-red-600 rounded-lg'
-                : 'bg-[#F5A524] hover:bg-[#E09000] rounded-lg'
+                : 'bg-[#C41E3A] hover:bg-[#A01830] rounded-lg'
             }
           >
             {isPending ? (

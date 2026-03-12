@@ -29,7 +29,7 @@ interface OrderDetailCardProps {
   order: OrderWithDetails;
 }
 
-// 訂單狀態 Badge 樣式 - VibeFlow 風格
+// 訂單狀態 Badge 樣式 - Solo Academy 風格
 const statusStyles: Record<OrderStatus, { label: string; className: string }> =
   {
     PENDING: {
@@ -204,7 +204,7 @@ export function OrderDetailCard({ order }: OrderDetailCardProps) {
             </div>
             <div className="flex justify-between items-center py-2">
               <span className="text-[#525252]">實付金額</span>
-              <span className="text-xl font-bold text-[#F5A524]">
+              <span className="text-xl font-bold text-[#C41E3A]">
                 {formatAmount(order.amount)}
               </span>
             </div>
@@ -331,7 +331,7 @@ export function OrderDetailCard({ order }: OrderDetailCardProps) {
               {timelineEvents.map((event, index) => {
                 const isLast = index === timelineEvents.length - 1;
 
-                // 狀態顏色 - VibeFlow 風格
+                // 狀態顏色 - Solo Academy 風格
                 const statusColors = {
                   completed:
                     "bg-[#D1FAE5] text-[#065F46] border border-[#6EE7B7]",

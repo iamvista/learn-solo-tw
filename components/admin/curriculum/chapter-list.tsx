@@ -135,7 +135,7 @@ function SortableChapterItem({
           </CollapsibleTrigger>
 
           {/* 圖標 */}
-          <FolderOpen className="h-5 w-5 text-[#F5A524] flex-shrink-0" />
+          <FolderOpen className="h-5 w-5 text-[#C41E3A] flex-shrink-0" />
 
           {/* 標題 */}
           <div className="flex-1 min-w-0">

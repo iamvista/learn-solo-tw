@@ -102,7 +102,7 @@ export function TOCDrawer({ content, open, onOpenChange }: TOCDrawerProps) {
         
         <SheetHeader className="px-6 pb-2">
           <SheetTitle className="text-white text-lg font-bold flex items-center gap-2">
-            <Hash className="h-5 w-5 text-[#F5A524]" />
+            <Hash className="h-5 w-5 text-[#C41E3A]" />
             目錄
           </SheetTitle>
         </SheetHeader>
@@ -120,14 +120,14 @@ export function TOCDrawer({ content, open, onOpenChange }: TOCDrawerProps) {
                     item.level === 2 ? "pl-4 text-sm font-semibold" : 
                     "pl-8 text-sm font-medium",
                     activeId === item.id 
-                      ? "text-[#F5A524]" 
+                      ? "text-[#C41E3A]" 
                       : "text-white/60 hover:text-white"
                   )}
                 >
                   <span className={cn(
                     "h-1.5 w-1.5 rounded-full transition-all",
                     activeId === item.id 
-                      ? "bg-[#F5A524] scale-125" 
+                      ? "bg-[#C41E3A] scale-125" 
                       : "bg-white/10 group-hover:bg-white/30"
                   )} />
                   <span className="flex-1 truncate">{item.text}</span>

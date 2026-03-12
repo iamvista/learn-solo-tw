@@ -120,7 +120,7 @@ export function CommentReplyModal({
       <DialogContent className="bg-white border-[#E5E5E5] rounded-xl sm:max-w-5xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-[#0A0A0A] flex items-center gap-2">
-            <Send className="h-5 w-5 text-[#F5A524]" />
+            <Send className="h-5 w-5 text-[#C41E3A]" />
             回覆留言
           </DialogTitle>
         </DialogHeader>
@@ -262,7 +262,7 @@ export function CommentReplyModal({
           <Button
             onClick={handleSubmit}
             disabled={isPending || (!sendAsComment && !sendAsEmail)}
-            className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg"
+            className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg"
           >
             {isPending ? (
               <>

@@ -1,7 +1,7 @@
 // components/layouts/main-header.tsx
 // 前台網站 Header 元件
-// 極簡黑白灰設計 + #F5A524 強調色
-// 符合 VibeFlow Design System
+// 極簡黑白灰設計 + #C41E3A 強調色
+// 符合 Solo Academy Design System
 
 'use client'
 
@@ -142,7 +142,7 @@ export function MainHeader({ siteName, headerLeftLinks, headerRightLinks }: Main
                         src={session.user.image || undefined}
                         alt={session.user.name || '用戶'}
                       />
-                      <AvatarFallback className="bg-[#F5A524] text-white">
+                      <AvatarFallback className="bg-[#C41E3A] text-white">
                         {getInitials(session.user.name)}
                       </AvatarFallback>
                     </Avatar>
@@ -159,7 +159,7 @@ export function MainHeader({ siteName, headerLeftLinks, headerRightLinks }: Main
                         src={session.user.image || undefined}
                         alt={session.user.name || '用戶'}
                       />
-                      <AvatarFallback className="bg-[#F5A524] text-white font-semibold">
+                      <AvatarFallback className="bg-[#C41E3A] text-white font-semibold">
                         {getInitials(session.user.name)}
                       </AvatarFallback>
                     </Avatar>
@@ -291,7 +291,7 @@ export function MainHeader({ siteName, headerLeftLinks, headerRightLinks }: Main
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className="group flex items-center justify-between rounded-2xl bg-[#FAFAFA] p-4 text-lg font-bold text-[#0A0A0A] transition-all hover:bg-[#F5A524] hover:text-white"
+                            className="group flex items-center justify-between rounded-2xl bg-[#FAFAFA] p-4 text-lg font-bold text-[#0A0A0A] transition-all hover:bg-[#C41E3A] hover:text-white"
                           >
                             <div className="flex items-center gap-3">
                               <BookOpen className="h-5 w-5 opacity-50 transition-opacity group-hover:opacity-100" />
@@ -303,7 +303,7 @@ export function MainHeader({ siteName, headerLeftLinks, headerRightLinks }: Main
                           <Link
                             href={link.url}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className="group flex items-center justify-between rounded-2xl bg-[#FAFAFA] p-4 text-lg font-bold text-[#0A0A0A] transition-all hover:bg-[#F5A524] hover:text-white"
+                            className="group flex items-center justify-between rounded-2xl bg-[#FAFAFA] p-4 text-lg font-bold text-[#0A0A0A] transition-all hover:bg-[#C41E3A] hover:text-white"
                           >
                             <div className="flex items-center gap-3">
                               <BookOpen className="h-5 w-5 opacity-50 transition-opacity group-hover:opacity-100" />
@@ -335,7 +335,7 @@ export function MainHeader({ siteName, headerLeftLinks, headerRightLinks }: Main
                             href={link.url}
                             {...(link.openInNewTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className="group flex items-center justify-between rounded-2xl bg-[#FAFAFA] p-4 text-base font-semibold text-[#525252] transition-all hover:bg-[#F5A524] hover:text-white"
+                            className="group flex items-center justify-between rounded-2xl bg-[#FAFAFA] p-4 text-base font-semibold text-[#525252] transition-all hover:bg-[#C41E3A] hover:text-white"
                           >
                             {link.label}
                             <ChevronRight className="h-5 w-5 opacity-30 transition-opacity group-hover:opacity-100" />
@@ -356,7 +356,7 @@ export function MainHeader({ siteName, headerLeftLinks, headerRightLinks }: Main
                             src={session?.user?.image || undefined}
                             alt={session?.user?.name || '用戶'}
                           />
-                          <AvatarFallback className="bg-[#F5A524] text-white text-xl">
+                          <AvatarFallback className="bg-[#C41E3A] text-white text-xl">
                             {getInitials(session?.user?.name)}
                           </AvatarFallback>
                         </Avatar>
@@ -403,7 +403,7 @@ export function MainHeader({ siteName, headerLeftLinks, headerRightLinks }: Main
                       <Button
                         asChild
                         size="lg"
-                        className="h-16 w-full rounded-full bg-[#F5A524] text-lg font-bold text-white shadow-xl shadow-[#F5A524]/20 hover:bg-[#E09000]"
+                        className="h-16 w-full rounded-full bg-[#C41E3A] text-lg font-bold text-white shadow-xl shadow-[#C41E3A]/20 hover:bg-[#A01830]"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         <Link href="/login">立即加入學習</Link>

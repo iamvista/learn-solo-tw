@@ -47,7 +47,7 @@ export function MobileNav({ userRole }: MobileNavProps) {
       >
         <SheetHeader className="px-6 py-4 border-b border-border">
           <SheetTitle className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#F5A524] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#C41E3A] flex items-center justify-center">
               <span className="text-white font-bold text-sm">R</span>
             </div>
             <span className="font-semibold text-foreground">{siteName}</span>

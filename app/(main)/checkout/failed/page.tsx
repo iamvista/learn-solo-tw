@@ -143,7 +143,7 @@ export default async function FailedPage({ searchParams }: FailedPageProps) {
               {course ? (
                 <Button
                   asChild
-                  className="w-full rounded-full bg-[#F5A524] hover:bg-[#E09000] text-white py-8 text-lg font-bold transition-all"
+                  className="w-full rounded-full bg-[#C41E3A] hover:bg-[#A01830] text-white py-8 text-lg font-bold transition-all"
                 >
                   <Link href={`/checkout?courseId=${course.id}`}>
                     <RefreshCw className="h-5 w-5 mr-2" />
@@ -153,7 +153,7 @@ export default async function FailedPage({ searchParams }: FailedPageProps) {
               ) : (
                 <Button
                   asChild
-                  className="w-full rounded-full bg-[#F5A524] hover:bg-[#E09000] text-white py-8 text-lg font-bold"
+                  className="w-full rounded-full bg-[#C41E3A] hover:bg-[#A01830] text-white py-8 text-lg font-bold"
                 >
                   <Link href="/">
                     返回首頁重試
@@ -182,7 +182,7 @@ export default async function FailedPage({ searchParams }: FailedPageProps) {
                 請來信與我們聯繫：
                 <a
                   href={`mailto:${contactEmail}`}
-                  className="text-[#F5A524] font-medium hover:underline ml-1"
+                  className="text-[#C41E3A] font-medium hover:underline ml-1"
                 >
                   {contactEmail}
                 </a>

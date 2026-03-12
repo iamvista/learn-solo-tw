@@ -133,14 +133,14 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
           <TabsList>
             <TabsTrigger
               value="basic"
-              className="data-[state=active]:bg-[#F5A524] data-[state=active]:text-white"
+              className="data-[state=active]:bg-[#C41E3A] data-[state=active]:text-white"
             >
               <Globe className="h-4 w-4 mr-2" />
               基本設定
             </TabsTrigger>
             <TabsTrigger
               value="analytics"
-              className="data-[state=active]:bg-[#F5A524] data-[state=active]:text-white"
+              className="data-[state=active]:bg-[#C41E3A] data-[state=active]:text-white"
             >
               <BarChart3 className="h-4 w-4 mr-2" />
               分析追蹤
@@ -169,7 +169,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                       <FormControl>
                         <Input
                           placeholder="我的課程平台"
-                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                         />
                       </FormControl>
@@ -234,11 +234,11 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                             </div>
                           ) : (
                             <div
-                              className="flex flex-col items-center justify-center py-8 px-4 border-2 border-dashed border-[#E5E5E5] rounded-xl cursor-pointer hover:border-[#F5A524] transition-colors bg-white"
+                              className="flex flex-col items-center justify-center py-8 px-4 border-2 border-dashed border-[#E5E5E5] rounded-xl cursor-pointer hover:border-[#C41E3A] transition-colors bg-white"
                               onClick={() => logoInputRef.current?.click()}
                             >
                               {isUploadingLogo ? (
-                                <Loader2 className="w-8 h-8 text-[#F5A524] animate-spin mb-2" />
+                                <Loader2 className="w-8 h-8 text-[#C41E3A] animate-spin mb-2" />
                               ) : (
                                 <Upload className="w-8 h-8 text-[#A3A3A3] mb-2" />
                               )}
@@ -279,7 +279,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                         <Input
                           type="email"
                           placeholder="contact@example.com"
-                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                           value={field.value ?? ''}
                         />
@@ -301,7 +301,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                       <FormControl>
                         <Input
                           placeholder="講師名稱"
-                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                           value={field.value ?? ''}
                         />
@@ -323,7 +323,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                       <FormControl>
                         <Input
                           placeholder="線上課程"
-                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                           value={field.value ?? ''}
                         />
@@ -361,7 +361,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                       <FormControl>
                         <Input
                           placeholder="G-XXXXXXXXXX"
-                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                           value={field.value ?? ''}
                         />
@@ -397,7 +397,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                       <FormControl>
                         <Input
                           placeholder="phc_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                           value={field.value ?? ''}
                         />
@@ -422,7 +422,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                       <FormControl>
                         <Input
                           placeholder="https://us.i.posthog.com"
-                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                           value={field.value ?? ''}
                         />
@@ -448,7 +448,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                         <Input
                           type="password"
                           placeholder="phx_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                           value={field.value ?? ''}
                         />
@@ -483,7 +483,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                       <FormControl>
                         <Input
                           placeholder="123456789012345"
-                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                           value={field.value ?? ''}
                         />
@@ -508,7 +508,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                         <Input
                           type="password"
                           placeholder="EAAxxxxxxxxxxxxxxx..."
-                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                          className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                           {...field}
                           value={field.value ?? ''}
                         />
@@ -531,7 +531,7 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
           <Button
             type="submit"
             disabled={isPending}
-            className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-full"
+            className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-full"
           >
             {isPending ? (
               <>

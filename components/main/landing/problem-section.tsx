@@ -124,9 +124,9 @@ export function ProblemSection() {
                   <div className="my-4 h-px bg-[#E5E5E5]" />
 
                   <div className="flex items-start gap-3">
-                    <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-[#F5A524]" />
+                    <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-[#C41E3A]" />
                     <div>
-                      <h4 className="text-base font-bold text-[#F5A524]">
+                      <h4 className="text-base font-bold text-[#C41E3A]">
                         {item.solution.title}
                       </h4>
                       <p className="mt-1 text-sm leading-relaxed text-[#525252]">
@@ -155,7 +155,7 @@ export function ProblemSection() {
             <p className="mt-4 text-base text-neutral-400 max-w-2xl mx-auto leading-relaxed">
               在 AI 時代，任何人都可以做出自己的 App
               <br className="hidden sm:block" />
-              我將教授一整套完整的 AI Coding；讓你成為<span className="mx-1 font-bold text-[#F5A524]">老闆</span>，做出自己的 App。
+              我將教授一整套完整的 AI Coding；讓你成為<span className="mx-1 font-bold text-[#C41E3A]">老闆</span>，做出自己的 App。
               <br className="hidden sm:block" />
               不只如此，你還能學會如何上架 App Store，並開啟你的獲利之路。
             </p>
@@ -183,16 +183,16 @@ export function ProblemSection() {
               </div>
 
               {/* Vibe Coding (Highlight) */}
-              <div className="rounded-xl bg-[#F5A524]/10 p-5 border border-[#F5A524]/50 relative overflow-hidden flex flex-col justify-center">
-                <div className="absolute top-0 right-0 bg-[#F5A524] text-[#0A0A0A] text-xs font-bold px-3 py-1 rounded-bl-lg">
+              <div className="rounded-xl bg-[#C41E3A]/10 p-5 border border-[#C41E3A]/50 relative overflow-hidden flex flex-col justify-center">
+                <div className="absolute top-0 right-0 bg-[#C41E3A] text-[#0A0A0A] text-xs font-bold px-3 py-1 rounded-bl-lg">
                   AI 時代最佳解
                 </div>
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle2 className="h-4 w-4 text-[#F5A524]" />
-                  <span className="text-sm text-[#F5A524] font-medium">Vibe Coding 實戰課</span>
+                  <CheckCircle2 className="h-4 w-4 text-[#C41E3A]" />
+                  <span className="text-sm text-[#C41E3A] font-medium">Vibe Coding 實戰課</span>
                 </div>
                 <div className="text-xl font-bold text-white mb-1">2.5 小時</div>
-                <div className="text-sm text-[#F5A524]/80">永久掌握 AI 協作力與上架能力</div>
+                <div className="text-sm text-[#C41E3A]/80">永久掌握 AI 協作力與上架能力</div>
               </div>
             </div>
 

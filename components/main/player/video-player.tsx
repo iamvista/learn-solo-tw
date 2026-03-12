@@ -270,7 +270,7 @@ export const VideoPlayer = forwardRef<VideoPlayerHandle, VideoPlayerProps>(
       return (
         <div className="relative flex h-full w-full items-center justify-center bg-[#FAFAFA]">
           <div className="flex flex-col items-center gap-4 text-center">
-            <Loader2 className="h-12 w-12 animate-spin text-[#F5A524]" />
+            <Loader2 className="h-12 w-12 animate-spin text-[#C41E3A]" />
             <p className="text-sm text-[#525252]">正在載入影片...</p>
           </div>
         </div>
@@ -299,7 +299,7 @@ export const VideoPlayer = forwardRef<VideoPlayerHandle, VideoPlayerProps>(
       return (
         <div className="relative flex h-full w-full items-center justify-center bg-[#FAFAFA]">
           <div className="flex flex-col items-center gap-4 text-center">
-            <Loader2 className="h-12 w-12 animate-spin text-[#F5A524]" />
+            <Loader2 className="h-12 w-12 animate-spin text-[#C41E3A]" />
             <p className="text-sm text-[#525252]">正在準備影片...</p>
           </div>
         </div>

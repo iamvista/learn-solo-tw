@@ -89,7 +89,7 @@ export default async function CoursesPage({ searchParams }: CoursesPageProps) {
         </div>
         <Button
           asChild
-          className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-full"
+          className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-full"
         >
           <Link href="/admin/courses/new">
             <Plus className="mr-2 h-4 w-4" />

@@ -154,7 +154,7 @@ export function EmailSettingsForm({
               className={
                 isConfigured
                   ? "border-green-500 text-green-600 bg-green-50"
-                  : "border-[#F5A524] text-[#F5A524] bg-[#F5A524]/10"
+                  : "border-[#C41E3A] text-[#C41E3A] bg-[#C41E3A]/10"
               }
             >
               {isConfigured ? "已設定" : "未設定"}
@@ -164,11 +164,11 @@ export function EmailSettingsForm({
         <CardContent className="space-y-4">
           {/* 未設定警告 */}
           {!isConfigured && (
-            <div className="rounded-xl bg-[#F5A524]/10 border border-[#F5A524]/20 p-4">
+            <div className="rounded-xl bg-[#C41E3A]/10 border border-[#C41E3A]/20 p-4">
               <div className="flex items-start gap-3">
-                <AlertCircle className="h-5 w-5 text-[#F5A524] shrink-0 mt-0.5" />
+                <AlertCircle className="h-5 w-5 text-[#C41E3A] shrink-0 mt-0.5" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-[#F5A524]">
+                  <p className="text-sm font-medium text-[#C41E3A]">
                     Email 服務未設定
                   </p>
                   <p className="text-sm text-[#525252]">
@@ -185,14 +185,14 @@ export function EmailSettingsForm({
         <TabsList>
           <TabsTrigger
             value="settings"
-            className="data-[state=active]:bg-[#F5A524] data-[state=active]:text-white"
+            className="data-[state=active]:bg-[#C41E3A] data-[state=active]:text-white"
           >
             <Mail className="h-4 w-4 mr-2" />
             發送者設定
           </TabsTrigger>
           <TabsTrigger
             value="test"
-            className="data-[state=active]:bg-[#F5A524] data-[state=active]:text-white"
+            className="data-[state=active]:bg-[#C41E3A] data-[state=active]:text-white"
           >
             <Send className="h-4 w-4 mr-2" />
             測試發送
@@ -225,7 +225,7 @@ export function EmailSettingsForm({
                         <FormControl>
                           <Input
                             placeholder="我的課程平台"
-                            className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                            className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                             {...field}
                           />
                         </FormControl>
@@ -250,7 +250,7 @@ export function EmailSettingsForm({
                           <Input
                             type="email"
                             placeholder="noreply@learn.solo.tw"
-                            className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                            className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                             {...field}
                           />
                         </FormControl>
@@ -284,7 +284,7 @@ export function EmailSettingsForm({
                     <Button
                       type="submit"
                       disabled={isPending}
-                      className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-full"
+                      className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-full"
                     >
                       {isPending ? (
                         <>
@@ -332,7 +332,7 @@ export function EmailSettingsForm({
                           <Input
                             type="email"
                             placeholder="your@email.com"
-                            className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                            className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                             {...field}
                           />
                         </FormControl>
@@ -348,7 +348,7 @@ export function EmailSettingsForm({
                     <Button
                       type="submit"
                       disabled={isSendingTest || !isConfigured}
-                      className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-full"
+                      className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-full"
                     >
                       {isSendingTest ? (
                         <>

@@ -1,6 +1,6 @@
 // components/main/player/coming-soon-modal.tsx
 // 製作中單元 Modal
-// VibeFlow Design System - 無法關閉的 Modal，提示使用者內容正在製作中
+// Solo Academy Design System - 無法關閉的 Modal，提示使用者內容正在製作中
 
 'use client'
 
@@ -84,7 +84,7 @@ export function ComingSoonModal({
           {/* Content */}
           <div className="p-8">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#F5A524]/10 px-4 py-1.5 text-sm font-semibold text-[#F5A524]">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#C41E3A]/10 px-4 py-1.5 text-sm font-semibold text-[#C41E3A]">
               <Clock className="h-4 w-4" />
               製作中
             </div>
@@ -124,7 +124,7 @@ export function ComingSoonModal({
               {adjacentLessons.next ? (
                 <Button
                   onClick={handleNext}
-                  className="flex-1 rounded-full bg-[#F5A524] px-6 py-5 text-white hover:bg-[#E09000]"
+                  className="flex-1 rounded-full bg-[#C41E3A] px-6 py-5 text-white hover:bg-[#A01830]"
                 >
                   前往下一單元
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -132,7 +132,7 @@ export function ComingSoonModal({
               ) : isLastLesson && (
                 <Button
                   onClick={handleCloseCourse}
-                  className="flex-1 rounded-full bg-[#F5A524] px-6 py-5 text-white hover:bg-[#E09000]"
+                  className="flex-1 rounded-full bg-[#C41E3A] px-6 py-5 text-white hover:bg-[#A01830]"
                 >
                   <X className="mr-2 h-4 w-4" />
                   關閉課程

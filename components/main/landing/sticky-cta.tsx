@@ -95,7 +95,7 @@ export function StickyCTA({
           <Button
             onClick={handleEnrollFree}
             disabled={isEnrolling}
-            className="flex-1 rounded-full bg-[#F5A524] py-6 text-sm font-bold text-white hover:bg-[#E09000]"
+            className="flex-1 rounded-full bg-[#C41E3A] py-6 text-sm font-bold text-white hover:bg-[#A01830]"
           >
             {isEnrolling ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -109,7 +109,7 @@ export function StickyCTA({
         ) : (
           <Button
             asChild
-            className="flex-1 rounded-full bg-[#F5A524] py-6 text-sm font-bold text-white hover:bg-[#E09000]"
+            className="flex-1 rounded-full bg-[#C41E3A] py-6 text-sm font-bold text-white hover:bg-[#A01830]"
           >
             <Link href={`/checkout?courseId=${courseId}`}>
               立即加入

@@ -213,7 +213,7 @@ export function CourseTable({ courses }: CourseTableProps) {
                           {formatCurrency(course.price)}
                         </p>
                         {course.saleCycleEnabled && (
-                          <p className="text-[10px] text-[#F5A524] font-medium mt-0.5">
+                          <p className="text-[10px] text-[#C41E3A] font-medium mt-0.5">
                             永久免費
                           </p>
                         )}

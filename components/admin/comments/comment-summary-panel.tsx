@@ -79,7 +79,7 @@ export function CommentSummaryPanel({ courseId }: CommentSummaryPanelProps) {
       <div className="p-4 border-b border-[#E5E5E5]">
         <div className="flex items-center justify-between">
           <h2 className="text-sm font-bold text-[#0A0A0A] flex items-center gap-2">
-            <MessageCircle className="h-4 w-4 text-[#F5A524]" />
+            <MessageCircle className="h-4 w-4 text-[#C41E3A]" />
             留言總覽
           </h2>
           <button
@@ -127,7 +127,7 @@ export function CommentSummaryPanel({ courseId }: CommentSummaryPanelProps) {
                   className={cn(
                     'w-full text-left px-4 py-3 transition-colors',
                     isSelected
-                      ? 'bg-[#F5A524]/10 border-l-2 border-[#F5A524]'
+                      ? 'bg-[#C41E3A]/10 border-l-2 border-[#C41E3A]'
                       : 'hover:bg-[#FAFAFA] border-l-2 border-transparent',
                     hasUnread && !isSelected && 'bg-blue-50/50'
                   )}

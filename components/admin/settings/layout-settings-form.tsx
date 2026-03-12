@@ -116,7 +116,7 @@ export function LayoutSettingsForm({ initialData }: LayoutSettingsFormProps) {
         {/* ── Header 設定 ── */}
         <section className="space-y-4">
           <div className="flex items-center gap-2">
-            <PanelTop className="h-5 w-5 text-[#F5A524]" />
+            <PanelTop className="h-5 w-5 text-[#C41E3A]" />
             <h2 className="text-lg font-bold text-[#0A0A0A]">Header 設定</h2>
           </div>
 
@@ -168,7 +168,7 @@ export function LayoutSettingsForm({ initialData }: LayoutSettingsFormProps) {
                 ))}
                 <button
                   type="button"
-                  className="flex items-center gap-1.5 text-xs font-medium text-[#A3A3A3] hover:text-[#F5A524] transition-colors"
+                  className="flex items-center gap-1.5 text-xs font-medium text-[#A3A3A3] hover:text-[#C41E3A] transition-colors"
                   onClick={() =>
                     headerLeftLinks.append({
                       label: '',
@@ -199,7 +199,7 @@ export function LayoutSettingsForm({ initialData }: LayoutSettingsFormProps) {
                 ))}
                 <button
                   type="button"
-                  className="flex items-center gap-1.5 text-xs font-medium text-[#A3A3A3] hover:text-[#F5A524] transition-colors"
+                  className="flex items-center gap-1.5 text-xs font-medium text-[#A3A3A3] hover:text-[#C41E3A] transition-colors"
                   onClick={() =>
                     headerRightLinks.append({
                       label: '',
@@ -219,7 +219,7 @@ export function LayoutSettingsForm({ initialData }: LayoutSettingsFormProps) {
         {/* ── Footer 設定 ── */}
         <section className="space-y-4">
           <div className="flex items-center gap-2">
-            <PanelBottom className="h-5 w-5 text-[#F5A524]" />
+            <PanelBottom className="h-5 w-5 text-[#C41E3A]" />
             <h2 className="text-lg font-bold text-[#0A0A0A]">Footer 設定</h2>
           </div>
 
@@ -288,7 +288,7 @@ export function LayoutSettingsForm({ initialData }: LayoutSettingsFormProps) {
 
                 <button
                   type="button"
-                  className="flex items-center gap-1.5 text-xs font-medium text-[#A3A3A3] hover:text-[#F5A524] transition-colors"
+                  className="flex items-center gap-1.5 text-xs font-medium text-[#A3A3A3] hover:text-[#C41E3A] transition-colors"
                   onClick={() =>
                     footerSections.append({ title: '', links: [] })
                   }
@@ -306,7 +306,7 @@ export function LayoutSettingsForm({ initialData }: LayoutSettingsFormProps) {
           <Button
             type="submit"
             disabled={isPending}
-            className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-full"
+            className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-full"
           >
             {isPending ? (
               <>
@@ -397,7 +397,7 @@ function LinkRow({
                 onClick={() => field.onChange(!field.value)}
                 className={`p-1 rounded transition-colors ${
                   field.value
-                    ? 'text-[#F5A524] bg-[#F5A524]/10'
+                    ? 'text-[#C41E3A] bg-[#C41E3A]/10'
                     : 'text-[#A3A3A3] hover:text-[#525252]'
                 }`}
                 title={field.value ? '在新分頁開啟' : '在同一頁開啟'}
@@ -533,7 +533,7 @@ function FooterSectionEditor({
         ))}
         <button
           type="button"
-          className="flex items-center gap-1 text-xs text-[#A3A3A3] hover:text-[#F5A524] transition-colors pt-1"
+          className="flex items-center gap-1 text-xs text-[#A3A3A3] hover:text-[#C41E3A] transition-colors pt-1"
           onClick={() => links.append({ label: '', url: '', icon: '' })}
         >
           <Plus className="h-3 w-3" />

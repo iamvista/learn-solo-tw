@@ -64,8 +64,8 @@ export function IconPicker({ value, onChange, placeholder = '選擇圖示' }: Ic
           type="button"
           className={`flex items-center gap-1.5 h-7 rounded border px-2 text-xs transition-colors ${
             value
-              ? 'border-[#E5E5E5] bg-white text-[#525252] hover:border-[#F5A524]'
-              : 'border-dashed border-[#D4D4D4] bg-[#FAFAFA] text-[#A3A3A3] hover:border-[#F5A524] hover:text-[#525252]'
+              ? 'border-[#E5E5E5] bg-white text-[#525252] hover:border-[#C41E3A]'
+              : 'border-dashed border-[#D4D4D4] bg-[#FAFAFA] text-[#A3A3A3] hover:border-[#C41E3A] hover:text-[#525252]'
           }`}
         >
           {SelectedIcon ? (
@@ -133,7 +133,7 @@ export function IconPicker({ value, onChange, placeholder = '選擇圖示' }: Ic
                 }}
                 className={`flex items-center justify-center rounded p-1.5 transition-colors ${
                   isSelected
-                    ? 'bg-[#F5A524] text-white'
+                    ? 'bg-[#C41E3A] text-white'
                     : 'text-[#525252] hover:bg-[#F5F5F5] hover:text-[#0A0A0A]'
                 }`}
               >

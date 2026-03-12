@@ -189,8 +189,8 @@ export function VideoUpload({
         className={cn(
           'border-2 border-dashed transition-colors cursor-pointer rounded-xl',
           isDragging
-            ? 'border-[#F5A524] bg-[#F5A524]/10'
-            : 'border-[#E5E5E5] bg-white hover:border-[#F5A524]'
+            ? 'border-[#C41E3A] bg-[#C41E3A]/10'
+            : 'border-[#E5E5E5] bg-white hover:border-[#C41E3A]'
         )}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -245,7 +245,7 @@ export function VideoUpload({
                   ) : item.status === 'pending' ? (
                     <Film className="w-6 h-6 text-[#A3A3A3]" />
                   ) : (
-                    <Film className="w-6 h-6 text-[#F5A524]" />
+                    <Film className="w-6 h-6 text-[#C41E3A]" />
                   )}
                 </div>
 
@@ -272,7 +272,7 @@ export function VideoUpload({
                     <div className="mt-2">
                       <div className="h-1.5 bg-[#FAFAFA] rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-[#F5A524] transition-all duration-300"
+                          className="h-full bg-[#C41E3A] transition-all duration-300"
                           style={{ width: `${item.progress}%` }}
                         />
                       </div>

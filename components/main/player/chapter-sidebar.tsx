@@ -54,14 +54,14 @@ export function ChapterSidebar({
             <div className="mt-4 space-y-3">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-gray-400">目前學習進度</span>
-                <span className="flex items-center gap-1.5 font-bold text-[#F5A524]">
+                <span className="flex items-center gap-1.5 font-bold text-[#C41E3A]">
                   <CheckCircle2 className="h-4 w-4" />
                   {courseProgress.completedLessons} / {courseProgress.totalLessons}
                 </span>
               </div>
               <Progress
                 value={courseProgress.progressPercentage}
-                className="h-2 bg-gray-50 [&>div]:bg-[#F5A524]"
+                className="h-2 bg-gray-50 [&>div]:bg-[#C41E3A]"
               />
             </div>
           )}

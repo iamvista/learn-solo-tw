@@ -234,7 +234,7 @@ export function FloatingLessonMenu({
             className="fixed bottom-[88px] right-6 z-[60] w-[calc(100vw-48px)] max-w-[400px] overflow-hidden rounded-[24px] bg-[#1A1A1A] text-white shadow-2xl border border-white/5"
           >
             <div className="flex items-center gap-2 px-6 py-4 border-b border-white/5 bg-white/5">
-              <List className="h-4 w-4 text-[#F5A524]" />
+              <List className="h-4 w-4 text-[#C41E3A]" />
               <span className="text-sm font-bold">目錄</span>
             </div>
 
@@ -256,7 +256,7 @@ export function FloatingLessonMenu({
                       {/* 左側圓點指示器 */}
                       <div className="flex items-center justify-center w-4 shrink-0">
                         {isActive ? (
-                          <div className="h-1.5 w-1.5 rounded-full bg-[#F5A524] shadow-[0_0_8px_rgba(245,165,36,0.4)]" />
+                          <div className="h-1.5 w-1.5 rounded-full bg-[#C41E3A] shadow-[0_0_8px_rgba(245,165,36,0.4)]" />
                         ) : (
                           <div className="h-1 w-1 rounded-full bg-white/10" />
                         )}

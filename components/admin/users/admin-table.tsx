@@ -52,7 +52,7 @@ const roleConfig: Record<UserRole, { label: string; className: string }> = {
   },
   EDITOR: {
     label: '編輯者',
-    className: 'bg-[#F5A524] hover:bg-[#E09000] text-white',
+    className: 'bg-[#C41E3A] hover:bg-[#A01830] text-white',
   },
   ADMIN: {
     label: '管理員',
@@ -225,7 +225,7 @@ export function AdminTable({ admins, currentUserId }: AdminTableProps) {
                           </SelectItem>
                           <SelectItem
                             value="EDITOR"
-                            className="text-[#F5A524] focus:bg-[#FAFAFA] focus:text-[#E09000]"
+                            className="text-[#C41E3A] focus:bg-[#FAFAFA] focus:text-[#A01830]"
                           >
                             編輯者
                           </SelectItem>
@@ -276,7 +276,7 @@ export function AdminTable({ admins, currentUserId }: AdminTableProps) {
                   您確定要將「{userToChange?.name || userToChange?.email}」的角色從
                   「{userToChange && roleConfig[userToChange.role].label}」降級為「學員」嗎？
                   <br />
-                  <span className="text-[#E09000] font-medium">
+                  <span className="text-[#A01830] font-medium">
                     此操作將移除該用戶的管理權限。
                   </span>
                 </>
@@ -303,7 +303,7 @@ export function AdminTable({ admins, currentUserId }: AdminTableProps) {
               className={
                 newRole === 'USER'
                   ? 'bg-red-500 hover:bg-red-600 rounded-lg'
-                  : 'bg-[#F5A524] hover:bg-[#E09000] rounded-lg'
+                  : 'bg-[#C41E3A] hover:bg-[#A01830] rounded-lg'
               }
             >
               {isPending ? (

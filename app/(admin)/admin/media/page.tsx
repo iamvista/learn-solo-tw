@@ -31,32 +31,32 @@ async function StatsCards() {
       title: '影片',
       value: stats.totalVideos,
       icon: Film,
-      color: 'text-[#F5A524]',
-      bgColor: 'bg-[#F5A524]/10',
+      color: 'text-[#C41E3A]',
+      bgColor: 'bg-[#C41E3A]/10',
       href: '/admin/media/videos',
     },
     {
       title: '圖片',
       value: stats.totalImages,
       icon: ImageIcon,
-      color: 'text-[#F5A524]',
-      bgColor: 'bg-[#F5A524]/10',
+      color: 'text-[#C41E3A]',
+      bgColor: 'bg-[#C41E3A]/10',
       href: '/admin/media/images',
     },
     {
       title: '附件',
       value: stats.totalAttachments,
       icon: FileText,
-      color: 'text-[#F5A524]',
-      bgColor: 'bg-[#F5A524]/10',
+      color: 'text-[#C41E3A]',
+      bgColor: 'bg-[#C41E3A]/10',
       href: '/admin/media',
     },
     {
       title: '總儲存空間',
       value: formatFileSize(stats.totalSize),
       icon: HardDrive,
-      color: 'text-[#F5A524]',
-      bgColor: 'bg-[#F5A524]/10',
+      color: 'text-[#C41E3A]',
+      bgColor: 'bg-[#C41E3A]/10',
     },
   ]
 
@@ -150,7 +150,7 @@ async function RecentVideos() {
               ) : video.cfStatus === 'error' ? (
                 <span className="text-xs text-red-600">錯誤</span>
               ) : (
-                <span className="text-xs text-[#F5A524]">處理中</span>
+                <span className="text-xs text-[#C41E3A]">處理中</span>
               )}
             </div>
           </div>
@@ -181,7 +181,7 @@ async function RecentImages() {
       {result.media.map((image) => (
         <div
           key={image.id}
-          className="aspect-square rounded-lg bg-[#FAFAFA] overflow-hidden hover:ring-2 hover:ring-[#F5A524] transition-all"
+          className="aspect-square rounded-lg bg-[#FAFAFA] overflow-hidden hover:ring-2 hover:ring-[#C41E3A] transition-all"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

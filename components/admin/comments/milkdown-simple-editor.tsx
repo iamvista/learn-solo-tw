@@ -315,7 +315,7 @@ export function MilkdownSimpleEditor({
         <MilkdownProvider key={combinedKey}>
           <SimpleToolbar />
           <div
-            className="milkdown-editor-wrapper p-4 bg-white border border-[#E5E5E5] rounded-xl overflow-auto prose prose-sm max-w-none prose-headings:text-[#0A0A0A] prose-p:text-[#525252] prose-a:text-[#F5A524] prose-strong:text-[#0A0A0A] prose-code:text-[#F5A524] prose-code:bg-[#FAFAFA] prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-[#FAFAFA] prose-blockquote:border-[#E5E5E5] prose-blockquote:text-[#525252] prose-li:text-[#525252]"
+            className="milkdown-editor-wrapper p-4 bg-white border border-[#E5E5E5] rounded-xl overflow-auto prose prose-sm max-w-none prose-headings:text-[#0A0A0A] prose-p:text-[#525252] prose-a:text-[#C41E3A] prose-strong:text-[#0A0A0A] prose-code:text-[#C41E3A] prose-code:bg-[#FAFAFA] prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-[#FAFAFA] prose-blockquote:border-[#E5E5E5] prose-blockquote:text-[#525252] prose-li:text-[#525252]"
             style={{ minHeight }}
           >
             <MilkdownCore value={value} onChange={handleWysiwygChange} />

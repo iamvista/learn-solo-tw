@@ -82,7 +82,7 @@ export default async function ImagesPage({ searchParams }: ImagesPageProps) {
       <Card className="bg-white border-[#E5E5E5] rounded-xl">
         <CardHeader>
           <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-            <ImageIcon className="w-5 h-5 text-[#F5A524]" />
+            <ImageIcon className="w-5 h-5 text-[#C41E3A]" />
             圖片列表
           </CardTitle>
         </CardHeader>

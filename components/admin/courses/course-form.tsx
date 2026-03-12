@@ -285,7 +285,7 @@ export function CourseForm({ course, mode }: CourseFormProps) {
             {/* 講師資訊 */}
             <div className="space-y-1">
               <h3 className="text-sm font-semibold text-[#0A0A0A] flex items-center gap-2">
-                <User className="h-4 w-4 text-[#F5A524]" />
+                <User className="h-4 w-4 text-[#C41E3A]" />
                 講師資訊
               </h3>
               <p className="text-xs text-[#A3A3A3]">
@@ -519,7 +519,7 @@ export function CourseForm({ course, mode }: CourseFormProps) {
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border border-[#E5E5E5] p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-[#0A0A0A] flex items-center gap-2">
-                      <RefreshCw className="h-4 w-4 text-[#F5A524]" />
+                      <RefreshCw className="h-4 w-4 text-[#C41E3A]" />
                       永久優惠
                     </FormLabel>
                     <FormDescription className="text-[#A3A3A3]">
@@ -552,7 +552,7 @@ export function CourseForm({ course, mode }: CourseFormProps) {
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border border-[#E5E5E5] p-4 ml-4">
                       <div className="space-y-0.5">
                         <FormLabel className="text-[#0A0A0A] flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-[#F5A524]" />
+                          <Clock className="h-4 w-4 text-[#C41E3A]" />
                           顯示倒數時鐘
                         </FormLabel>
                         <FormDescription className="text-[#A3A3A3]">
@@ -617,7 +617,7 @@ export function CourseForm({ course, mode }: CourseFormProps) {
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border border-[#E5E5E5] p-4">
                       <div className="space-y-0.5">
                         <FormLabel className="text-[#0A0A0A] flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-[#F5A524]" />
+                          <Clock className="h-4 w-4 text-[#C41E3A]" />
                           顯示倒數時鐘
                         </FormLabel>
                         <FormDescription className="text-[#A3A3A3]">
@@ -752,7 +752,7 @@ export function CourseForm({ course, mode }: CourseFormProps) {
         <Card className="bg-white border-[#E5E5E5] rounded-xl">
           <CardHeader>
             <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-              <Globe className="h-5 w-5 text-[#F5A524]" />
+              <Globe className="h-5 w-5 text-[#C41E3A]" />
               OG / Social 設定
             </CardTitle>
             <CardDescription className="text-[#525252]">
@@ -845,7 +845,7 @@ export function CourseForm({ course, mode }: CourseFormProps) {
         <Card className="bg-white border-[#E5E5E5] rounded-xl">
           <CardHeader>
             <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-              <FileCode className="h-5 w-5 text-[#F5A524]" />
+              <FileCode className="h-5 w-5 text-[#C41E3A]" />
               銷售頁設定
             </CardTitle>
             <CardDescription className="text-[#525252]">
@@ -942,7 +942,7 @@ export function CourseForm({ course, mode }: CourseFormProps) {
         <Card className="bg-white border-[#E5E5E5] rounded-xl">
           <CardHeader>
             <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-              <Mail className="h-5 w-5 text-[#F5A524]" />
+              <Mail className="h-5 w-5 text-[#C41E3A]" />
               購買通知
             </CardTitle>
             <CardDescription className="text-[#525252]">
@@ -990,7 +990,7 @@ export function CourseForm({ course, mode }: CourseFormProps) {
           <Button
             type="submit"
             disabled={isPending}
-            className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-full"
+            className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-full"
           >
             {isPending ? (
               <>

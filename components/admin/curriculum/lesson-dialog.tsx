@@ -147,7 +147,7 @@ export function LessonDialog({
               <Button
                 type="submit"
                 disabled={isPending}
-                className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg"
+                className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg"
               >
                 {isPending ? (
                   <>

@@ -37,7 +37,7 @@ export default async function ResetPasswordPage({ searchParams }: ResetPasswordP
             <div className="text-center">
               <Link
                 href="/forgot-password"
-                className="text-sm font-semibold text-[#F5A524] hover:text-[#E09000] transition-colors"
+                className="text-sm font-semibold text-[#C41E3A] hover:text-[#A01830] transition-colors"
               >
                 重新申請密碼重設
               </Link>

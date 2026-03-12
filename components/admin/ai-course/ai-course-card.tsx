@@ -22,7 +22,7 @@ export function AICourseCard({ courseId, onSuccess }: AICourseCardProps) {
       <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200/50 rounded-xl overflow-hidden">
         <CardHeader className="pb-2">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F5A524] to-[#E09000] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C41E3A] to-[#A01830] flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -38,11 +38,11 @@ export function AICourseCard({ courseId, onSuccess }: AICourseCardProps) {
             {/* 功能說明 */}
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div className="flex items-center gap-2 text-[#525252]">
-                <FolderUp className="w-4 h-4 text-[#F5A524]" />
+                <FolderUp className="w-4 h-4 text-[#C41E3A]" />
                 <span>批量上傳影片</span>
               </div>
               <div className="flex items-center gap-2 text-[#525252]">
-                <Zap className="w-4 h-4 text-[#F5A524]" />
+                <Zap className="w-4 h-4 text-[#C41E3A]" />
                 <span>AI 生成內文</span>
               </div>
             </div>
@@ -50,7 +50,7 @@ export function AICourseCard({ courseId, onSuccess }: AICourseCardProps) {
             {/* 操作按鈕 */}
             <Button
               onClick={() => setDialogOpen(true)}
-              className="w-full bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg"
+              className="w-full bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg"
             >
               <Sparkles className="mr-2 h-4 w-4" />
               開始建立

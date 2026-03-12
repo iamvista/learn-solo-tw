@@ -266,7 +266,7 @@ export function LessonCommentsPopover({
                         className={cn(
                           'rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap break-words',
                           isMine
-                            ? 'bg-[#F5A524] text-[#0A0A0A] rounded-tr-md'
+                            ? 'bg-[#C41E3A] text-[#0A0A0A] rounded-tr-md'
                             : 'bg-white/10 text-white rounded-tl-md'
                         )}
                       >
@@ -310,7 +310,7 @@ export function LessonCommentsPopover({
                       onCheckedChange={setIsAnonymous}
                       className={cn(
                         'h-4 w-8',
-                        'data-[state=checked]:bg-[#F5A524] data-[state=unchecked]:bg-white/15'
+                        'data-[state=checked]:bg-[#C41E3A] data-[state=unchecked]:bg-white/15'
                       )}
                     />
                     <span className="text-xs font-semibold text-white/70">
@@ -333,7 +333,7 @@ export function LessonCommentsPopover({
                     maxLength={2000}
                     className={cn(
                       'h-10 rounded-xl border-white/10 bg-white/5 text-white placeholder:text-white/35',
-                      'focus-visible:ring-[#F5A524]/30'
+                      'focus-visible:ring-[#C41E3A]/30'
                     )}
                     disabled={sending}
                     onCompositionStart={() => {
@@ -356,7 +356,7 @@ export function LessonCommentsPopover({
                     onClick={handleSend}
                     disabled={!canSend}
                     className={cn(
-                      'h-10 w-10 rounded-xl bg-[#F5A524] text-[#0A0A0A] hover:bg-[#F5A524]/90',
+                      'h-10 w-10 rounded-xl bg-[#C41E3A] text-[#0A0A0A] hover:bg-[#C41E3A]/90',
                       'disabled:opacity-50 disabled:cursor-not-allowed'
                     )}
                     aria-label="送出留言"

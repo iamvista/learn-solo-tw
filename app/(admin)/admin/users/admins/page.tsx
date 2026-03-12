@@ -60,7 +60,7 @@ export default async function AdminsPage() {
           <CardContent>
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-[#FAFAFA] border border-[#E5E5E5] flex items-center justify-center">
-                <Shield className="h-6 w-6 text-[#F5A524]" />
+                <Shield className="h-6 w-6 text-[#C41E3A]" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-[#0A0A0A]">{adminCount}</p>

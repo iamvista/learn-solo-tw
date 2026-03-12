@@ -99,8 +99,8 @@ export function UserGrowthChart({ data }: UserGrowthChartProps) {
             >
               <defs>
                 <linearGradient id="colorCumulative" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#F5A524" stopOpacity={0.15} />
-                  <stop offset="95%" stopColor="#F5A524" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#C41E3A" stopOpacity={0.15} />
+                  <stop offset="95%" stopColor="#C41E3A" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
@@ -128,7 +128,7 @@ export function UserGrowthChart({ data }: UserGrowthChartProps) {
                 type="monotone"
                 dataKey="cumulativeUsers"
                 name="cumulativeUsers"
-                stroke="#F5A524"
+                stroke="#C41E3A"
                 strokeWidth={2}
                 fill="url(#colorCumulative)"
               />

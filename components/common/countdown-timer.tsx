@@ -109,7 +109,7 @@ export function CountdownTimer({
 
   return (
     <div className="flex  lg:flex-col items-center lg:items-start gap-2">
-      <div className="flex items-center gap-1.5 text-xs font-semibold text-[#F5A524]">
+      <div className="flex items-center gap-1.5 text-xs font-semibold text-[#C41E3A]">
         <Clock className="h-3.5 w-3.5" />
         <span>優惠倒數</span>
       </div>

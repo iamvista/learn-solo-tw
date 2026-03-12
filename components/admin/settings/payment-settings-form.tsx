@@ -137,7 +137,7 @@ export function PaymentSettingsForm({
               className={
                 initialPayuni.isConfigured
                   ? "border-green-500 text-green-600 bg-green-50"
-                  : "border-[#F5A524] text-[#F5A524] bg-[#F5A524]/10"
+                  : "border-[#C41E3A] text-[#C41E3A] bg-[#C41E3A]/10"
               }
             >
               {initialPayuni.isConfigured ? "已設定" : "未設定"}
@@ -268,7 +268,7 @@ export function PaymentSettingsForm({
           onClick={handleTestConnection}
           disabled={isTesting}
           variant="outline"
-          className="border-[#F5A524] text-[#F5A524] hover:bg-[#F5A524]/10 rounded-full"
+          className="border-[#C41E3A] text-[#C41E3A] hover:bg-[#C41E3A]/10 rounded-full"
         >
           {isTesting ? (
             <>
@@ -285,7 +285,7 @@ export function PaymentSettingsForm({
         <Button
           onClick={handleSave}
           disabled={isSaving}
-          className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-full px-8"
+          className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-full px-8"
         >
           {isSaving ? (
             <>
@@ -345,7 +345,7 @@ export function PaymentSettingsForm({
             href="https://www.payuni.com.tw/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-[#F5A524] hover:text-[#E09000] transition-colors"
+            className="flex items-center gap-2 text-[#C41E3A] hover:text-[#A01830] transition-colors"
           >
             <ExternalLink className="h-4 w-4" />
             PAYUNi 官網
@@ -354,7 +354,7 @@ export function PaymentSettingsForm({
             href="https://docs.payuni.com.tw/web/#/7/24"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-[#F5A524] hover:text-[#E09000] transition-colors"
+            className="flex items-center gap-2 text-[#C41E3A] hover:text-[#A01830] transition-colors"
           >
             <ExternalLink className="h-4 w-4" />
             統一金流 API 文件

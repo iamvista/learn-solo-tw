@@ -79,7 +79,7 @@ export function UserFilters() {
             placeholder="搜尋姓名或 Email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] rounded-lg"
+            className="pl-10 bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] rounded-lg"
           />
         </div>
         <Button

@@ -103,7 +103,7 @@ export function CurriculumList({
                     className={cn(
                       "flex h-6 w-6 items-center justify-center rounded-full border text-[10px]",
                       isChapterCompleted
-                        ? "bg-[#F5A524]/10 border-[#F5A524] text-[#F5A524]"
+                        ? "bg-[#C41E3A]/10 border-[#C41E3A] text-[#C41E3A]"
                         : "border-gray-200 text-gray-400 group-hover:border-gray-300",
                     )}
                   >
@@ -113,7 +113,7 @@ export function CurriculumList({
                       chapter.order + 1
                     )}
                   </div>
-                  <span className={cn(isChapterCompleted && "text-[#F5A524]")}>
+                  <span className={cn(isChapterCompleted && "text-[#C41E3A]")}>
                     {chapter.title}
                   </span>
                 </span>
@@ -137,7 +137,7 @@ export function CurriculumList({
                             isComingSoon
                               ? "text-gray-400 hover:bg-gray-50 rounded-r-xl"
                               : isCurrentLesson
-                                ? "bg-[#FEF3C7]/50 font-bold text-[#F5A524] rounded-r-xl before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[#F5A524]"
+                                ? "bg-[#FEF3C7]/50 font-bold text-[#C41E3A] rounded-r-xl before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[#C41E3A]"
                                 : isCompleted
                                   ? "text-gray-500 hover:bg-gray-50 rounded-r-xl"
                                   : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-r-xl",
@@ -161,10 +161,10 @@ export function CurriculumList({
                               isComingSoon
                                 ? "border-2 border-gray-200 cursor-not-allowed"
                                 : isCompleted
-                                  ? "bg-[#F5A524] hover:bg-[#E09000]"
+                                  ? "bg-[#C41E3A] hover:bg-[#A01830]"
                                   : isCurrentLesson
-                                    ? "border-2 border-[#F5A524] hover:bg-[#F5A524]/10"
-                                    : "border-2 border-gray-200 hover:border-[#F5A524] hover:bg-[#F5A524]/10",
+                                    ? "border-2 border-[#C41E3A] hover:bg-[#C41E3A]/10"
+                                    : "border-2 border-gray-200 hover:border-[#C41E3A] hover:bg-[#C41E3A]/10",
                             )}
                             title={
                               isComingSoon
@@ -179,7 +179,7 @@ export function CurriculumList({
                             ) : isCompleted ? (
                               <Check className="h-2.5 w-2.5 text-white" />
                             ) : isCurrentLesson ? (
-                              <div className="h-2 w-2 rounded-full bg-[#F5A524] animate-pulse" />
+                              <div className="h-2 w-2 rounded-full bg-[#C41E3A] animate-pulse" />
                             ) : null}
                           </button>
 
@@ -202,7 +202,7 @@ export function CurriculumList({
                                   </span>
                                 )}
                                 {lesson.isFree && !isCompleted && (
-                                  <Badge className="bg-[#F5A524]/10 text-[#F5A524] text-[10px] border-none font-bold">
+                                  <Badge className="bg-[#C41E3A]/10 text-[#C41E3A] text-[10px] border-none font-bold">
                                     試看
                                   </Badge>
                                 )}
@@ -258,7 +258,7 @@ export function PurchasedCurriculumList({
             <Button
               asChild
               size="lg"
-              className="mt-6 rounded-full bg-[#F5A524] px-8 text-base font-semibold text-white hover:bg-[#E09000] sm:mt-0"
+              className="mt-6 rounded-full bg-[#C41E3A] px-8 text-base font-semibold text-white hover:bg-[#A01830] sm:mt-0"
             >
               <Link href={`/courses/${course.slug}/lessons/${firstLessonId}`}>
                 <Play className="mr-2 h-4 w-4" />
@@ -278,7 +278,7 @@ export function PurchasedCurriculumList({
             >
               <CollapsibleTrigger className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors hover:bg-gray-50">
                 <div className="flex items-center gap-4">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5A524]/10 text-sm font-bold text-[#F5A524]">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C41E3A]/10 text-sm font-bold text-[#C41E3A]">
                     {chapterIndex + 1}
                   </div>
                   <div>
@@ -313,7 +313,7 @@ export function PurchasedCurriculumList({
                                 "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
                                 isComingSoon
                                   ? "bg-gray-100 text-gray-400"
-                                  : "bg-[#FAFAFA] text-[#F5A524]",
+                                  : "bg-[#FAFAFA] text-[#C41E3A]",
                               )}
                             >
                               {isComingSoon ? (
@@ -346,7 +346,7 @@ export function PurchasedCurriculumList({
                                     </span>
                                   )}
                                   {lesson.isFree && (
-                                    <Badge className="border-none bg-[#F5A524]/10 text-xs font-bold text-[#F5A524]">
+                                    <Badge className="border-none bg-[#C41E3A]/10 text-xs font-bold text-[#C41E3A]">
                                       試看
                                     </Badge>
                                   )}

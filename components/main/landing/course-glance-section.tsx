@@ -47,7 +47,7 @@ const glanceItems: GlanceItem[] = [
 function GlanceCard({ item }: { item: GlanceItem }) {
   return (
     <div className="flex items-center gap-4">
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F5A524]">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#C41E3A]">
         <item.icon className="h-5 w-5 text-white" />
       </div>
       <div className="flex flex-col">
@@ -63,7 +63,7 @@ export function CourseGlanceSection() {
     <section className="border-y border-[#E5E5E5] bg-[#FAFAFA] py-8 sm:py-10">
       <div className="mx-auto max-w-6xl">
         <h2 className="mb-6 flex items-center gap-2 text-lg font-bold text-[#0A0A0A] sm:text-xl">
-          <span className="inline-block h-5 w-1 rounded-full bg-[#F5A524]" />
+          <span className="inline-block h-5 w-1 rounded-full bg-[#C41E3A]" />
           課程資訊
         </h2>
 

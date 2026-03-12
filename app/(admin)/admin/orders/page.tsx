@@ -47,12 +47,12 @@ async function OrderStatsSection() {
       <StatCard
         title="總營收"
         value={`NT$ ${stats.totalRevenue.toLocaleString()}`}
-        icon={<DollarSign className="h-4 w-4 text-[#F5A524]" />}
+        icon={<DollarSign className="h-4 w-4 text-[#C41E3A]" />}
       />
       <StatCard
         title="已付款訂單"
         value={stats.paidOrders.toString()}
-        icon={<CheckCircle className="h-4 w-4 text-[#F5A524]" />}
+        icon={<CheckCircle className="h-4 w-4 text-[#C41E3A]" />}
       />
       <StatCard
         title="待處理訂單"

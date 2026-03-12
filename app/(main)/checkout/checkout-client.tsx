@@ -371,7 +371,7 @@ export function CheckoutClient({
           <Button
             onClick={handlePayment}
             disabled={isLoading}
-            className="mt-6 w-full rounded-xl bg-[#F5A524] py-7 text-base font-bold text-white hover:bg-[#E09000]"
+            className="mt-6 w-full rounded-xl bg-[#C41E3A] py-7 text-base font-bold text-white hover:bg-[#A01830]"
           >
             {isLoading ? (
               <>

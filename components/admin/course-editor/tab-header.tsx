@@ -103,7 +103,7 @@ export function TabHeader({ courseId, courseTitle }: TabHeaderProps) {
               className={cn(
                 'relative flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors rounded-lg',
                 isActive
-                  ? 'text-[#F5A524]'
+                  ? 'text-[#C41E3A]'
                   : 'text-[#525252] hover:text-[#0A0A0A] hover:bg-[#FAFAFA]'
               )}
             >
@@ -111,7 +111,7 @@ export function TabHeader({ courseId, courseTitle }: TabHeaderProps) {
               <span className="hidden sm:inline">{tab.label}</span>
               {/* Active 指示器 */}
               {isActive && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-[#F5A524] rounded-full" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-[#C41E3A] rounded-full" />
               )}
             </Link>
           )

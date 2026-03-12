@@ -65,7 +65,7 @@ export function InstructorSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-sm font-bold tracking-widest text-[#F5A524] uppercase"
+            className="text-sm font-bold tracking-widest text-[#C41E3A] uppercase"
           >
             Your Instructor
           </motion.p>
@@ -127,7 +127,7 @@ export function InstructorSection() {
               <div className="mt-8 grid gap-4 sm:grid-cols-3">
                 {credentials.map((item, index) => (
                   <div key={index} className="group">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-[#0A0A0A] border border-[#E5E5E5] group-hover:bg-[#F5A524] group-hover:text-white transition-colors">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-[#0A0A0A] border border-[#E5E5E5] group-hover:bg-[#C41E3A] group-hover:text-white transition-colors">
                       <item.icon className="h-4 w-4" />
                     </div>
                     <h4 className="mt-3 font-bold text-[#0A0A0A] text-sm">
@@ -164,7 +164,7 @@ export function InstructorSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                className="flex shrink-0 w-[200px] sm:w-auto flex-col items-center rounded-xl border border-[#E5E5E5] bg-[#FAFAFA] p-4 text-center transition-all hover:border-[#F5A524]/40"
+                className="flex shrink-0 w-[200px] sm:w-auto flex-col items-center rounded-xl border border-[#E5E5E5] bg-[#FAFAFA] p-4 text-center transition-all hover:border-[#C41E3A]/40"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0A0A0A] text-white">
                   <item.icon className="h-4 w-4" />

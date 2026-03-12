@@ -122,14 +122,14 @@ export function ImagesClient({ initialData, searchQuery }: ImagesClientProps) {
             placeholder="搜尋圖片..."
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
-            className="pl-10 bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus:ring-[#F5A524]"
+            className="pl-10 bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus:ring-[#C41E3A]"
           />
         </div>
 
         {/* 上傳按鈕 */}
         <Dialog open={showUploadDialog} onOpenChange={handleUploadDialogClose}>
           <DialogTrigger asChild>
-            <Button className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg">
+            <Button className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg">
               <Upload className="w-4 h-4 mr-2" />
               上傳圖片
             </Button>
@@ -139,7 +139,7 @@ export function ImagesClient({ initialData, searchQuery }: ImagesClientProps) {
               <DialogTitle className="text-[#0A0A0A]">
                 批量上傳圖片
                 {uploadCount > 0 && (
-                  <span className="ml-2 text-sm font-normal text-[#F5A524]">
+                  <span className="ml-2 text-sm font-normal text-[#C41E3A]">
                     （已完成 {uploadCount} 張）
                   </span>
                 )}
@@ -168,7 +168,7 @@ export function ImagesClient({ initialData, searchQuery }: ImagesClientProps) {
           </p>
           {!search && (
             <Button
-              className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg"
+              className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg"
               onClick={() => setShowUploadDialog(true)}
             >
               <Upload className="w-4 h-4 mr-2" />

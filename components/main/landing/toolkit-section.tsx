@@ -1,6 +1,6 @@
 // components/main/landing/toolkit-section.tsx
 // 工具鏈介紹區塊
-// VibeFlow Design System - The Toolkit
+// Solo Academy Design System - The Toolkit
 
 'use client'
 
@@ -35,7 +35,7 @@ export function ToolkitSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-sm font-bold tracking-widest text-[#F5A524] uppercase"
+            className="text-sm font-bold tracking-widest text-[#C41E3A] uppercase"
           >
             開發工具
           </motion.p>
@@ -56,7 +56,7 @@ export function ToolkitSection() {
             className="mx-auto mt-6 max-w-2xl text-lg text-[#525252]"
           >
             課程中，我們精選了目前最強大的 AI 開發工具鏈，而且它們大多都有
-            <span className="mx-1 font-bold text-[#F5A524]">免費方案</span>
+            <span className="mx-1 font-bold text-[#C41E3A]">免費方案</span>
             ，讓你能無負擔開始。
           </motion.p>
         </div>
@@ -72,7 +72,7 @@ export function ToolkitSection() {
               transition={{ delay: index * 0.1 + 0.3 }}
               className="group rounded-2xl border border-[#E5E5E5] bg-white p-10 transition-all hover:bg-[#FAFAFA]"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0A0A0A] group-hover:bg-[#F5A524] transition-colors">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0A0A0A] group-hover:bg-[#C41E3A] transition-colors">
                 <tool.icon className="h-6 w-6 text-white" />
               </div>
               <h3 className="mt-8 text-xl font-bold text-[#0A0A0A]">

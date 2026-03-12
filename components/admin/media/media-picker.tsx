@@ -144,7 +144,7 @@ export function MediaPicker({
                     variant={mediaType === 'VIDEO' ? 'default' : 'ghost'}
                     size="sm"
                     onClick={() => setMediaType('VIDEO')}
-                    className={mediaType === 'VIDEO' ? 'bg-[#F5A524] hover:bg-[#E09000] text-white' : 'text-[#525252] hover:text-[#0A0A0A] hover:bg-white'}
+                    className={mediaType === 'VIDEO' ? 'bg-[#C41E3A] hover:bg-[#A01830] text-white' : 'text-[#525252] hover:text-[#0A0A0A] hover:bg-white'}
                   >
                     <Film className="w-4 h-4 mr-2" />
                     影片
@@ -153,7 +153,7 @@ export function MediaPicker({
                     variant={mediaType === 'IMAGE' ? 'default' : 'ghost'}
                     size="sm"
                     onClick={() => setMediaType('IMAGE')}
-                    className={mediaType === 'IMAGE' ? 'bg-[#F5A524] hover:bg-[#E09000] text-white' : 'text-[#525252] hover:text-[#0A0A0A] hover:bg-white'}
+                    className={mediaType === 'IMAGE' ? 'bg-[#C41E3A] hover:bg-[#A01830] text-white' : 'text-[#525252] hover:text-[#0A0A0A] hover:bg-white'}
                   >
                     <ImageIcon className="w-4 h-4 mr-2" />
                     圖片
@@ -168,7 +168,7 @@ export function MediaPicker({
                   placeholder="搜尋媒體..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="pl-10 bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus:ring-[#F5A524]"
+                  className="pl-10 bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus:ring-[#C41E3A]"
                 />
               </div>
             </div>
@@ -254,7 +254,7 @@ export function MediaPicker({
           <Button
             onClick={handleConfirm}
             disabled={!selectedMedia}
-            className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg"
+            className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg"
           >
             確認選擇
           </Button>

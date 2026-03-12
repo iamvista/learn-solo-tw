@@ -30,7 +30,7 @@ export function MyCourseCard({ course, index }: MyCourseCardProps) {
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
       <Link href={targetUrl} className="group block h-full">
-        <Card className="h-full overflow-hidden border-[#E5E5E5] bg-white transition-all duration-300 hover:border-[#F5A524]/30 hover:shadow-xl hover:shadow-[#F5A524]/5">
+        <Card className="h-full overflow-hidden border-[#E5E5E5] bg-white transition-all duration-300 hover:border-[#C41E3A]/30 hover:shadow-xl hover:shadow-[#C41E3A]/5">
           {/* 封面圖片區域 */}
           <div className="relative aspect-video overflow-hidden">
             {course.coverImage ? (
@@ -50,7 +50,7 @@ export function MyCourseCard({ course, index }: MyCourseCardProps) {
             {/* 已完成徽章 */}
             {isCompleted && (
               <div className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 shadow-sm backdrop-blur-sm">
-                <CheckCircle2 className="h-4 w-4 text-[#F5A524]" />
+                <CheckCircle2 className="h-4 w-4 text-[#C41E3A]" />
                 <span className="text-xs font-bold text-[#0A0A0A]">
                   已完成
                 </span>
@@ -62,13 +62,13 @@ export function MyCourseCard({ course, index }: MyCourseCardProps) {
               <Progress
                 value={progress.progressPercentage}
                 className="h-1.5 bg-white/30"
-                indicatorClassName="bg-[#F5A524]"
+                indicatorClassName="bg-[#C41E3A]"
               />
             </div>
 
             {/* Hover 狀態 Overlay */}
             <div className="absolute inset-0 flex items-center justify-center bg-black/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#F5A524] text-white shadow-lg transition-transform duration-300 group-hover:scale-110">
+               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#C41E3A] text-white shadow-lg transition-transform duration-300 group-hover:scale-110">
                   <PlayCircle className="h-6 w-6 fill-current" />
                </div>
             </div>
@@ -83,7 +83,7 @@ export function MyCourseCard({ course, index }: MyCourseCardProps) {
                  </span>
               </div>
               
-              <h3 className="line-clamp-2 text-xl font-bold text-[#0A0A0A] transition-colors group-hover:text-[#F5A524]">
+              <h3 className="line-clamp-2 text-xl font-bold text-[#0A0A0A] transition-colors group-hover:text-[#C41E3A]">
                 {course.title}
               </h3>
 

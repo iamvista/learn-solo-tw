@@ -20,9 +20,9 @@ interface PaymentPieChartProps {
   data: PaymentMethodStats[]
 }
 
-// VibeFlow 顏色配置
+// Solo Academy 顏色配置
 const COLORS = [
-  '#F5A524', // 強調色
+  '#C41E3A', // 強調色
   '#525252', // 文字次色
   '#A3A3A3', // 文字輔助
   '#E5E5E5', // 邊框主色

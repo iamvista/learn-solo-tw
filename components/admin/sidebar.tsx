@@ -141,7 +141,7 @@ export function Sidebar({ className, userRole }: SidebarProps) {
             )}
           >
             <Link href="/admin" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#F5A524] flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-[#C41E3A] flex items-center justify-center flex-shrink-0">
                 <span className="text-white font-bold text-sm">R</span>
               </div>
               <span

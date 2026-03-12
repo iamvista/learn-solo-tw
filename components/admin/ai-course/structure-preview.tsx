@@ -140,7 +140,7 @@ export function StructurePreview({
                   ) : (
                     <ChevronRight className="w-4 h-4 text-[#A3A3A3]" />
                   )}
-                  <Folder className="w-4 h-4 text-[#F5A524]" />
+                  <Folder className="w-4 h-4 text-[#C41E3A]" />
 
                   {editingChapterId === chapterIndex ? (
                     <Input

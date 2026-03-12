@@ -111,7 +111,7 @@ export function UserTable({ users }: UserTableProps) {
                   variant={user._count.purchases > 0 ? 'default' : 'secondary'}
                   className={
                     user._count.purchases > 0
-                      ? 'bg-[#F5A524] hover:bg-[#E09000] text-white'
+                      ? 'bg-[#C41E3A] hover:bg-[#A01830] text-white'
                       : 'bg-[#FAFAFA] hover:bg-[#FAFAFA] text-[#525252] border border-[#E5E5E5]'
                   }
                 >

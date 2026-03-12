@@ -111,7 +111,7 @@ function TimestampPopover({
                 onChange={(e) => setMinutes(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="00"
-                className="w-full h-8 px-2 text-sm border border-[#E5E5E5] rounded-md bg-white text-[#0A0A0A] focus:outline-none focus:ring-1 focus:ring-[#F5A524]"
+                className="w-full h-8 px-2 text-sm border border-[#E5E5E5] rounded-md bg-white text-[#0A0A0A] focus:outline-none focus:ring-1 focus:ring-[#C41E3A]"
                 autoFocus
               />
             </div>
@@ -126,7 +126,7 @@ function TimestampPopover({
                 onChange={(e) => setSeconds(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="00"
-                className="w-full h-8 px-2 text-sm border border-[#E5E5E5] rounded-md bg-white text-[#0A0A0A] focus:outline-none focus:ring-1 focus:ring-[#F5A524]"
+                className="w-full h-8 px-2 text-sm border border-[#E5E5E5] rounded-md bg-white text-[#0A0A0A] focus:outline-none focus:ring-1 focus:ring-[#C41E3A]"
               />
             </div>
           </div>
@@ -140,7 +140,7 @@ function TimestampPopover({
           <Button
             size="sm"
             onClick={handleInsert}
-            className="w-full bg-[#F5A524] hover:bg-[#E09000] text-white"
+            className="w-full bg-[#C41E3A] hover:bg-[#A01830] text-white"
           >
             插入
           </Button>
@@ -529,7 +529,7 @@ export function MilkdownMarkdownEditor({
       {mode === 'wysiwyg' && (
         <MilkdownProvider key={combinedKey}>
           <WysiwygToolbar />
-          <div className="milkdown-editor-wrapper min-h-[400px] p-4 bg-white border border-[#E5E5E5] rounded-xl overflow-auto prose prose-sm max-w-none prose-headings:text-[#0A0A0A] prose-p:text-[#525252] prose-a:text-[#F5A524] prose-strong:text-[#0A0A0A] prose-code:text-[#F5A524] prose-code:bg-[#FAFAFA] prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-[#FAFAFA] prose-blockquote:border-[#E5E5E5] prose-blockquote:text-[#525252] prose-li:text-[#525252]">
+          <div className="milkdown-editor-wrapper min-h-[400px] p-4 bg-white border border-[#E5E5E5] rounded-xl overflow-auto prose prose-sm max-w-none prose-headings:text-[#0A0A0A] prose-p:text-[#525252] prose-a:text-[#C41E3A] prose-strong:text-[#0A0A0A] prose-code:text-[#C41E3A] prose-code:bg-[#FAFAFA] prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-[#FAFAFA] prose-blockquote:border-[#E5E5E5] prose-blockquote:text-[#525252] prose-li:text-[#525252]">
             <MilkdownEditorCore
               value={value}
               onChange={handleWysiwygChange}

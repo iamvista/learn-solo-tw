@@ -158,7 +158,7 @@ function SortableLessonItem({
         'flex items-center gap-2 px-3 py-2 group cursor-pointer transition-colors',
         isDragging ? 'opacity-50 z-50' : '',
         isSelected
-          ? 'bg-[#F5A524]/10 border-l-2 border-[#F5A524]'
+          ? 'bg-[#C41E3A]/10 border-l-2 border-[#C41E3A]'
           : 'hover:bg-[#FAFAFA] border-l-2 border-transparent'
       )}
       onClick={onSelect}
@@ -176,7 +176,7 @@ function SortableLessonItem({
       {/* 圖標 */}
       <div className="flex-shrink-0">
         {lesson.videoId ? (
-          <Video className="h-3.5 w-3.5 text-[#F5A524]" />
+          <Video className="h-3.5 w-3.5 text-[#C41E3A]" />
         ) : (
           <FileText className="h-3.5 w-3.5 text-[#525252]" />
         )}
@@ -196,7 +196,7 @@ function SortableLessonItem({
           {lesson.isFree && (
             <Badge
               variant="secondary"
-              className="bg-[#F5A524]/10 text-[#F5A524] text-[10px] px-1 py-0"
+              className="bg-[#C41E3A]/10 text-[#C41E3A] text-[10px] px-1 py-0"
             >
               試閱
             </Badge>
@@ -362,7 +362,7 @@ function SortableChapterItem({
             </Button>
           </CollapsibleTrigger>
 
-          <FolderOpen className="h-4 w-4 text-[#F5A524] flex-shrink-0" />
+          <FolderOpen className="h-4 w-4 text-[#C41E3A] flex-shrink-0" />
 
           <div className="flex-1 min-w-0">
             <span className="text-sm font-medium text-[#0A0A0A] truncate block">
@@ -680,7 +680,7 @@ export function OutlinePanel({ courseId }: OutlinePanelProps) {
         <Button
           variant="outline"
           size="sm"
-          className="w-full border-[#F5A524] text-[#F5A524] hover:bg-[#F5A524]/10 hover:text-[#E09000]"
+          className="w-full border-[#C41E3A] text-[#C41E3A] hover:bg-[#C41E3A]/10 hover:text-[#A01830]"
           onClick={() => setAiCourseDialogOpen(true)}
         >
           <Sparkles className="h-4 w-4 mr-2" />

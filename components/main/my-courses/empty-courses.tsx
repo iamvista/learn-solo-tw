@@ -26,7 +26,7 @@ export function EmptyCourses() {
       {/* CTA 按鈕 */}
       <Button
         asChild
-        className="mt-10 rounded-full bg-[#F5A524] px-10 py-7 text-lg font-semibold text-white transition-all hover:bg-[#E09000] hover:scale-105 active:scale-95 shadow-lg shadow-[#F5A524]/20"
+        className="mt-10 rounded-full bg-[#C41E3A] px-10 py-7 text-lg font-semibold text-white transition-all hover:bg-[#A01830] hover:scale-105 active:scale-95 shadow-lg shadow-[#C41E3A]/20"
       >
         <Link href="/">
           瀏覽課程

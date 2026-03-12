@@ -75,7 +75,7 @@ export function RegisterForm({ callbackUrl }: RegisterFormProps) {
               placeholder="請輸入您的姓名"
               required
               disabled={isPending}
-              className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-6 text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus:ring-[#F5A524]/20"
+              className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-6 text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus:ring-[#C41E3A]/20"
             />
           </div>
 
@@ -88,7 +88,7 @@ export function RegisterForm({ callbackUrl }: RegisterFormProps) {
               placeholder="your@email.com"
               required
               disabled={isPending}
-              className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-6 text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus:ring-[#F5A524]/20"
+              className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-6 text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus:ring-[#C41E3A]/20"
             />
           </div>
 
@@ -101,7 +101,7 @@ export function RegisterForm({ callbackUrl }: RegisterFormProps) {
               placeholder="請輸入密碼（至少 8 個字元）"
               required
               disabled={isPending}
-              className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-6 text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus:ring-[#F5A524]/20"
+              className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-6 text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus:ring-[#C41E3A]/20"
             />
             <p className="text-xs text-[#A3A3A3]">
               密碼至少需要 8 個字元
@@ -117,13 +117,13 @@ export function RegisterForm({ callbackUrl }: RegisterFormProps) {
               placeholder="請再次輸入密碼"
               required
               disabled={isPending}
-              className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-6 text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus:ring-[#F5A524]/20"
+              className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-6 text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus:ring-[#C41E3A]/20"
             />
           </div>
 
           <Button 
             type="submit" 
-            className="w-full rounded-full bg-[#F5A524] py-6 text-base font-semibold text-white transition-colors hover:bg-[#E09000]" 
+            className="w-full rounded-full bg-[#C41E3A] py-6 text-base font-semibold text-white transition-colors hover:bg-[#A01830]" 
             disabled={isPending}
           >
             {isPending ? (

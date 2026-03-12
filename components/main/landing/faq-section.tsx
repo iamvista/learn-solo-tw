@@ -22,7 +22,7 @@ export function FAQSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-sm font-bold tracking-widest text-[#F5A524] uppercase"
+            className="text-sm font-bold tracking-widest text-[#C41E3A] uppercase"
           >
             F.A.Q
           </motion.p>
@@ -52,7 +52,7 @@ export function FAQSection() {
                 value={`item-${index}`}
                 className="overflow-hidden rounded-2xl border border-[#E5E5E5] bg-white px-0"
               >
-                <AccordionTrigger className="px-5 py-4 text-left hover:no-underline hover:text-[#F5A524] data-[state=open]:text-[#F5A524] transition-colors">
+                <AccordionTrigger className="px-5 py-4 text-left hover:no-underline hover:text-[#C41E3A] data-[state=open]:text-[#C41E3A] transition-colors">
                   <span className="text-sm font-bold text-[#0A0A0A] sm:text-base">
                     {faq.question}
                   </span>
@@ -77,7 +77,7 @@ export function FAQSection() {
             還有其他問題？
             <a
               href="mailto:hello@solo.tw"
-              className="ml-1.5 font-bold text-[#0A0A0A] underline decoration-[#F5A524] decoration-2 underline-offset-4 hover:text-[#F5A524] transition-colors"
+              className="ml-1.5 font-bold text-[#0A0A0A] underline decoration-[#C41E3A] decoration-2 underline-offset-4 hover:text-[#C41E3A] transition-colors"
             >
               聯繫我們
             </a>

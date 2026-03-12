@@ -1,6 +1,6 @@
 // components/main/landing/hero-section.tsx
 // 課程銷售頁 Hero Section
-// 極簡黑白灰設計 + #F5A524 強調色
+// 極簡黑白灰設計 + #C41E3A 強調色
 // 手機版優先：首屏必須包含 H1 + subtitle + CTA + trust signals
 
 "use client";
@@ -120,14 +120,14 @@ export function LandingHeroSection({
                 從零開始
                 <br />
                 帶你用 AI 做出你的 iOS App
-                <span className="text-[#F5A524]">{" "}上架 App Store</span>
+                <span className="text-[#C41E3A]">{" "}上架 App Store</span>
               </>
             ) : (
               <>
                 不需要程式基礎，
                 <br />
                 也能做出你的 iOS App
-                <span className="text-[#F5A524]">{" "}上架 App Store</span>
+                <span className="text-[#C41E3A]">{" "}上架 App Store</span>
               </>
             )}
           </h1>
@@ -139,7 +139,7 @@ export function LandingHeroSection({
                 <br />
                 帶你用 AI 做出你的 iOS App
                 <br />
-                <span className="text-[#F5A524]">上架 App Store</span>
+                <span className="text-[#C41E3A]">上架 App Store</span>
               </>
             ) : (
               <>
@@ -147,7 +147,7 @@ export function LandingHeroSection({
                 <br />
                 也能做出你的 iOS App
                 <br />
-                <span className="text-[#F5A524]">上架 App Store</span>
+                <span className="text-[#C41E3A]">上架 App Store</span>
               </>
             )}
           </h1>
@@ -155,16 +155,16 @@ export function LandingHeroSection({
           {/* Subtitle — 列點式價值主張 */}
           <ul className="mt-4 flex flex-col gap-1.5 text-base text-[#525252] sm:text-lg">
             <li className="flex items-center gap-2">
-              <span className="text-[#F5A524]">✓</span> 零程式基礎完全可上手
+              <span className="text-[#C41E3A]">✓</span> 零程式基礎完全可上手
             </li>
             <li className="flex items-center gap-2">
-              <span className="text-[#F5A524]">✓</span> 用白話文與AI一起建構自己的 App
+              <span className="text-[#C41E3A]">✓</span> 用白話文與AI一起建構自己的 App
             </li>
             <li className="flex items-center gap-2">
-              <span className="text-[#F5A524]">✓</span> 上架 App Store 全攻略
+              <span className="text-[#C41E3A]">✓</span> 上架 App Store 全攻略
             </li>
             <li className="flex items-center gap-2">
-              <span className="text-[#F5A524]">✓</span> 從企劃到內購金流，完整商業落地
+              <span className="text-[#C41E3A]">✓</span> 從企劃到內購金流，完整商業落地
             </li>
           </ul>
           <p className="mt-3 text-sm text-[#A3A3A3] sm:text-base">
@@ -185,7 +185,7 @@ export function LandingHeroSection({
                   <Button
                     asChild
                     size="lg"
-                    className="py-6 rounded-full bg-[#F5A524] px-8! text-base font-semibold text-white transition-colors hover:bg-[#E09000]"
+                    className="py-6 rounded-full bg-[#C41E3A] px-8! text-base font-semibold text-white transition-colors hover:bg-[#A01830]"
                   >
                     <Link
                       href={finalPrimaryLink}
@@ -212,7 +212,7 @@ export function LandingHeroSection({
                 <div className="mt-4 flex flex-col items-start gap-2">
                   <div className="flex items-baseline gap-2">
                     <span className="text-sm text-[#A3A3A3] line-through">原價 {formatPrice(originalPrice)}</span>
-                    <span className="text-lg font-bold text-[#0A0A0A]">{saleLabel} <span className="text-[#F5A524]">{formatPrice(finalPrice)}</span></span>
+                    <span className="text-lg font-bold text-[#0A0A0A]">{saleLabel} <span className="text-[#C41E3A]">{formatPrice(finalPrice)}</span></span>
                   </div>
                   {showCountdown && (countdownTarget || saleEndAt) && (
                     <CountdownTimer
@@ -229,9 +229,9 @@ export function LandingHeroSection({
                 {isPurchased ? (
                   <span className="text-[#A3A3A3]">感謝您的支持！隨時開始您的學習旅程</span>
                 ) : isFree ? (
-                  <span className="font-semibold text-[#F5A524]">限時免費</span>
+                  <span className="font-semibold text-[#C41E3A]">限時免費</span>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#F5A524]/30 bg-[#F5A524]/5 px-3 py-1 text-sm font-semibold text-[#F5A524]">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C41E3A]/30 bg-[#C41E3A]/5 px-3 py-1 text-sm font-semibold text-[#C41E3A]">
                     <Shield className="h-3.5 w-3.5" />
                     7 日內未觀看 100% 退費保證
                   </span>
@@ -241,7 +241,7 @@ export function LandingHeroSection({
           )}
 
           {minimal && (
-            <div className="mt-6 flex items-center gap-2 text-[#F5A524] font-semibold">
+            <div className="mt-6 flex items-center gap-2 text-[#C41E3A] font-semibold">
               了解更多課程資訊
               <ArrowRight className="h-5 w-5" />
             </div>

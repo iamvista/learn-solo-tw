@@ -1,6 +1,6 @@
 // components/main/course-grid.tsx
 // 課程列表網格元件
-// VibeFlow Design System - 極簡風格
+// Solo Academy Design System - 極簡風格
 
 import { CourseCard } from '@/components/main/course-card'
 import type { PublishedCourse } from '@/lib/actions/public-courses'

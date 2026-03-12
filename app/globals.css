@@ -46,57 +46,57 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
-/* VibeFlow Design System - Light Mode Only */
+/* 自由人學院 Design System - Light Mode Only */
 :root {
   --radius: 0.75rem;
 
-  /* VibeFlow Core Palette */
-  --background: #F8FAFC;           /* 冰川白 - 背景主色 */
-  --foreground: #0F172A;           /* 板岩深藍 - 文字深色 */
+  /* Solo Academy Core Palette — 紅白黑配淺底 */
+  --background: #FAFAFA;           /* 暖白 - 背景主色 */
+  --foreground: #1A1A1A;           /* 近黑 - 文字深色 */
 
   --card: #FFFFFF;
-  --card-foreground: #0F172A;
+  --card-foreground: #1A1A1A;
 
   --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
+  --popover-foreground: #1A1A1A;
 
-  --primary: #6366F1;              /* 智能靛藍 - 品牌主色 */
+  --primary: #C41E3A;              /* 自由紅 - 品牌主色 */
   --primary-foreground: #FFFFFF;
 
-  --secondary: #F1F5F9;
-  --secondary-foreground: #0F172A;
+  --secondary: #F5F5F5;
+  --secondary-foreground: #1A1A1A;
 
-  --muted: #F1F5F9;
-  --muted-foreground: #64748B;     /* 石板灰 - 輔助灰色 */
+  --muted: #F5F5F5;
+  --muted-foreground: #737373;     /* 中灰 - 輔助灰色 */
 
-  --accent: #10B981;               /* 生命翠綠 - 強調色 */
+  --accent: #C41E3A;               /* 同品牌紅 - 強調色 */
   --accent-foreground: #FFFFFF;
 
-  --destructive: #EF4444;
+  --destructive: #DC2626;
 
-  --border: #E2E8F0;
-  --input: #E2E8F0;
-  --ring: #6366F1;
+  --border: #E5E5E5;
+  --input: #E5E5E5;
+  --ring: #C41E3A;
 
   /* Chart Colors */
-  --chart-1: #6366F1;
-  --chart-2: #10B981;
-  --chart-3: #F59E0B;
-  --chart-4: #8B5CF6;
-  --chart-5: #EC4899;
+  --chart-1: #C41E3A;
+  --chart-2: #1A1A1A;
+  --chart-3: #E11D48;
+  --chart-4: #9F1239;
+  --chart-5: #F43F5E;
 
   /* Sidebar */
   --sidebar: #FFFFFF;
-  --sidebar-foreground: #0F172A;
-  --sidebar-primary: #6366F1;
+  --sidebar-foreground: #1A1A1A;
+  --sidebar-primary: #C41E3A;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F1F5F9;
-  --sidebar-accent-foreground: #0F172A;
-  --sidebar-border: #E2E8F0;
-  --sidebar-ring: #6366F1;
+  --sidebar-accent: #F5F5F5;
+  --sidebar-accent-foreground: #1A1A1A;
+  --sidebar-border: #E5E5E5;
+  --sidebar-ring: #C41E3A;
 
-  /* VibeFlow Custom Properties */
-  --vf-highlight: #F59E0B;         /* 靈感琥珀 - 點睛色/CTA */
+  /* Solo Academy Custom Properties */
+  --vf-highlight: #C41E3A;         /* 品牌紅 - 點睛色/CTA */
   --vf-glass-bg: rgba(255, 255, 255, 0.7);
   --vf-glass-border: rgba(255, 255, 255, 0.3);
 }
@@ -112,7 +112,7 @@
   --popover: #1C1C1E;
   --popover-foreground: #ECECEC;
 
-  --primary: #F5A524;
+  --primary: #E84057;              /* 亮紅 - 暗模式品牌色 */
   --primary-foreground: #FFFFFF;
 
   --secondary: #252528;
@@ -121,31 +121,31 @@
   --muted: #252528;
   --muted-foreground: #8E8E93;
 
-  --accent: #34D399;
+  --accent: #E84057;
   --accent-foreground: #FFFFFF;
 
   --destructive: #FF453A;
 
   --border: #333336;
   --input: #333336;
-  --ring: #F5A524;
+  --ring: #E84057;
 
-  --chart-1: #F5A524;
-  --chart-2: #34D399;
+  --chart-1: #E84057;
+  --chart-2: #F87171;
   --chart-3: #5AC8FA;
   --chart-4: #BF5AF2;
   --chart-5: #FF6482;
 
   --sidebar: #161618;
   --sidebar-foreground: #ECECEC;
-  --sidebar-primary: #F5A524;
+  --sidebar-primary: #E84057;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #252528;
   --sidebar-accent-foreground: #ECECEC;
   --sidebar-border: #333336;
-  --sidebar-ring: #F5A524;
+  --sidebar-ring: #E84057;
 
-  --vf-highlight: #FBBF24;
+  --vf-highlight: #E84057;
   --vf-glass-bg: rgba(28, 28, 30, 0.7);
   --vf-glass-border: rgba(51, 51, 54, 0.3);
 
@@ -205,11 +205,11 @@
 }
 
 /* Brand primary color */
-.admin-dark [class*="bg-[#F5A524]"] {
+.admin-dark [class*="bg-[#C41E3A]"] {
   background-color: var(--primary) !important;
 }
 
-.admin-dark [class*="text-[#F5A524]"] {
+.admin-dark [class*="text-[#C41E3A]"] {
   color: var(--primary) !important;
 }
 
@@ -271,8 +271,8 @@
   color: #facc15 !important;
 }
 
-/* hover:bg-[#E09000] (brand hover) */
-.admin-dark [class*="hover:bg-[#E09000]"]:hover {
+/* hover:bg-[#A01830] (brand hover) */
+.admin-dark [class*="hover:bg-[#A01830]"]:hover {
   background-color: color-mix(in srgb, var(--primary), #000 15%) !important;
 }
 
@@ -295,8 +295,8 @@
   color: var(--muted-foreground) !important;
 }
 
-/* focus:border-[#F5A524] override */
-.admin-dark [class*="focus:border-[#F5A524]"]:focus {
+/* focus:border-[#C41E3A] override */
+.admin-dark [class*="focus:border-[#C41E3A]"]:focus {
   border-color: var(--primary) !important;
 }
 
@@ -328,12 +328,12 @@
 /* Vibe Indicator Animation */
 @keyframes vibe-pulse {
   0%, 100% {
-    background-color: #6366F1;
-    box-shadow: 0 0 8px #6366F1;
+    background-color: #C41E3A;
+    box-shadow: 0 0 8px #C41E3A;
   }
   50% {
-    background-color: #10B981;
-    box-shadow: 0 0 8px #10B981;
+    background-color: #E84057;
+    box-shadow: 0 0 8px #E84057;
   }
 }
 
@@ -430,7 +430,7 @@
 }
 
 .prose a {
-  color: #F5A524;
+  color: #C41E3A;
   text-decoration: none;
 }
 
@@ -450,7 +450,7 @@
 .prose code {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875em;
-  color: #F5A524;
+  color: #C41E3A;
   background-color: #F5F5F5;
   padding: 0.125rem 0.375rem;
   border-radius: 0.25rem;
@@ -500,7 +500,7 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding-left: 1rem;
-  border-left: 4px solid #F5A524;
+  border-left: 4px solid #C41E3A;
   color: rgba(82, 82, 82, 0.8);
   font-style: italic;
 }
@@ -569,13 +569,13 @@
 
 .milkdown-timestamp-chip:hover {
   background: #F5F5F5;
-  border-color: #F5A524;
+  border-color: #C41E3A;
   color: #0A0A0A;
 }
 
 .milkdown-timestamp-icon {
   font-size: 0.625rem;
-  color: #F5A524;
+  color: #C41E3A;
 }
 
 /* Milkdown Editor Wrapper */
@@ -605,7 +605,7 @@
 
 .admin-dark .milkdown-timestamp-chip:hover {
   background: #333336;
-  border-color: #F5A524;
+  border-color: #C41E3A;
   color: #ECECEC;
 }
 

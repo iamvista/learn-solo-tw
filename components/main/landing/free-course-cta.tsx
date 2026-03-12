@@ -1,6 +1,6 @@
 // components/main/landing/free-course-cta.tsx
 // 免費課程 CTA 按鈕組件
-// VibeFlow Design System - 處理免費課程的加入邏輯
+// Solo Academy Design System - 處理免費課程的加入邏輯
 
 'use client'
 
@@ -58,8 +58,8 @@ export function FreeCourseCTA({
 
   const buttonClasses =
     size === 'lg'
-      ? 'py-6 rounded-full bg-[#F5A524] px-8! text-base font-semibold text-white transition-colors hover:bg-[#E09000]'
-      : 'rounded-full bg-[#F5A524] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#E09000]'
+      ? 'py-6 rounded-full bg-[#C41E3A] px-8! text-base font-semibold text-white transition-colors hover:bg-[#A01830]'
+      : 'rounded-full bg-[#C41E3A] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#A01830]'
 
   return (
     <div className={className}>

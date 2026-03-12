@@ -1,6 +1,6 @@
 // app/(main)/page.tsx
 // 前台首頁
-// VibeFlow Design System - 官網首頁佈局：Hero + 課程列表
+// Solo Academy Design System - 官網首頁佈局：Hero + 課程列表
 
 import type { Metadata } from 'next'
 import { getPublishedCourses, getCourseBySlug } from '@/lib/actions/public-courses'

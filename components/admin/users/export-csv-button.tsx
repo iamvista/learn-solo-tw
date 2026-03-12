@@ -51,7 +51,7 @@ export function ExportCsvButton() {
   return (
     <div className="flex items-center gap-2">
       {activeFilterCount > 0 && (
-        <span className="flex items-center gap-1 text-xs text-[#F5A524] font-medium">
+        <span className="flex items-center gap-1 text-xs text-[#C41E3A] font-medium">
           <Filter className="h-3 w-3" />
           套用 {activeFilterCount} 項篩選條件
         </span>

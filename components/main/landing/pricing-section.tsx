@@ -87,7 +87,7 @@ export function PricingSection({ course }: PricingSectionProps) {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-sm font-bold tracking-widest text-[#F5A524] uppercase"
+            className="text-sm font-bold tracking-widest text-[#C41E3A] uppercase"
           >
             Join the Revolution
           </motion.p>
@@ -132,7 +132,7 @@ export function PricingSection({ course }: PricingSectionProps) {
               <span className="text-xs font-bold text-[#A3A3A3] uppercase tracking-widest">
                 外包行情
               </span>
-              <span className="mt-1 text-2xl font-black text-[#0A0A0A] line-through decoration-[#F5A524] decoration-2">
+              <span className="mt-1 text-2xl font-black text-[#0A0A0A] line-through decoration-[#C41E3A] decoration-2">
                 NT$ 200,000+
               </span>
             </div>
@@ -141,7 +141,7 @@ export function PricingSection({ course }: PricingSectionProps) {
               <span className="text-xs font-bold text-[#A3A3A3] uppercase tracking-widest">
                 自學 Swift
               </span>
-              <span className="mt-1 text-2xl font-black text-[#0A0A0A] line-through decoration-[#F5A524] decoration-2">
+              <span className="mt-1 text-2xl font-black text-[#0A0A0A] line-through decoration-[#C41E3A] decoration-2">
                 6 個月以上
               </span>
             </div>
@@ -150,7 +150,7 @@ export function PricingSection({ course }: PricingSectionProps) {
               <span className="text-xs font-bold text-[#A3A3A3] uppercase tracking-widest">
                 自學 AI
               </span>
-              <span className="mt-1 text-2xl font-black text-[#0A0A0A] line-through decoration-[#F5A524] decoration-2">
+              <span className="mt-1 text-2xl font-black text-[#0A0A0A] line-through decoration-[#C41E3A] decoration-2">
                 無限撞牆
               </span>
             </div>
@@ -179,7 +179,7 @@ export function PricingSection({ course }: PricingSectionProps) {
                     className="flex items-start justify-between border-b border-gray-100 pb-4 last:border-0 last:pb-0"
                   >
                     <div className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#F5A524]" />
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#C41E3A]" />
                       <span className="text-base font-medium text-[#262626]">
                         {item.name}
                       </span>
@@ -192,10 +192,10 @@ export function PricingSection({ course }: PricingSectionProps) {
               </ul>
 
               {/* 限量 1 on 1 Bonus 區塊 */}
-              <div className="mt-8 rounded-2xl border-2 border-dashed border-[#F5A524] bg-amber-50/50 p-5">
+              <div className="mt-8 rounded-2xl border-2 border-dashed border-[#C41E3A] bg-amber-50/50 p-5">
                 <div className="flex items-center gap-2">
-                  <Gift className="h-5 w-5 text-[#F5A524]" />
-                  <span className="text-sm font-bold text-[#F5A524] uppercase tracking-wider">
+                  <Gift className="h-5 w-5 text-[#C41E3A]" />
+                  <span className="text-sm font-bold text-[#C41E3A] uppercase tracking-wider">
                     限時加贈 Bonus
                   </span>
                 </div>
@@ -227,7 +227,7 @@ export function PricingSection({ course }: PricingSectionProps) {
                 </div>
 
                 {priceResult.isOnSale && savings > 0 && (
-                  <div className="mt-4 inline-flex items-center rounded-full bg-[#F5A524]/20 px-4 py-1.5 text-sm font-bold text-[#F5A524]">
+                  <div className="mt-4 inline-flex items-center rounded-full bg-[#C41E3A]/20 px-4 py-1.5 text-sm font-bold text-[#C41E3A]">
                     {isFree
                       ? "限時免費體驗"
                       : `${priceResult.saleLabel} · 現省 NT$ ${savings.toLocaleString()}`}
@@ -236,7 +236,7 @@ export function PricingSection({ course }: PricingSectionProps) {
 
                 {priceResult.isOnSale && (
                   <div className="mt-4 flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2.5">
-                    <AlertTriangle className="h-4 w-4 shrink-0 text-[#F5A524]" />
+                    <AlertTriangle className="h-4 w-4 shrink-0 text-[#C41E3A]" />
                     <span className="text-sm font-medium text-white/80">
                       將於第七章節上線後正式漲價
                     </span>
@@ -247,7 +247,7 @@ export function PricingSection({ course }: PricingSectionProps) {
                   <Button
                     onClick={handleEnrollFree}
                     disabled={isEnrolling}
-                    className="group mt-8 h-14 w-full rounded-xl bg-[#F5A524] text-lg font-bold text-white transition-all hover:bg-[#E09000] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                    className="group mt-8 h-14 w-full rounded-xl bg-[#C41E3A] text-lg font-bold text-white transition-all hover:bg-[#A01830] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                   >
                     {isEnrolling ? (
                       <>
@@ -264,7 +264,7 @@ export function PricingSection({ course }: PricingSectionProps) {
                 ) : (
                   <Button
                     asChild
-                    className="group mt-8 h-14 w-full rounded-xl bg-[#F5A524] text-lg font-bold text-white transition-all hover:bg-[#E09000] hover:scale-[1.02] active:scale-[0.98]"
+                    className="group mt-8 h-14 w-full rounded-xl bg-[#C41E3A] text-lg font-bold text-white transition-all hover:bg-[#A01830] hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <Link
                       href={`/checkout?courseId=${course.id}`}

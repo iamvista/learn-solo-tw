@@ -140,10 +140,10 @@ export function SalesChart({ data }: SalesChartProps) {
                 type="monotone"
                 dataKey="revenue"
                 name="revenue"
-                stroke="#F5A524"
+                stroke="#C41E3A"
                 strokeWidth={2}
-                dot={{ fill: '#F5A524', strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6, fill: '#F5A524' }}
+                dot={{ fill: '#C41E3A', strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6, fill: '#C41E3A' }}
               />
               <Line
                 yAxisId="orders"

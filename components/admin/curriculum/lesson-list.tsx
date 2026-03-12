@@ -112,7 +112,7 @@ function SortableLessonItem({
       {/* 圖標 */}
       <div className="flex-shrink-0">
         {lesson.videoId ? (
-          <Video className="h-4 w-4 text-[#F5A524]" />
+          <Video className="h-4 w-4 text-[#C41E3A]" />
         ) : (
           <FileText className="h-4 w-4 text-[#525252]" />
         )}
@@ -125,7 +125,7 @@ function SortableLessonItem({
           {lesson.isFree && (
             <Badge
               variant="secondary"
-              className="bg-[#F5A524]/10 text-[#F5A524] text-xs"
+              className="bg-[#C41E3A]/10 text-[#C41E3A] text-xs"
             >
               試閱
             </Badge>

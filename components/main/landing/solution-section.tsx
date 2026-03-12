@@ -1,6 +1,6 @@
 // components/main/landing/solution-section.tsx
 // 解決方案區塊
-// VibeFlow Design System - Vibe Coding 開發法
+// Solo Academy Design System - Vibe Coding 開發法
 
 'use client'
 
@@ -41,7 +41,7 @@ export function SolutionSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-sm font-bold tracking-widest text-[#F5A524] uppercase"
+            className="text-sm font-bold tracking-widest text-[#C41E3A] uppercase"
           >
             Vibe Coding 開發法
           </motion.p>
@@ -74,10 +74,10 @@ export function SolutionSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 + 0.3 }}
-              className="group rounded-2xl border border-[#E5E5E5] bg-white p-10 transition-all hover:border-[#F5A524]/40 hover:bg-[#FAFAFA]"
+              className="group rounded-2xl border border-[#E5E5E5] bg-white p-10 transition-all hover:border-[#C41E3A]/40 hover:bg-[#FAFAFA]"
             >
               {/* 圖標 */}
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0A0A0A] transition-colors group-hover:bg-[#F5A524]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0A0A0A] transition-colors group-hover:bg-[#C41E3A]">
                 <solution.icon className="h-6 w-6 text-white" />
               </div>
 
@@ -85,7 +85,7 @@ export function SolutionSection() {
               <h3 className="mt-8 text-xl font-bold text-[#0A0A0A]">
                 {solution.title}
               </h3>
-              <p className="mt-2 text-sm font-semibold text-[#F5A524]">
+              <p className="mt-2 text-sm font-semibold text-[#C41E3A]">
                 {solution.subtitle}
               </p>
               <p className="mt-4 text-base leading-relaxed text-[#525252]">

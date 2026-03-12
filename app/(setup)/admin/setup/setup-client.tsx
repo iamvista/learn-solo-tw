@@ -122,7 +122,7 @@ export function SetupClient({ user }: SetupClientProps) {
               <div
                 key={step.id}
                 className={`h-1.5 flex-1 rounded-full transition-colors ${
-                  i <= currentStep ? 'bg-[#F5A524]' : 'bg-[#E5E5E5]'
+                  i <= currentStep ? 'bg-[#C41E3A]' : 'bg-[#E5E5E5]'
                 }`}
               />
             ))}
@@ -136,8 +136,8 @@ export function SetupClient({ user }: SetupClientProps) {
           {/* Step 0: 歡迎 */}
           {currentStep === 0 && (
             <div className="text-center space-y-6">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-[#F5A524]/10">
-                <Rocket className="w-10 h-10 text-[#F5A524]" />
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-[#C41E3A]/10">
+                <Rocket className="w-10 h-10 text-[#C41E3A]" />
               </div>
               <div className="space-y-2">
                 <h2 className="text-2xl font-bold text-[#0A0A0A]">
@@ -186,7 +186,7 @@ export function SetupClient({ user }: SetupClientProps) {
             <Card className="bg-white border border-[#E5E5E5] rounded-xl">
               <CardHeader>
                 <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-                  <Globe className="w-5 h-5 text-[#F5A524]" />
+                  <Globe className="w-5 h-5 text-[#C41E3A]" />
                   基本設定
                 </CardTitle>
                 <CardDescription className="text-[#525252]">
@@ -200,7 +200,7 @@ export function SetupClient({ user }: SetupClientProps) {
                     value={siteName}
                     onChange={(e) => setSiteName(e.target.value)}
                     placeholder="例如：我的線上課程"
-                    className="border-[#E5E5E5] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                    className="border-[#E5E5E5] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                   />
                   <p className="text-xs text-[#A3A3A3]">
                     顯示在網站標題和 Email 中的名稱
@@ -214,7 +214,7 @@ export function SetupClient({ user }: SetupClientProps) {
                     value={contactEmail}
                     onChange={(e) => setContactEmail(e.target.value)}
                     placeholder="contact@example.com"
-                    className="border-[#E5E5E5] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
+                    className="border-[#E5E5E5] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                   />
                   <p className="text-xs text-[#A3A3A3]">
                     用於接收用戶聯繫的 Email 地址
@@ -230,7 +230,7 @@ export function SetupClient({ user }: SetupClientProps) {
               <Card className="bg-white border border-[#E5E5E5] rounded-xl">
                 <CardHeader>
                   <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-                    <CreditCard className="w-5 h-5 text-[#F5A524]" />
+                    <CreditCard className="w-5 h-5 text-[#C41E3A]" />
                     金流設定
                   </CardTitle>
                   <CardDescription className="text-[#525252]">
@@ -244,7 +244,7 @@ export function SetupClient({ user }: SetupClientProps) {
                       onClick={() => setPaymentGateway(paymentGateway === 'payuni' ? '' : 'payuni')}
                       className={`flex-1 rounded-xl border-2 p-4 text-left transition-all ${
                         paymentGateway === 'payuni'
-                          ? 'border-[#F5A524] bg-[#F5A524]/5'
+                          ? 'border-[#C41E3A] bg-[#C41E3A]/5'
                           : 'border-[#E5E5E5] hover:border-[#A3A3A3]'
                       }`}
                     >
@@ -317,7 +317,7 @@ export function SetupClient({ user }: SetupClientProps) {
             <Card className="bg-white border border-[#E5E5E5] rounded-xl">
               <CardHeader>
                 <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-[#F5A524]" />
+                  <BarChart3 className="w-5 h-5 text-[#C41E3A]" />
                   追蹤像素
                 </CardTitle>
                 <CardDescription className="text-[#525252]">
@@ -404,7 +404,7 @@ export function SetupClient({ user }: SetupClientProps) {
                 <Button
                   type="button"
                   onClick={goNext}
-                  className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-full px-6"
+                  className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-full px-6"
                 >
                   {currentStep === 0 ? '開始設定' : '下一步'}
                   <ChevronRight className="w-4 h-4 ml-1" />
@@ -414,7 +414,7 @@ export function SetupClient({ user }: SetupClientProps) {
                   type="button"
                   onClick={handleComplete}
                   disabled={isPending}
-                  className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-full px-8"
+                  className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-full px-8"
                 >
                   {isPending ? (
                     <>

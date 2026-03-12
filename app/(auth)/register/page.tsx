@@ -41,7 +41,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
         已經有帳號？{' '}
         <Link
           href={callbackUrl ? `/login?callbackUrl=${encodeURIComponent(callbackUrl)}` : '/login'}
-          className="font-semibold text-[#F5A524] hover:text-[#E09000] transition-colors"
+          className="font-semibold text-[#C41E3A] hover:text-[#A01830] transition-colors"
         >
           立即登入
         </Link>

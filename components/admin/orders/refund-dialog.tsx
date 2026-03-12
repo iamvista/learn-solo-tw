@@ -92,7 +92,7 @@ export function RefundDialog({ orderId, orderNo, amount }: RefundDialogProps) {
       <DialogContent className="bg-white border-[#E5E5E5] sm:max-w-[425px] rounded-xl">
         <DialogHeader>
           <DialogTitle className="text-[#0A0A0A] flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-[#F5A524]" />
+            <AlertTriangle className="h-5 w-5 text-[#C41E3A]" />
             確認退款
           </DialogTitle>
           <DialogDescription className="text-[#525252]">
@@ -124,7 +124,7 @@ export function RefundDialog({ orderId, orderNo, amount }: RefundDialogProps) {
                   <FormControl>
                     <Textarea
                       placeholder="請輸入退款原因..."
-                      className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] min-h-[100px] rounded-lg focus:border-[#F5A524] focus:ring-[#F5A524]"
+                      className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] min-h-[100px] rounded-lg focus:border-[#C41E3A] focus:ring-[#C41E3A]"
                       {...field}
                     />
                   </FormControl>

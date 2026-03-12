@@ -82,16 +82,16 @@ export function CurriculumPreview({ course }: CurriculumPreviewProps) {
               }`}
             >
               {/* 裝飾編號 — 手機版隱藏 */}
-              <div className="hidden sm:block text-5xl lg:text-6xl font-black text-[#E5E5E5] -translate-y-1 transition-colors group-hover:text-[#F5A524]/20">
+              <div className="hidden sm:block text-5xl lg:text-6xl font-black text-[#E5E5E5] -translate-y-1 transition-colors group-hover:text-[#C41E3A]/20">
                 {String(index + 1).padStart(2, '0')}
               </div>
 
-              <div className="sm:-mt-6 flex-1 rounded-2xl border border-[#E5E5E5] bg-white p-5 sm:p-6 lg:p-8 transition-all hover:border-[#F5A524]/40">
+              <div className="sm:-mt-6 flex-1 rounded-2xl border border-[#E5E5E5] bg-white p-5 sm:p-6 lg:p-8 transition-all hover:border-[#C41E3A]/40">
                 <div className="flex items-center gap-3">
                   <span className="sm:hidden text-sm font-black text-[#E5E5E5]">
                     {String(index + 1).padStart(2, '0')}
                   </span>
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FAFAFA] text-[#0A0A0A] group-hover:bg-[#F5A524] group-hover:text-white transition-colors">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FAFAFA] text-[#0A0A0A] group-hover:bg-[#C41E3A] group-hover:text-white transition-colors">
                     <BookOpen className="h-4 w-4" />
                   </div>
                 </div>
@@ -146,7 +146,7 @@ export function CurriculumPreview({ course }: CurriculumPreviewProps) {
           <div className="mt-4 text-center sm:hidden">
             <button
               onClick={() => setExpanded(true)}
-              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#F5A524] hover:text-[#E09000] transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#C41E3A] hover:text-[#A01830] transition-colors"
             >
               查看完整大綱
               <ChevronDown className="h-4 w-4" />

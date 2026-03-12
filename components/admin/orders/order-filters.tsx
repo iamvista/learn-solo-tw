@@ -163,7 +163,7 @@ export function OrderFilters() {
               const timeoutId = setTimeout(() => handleSearch(value), 300)
               return () => clearTimeout(timeoutId)
             }}
-            className="pl-10 bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] rounded-lg focus:border-[#F5A524] focus:ring-[#F5A524]"
+            className="pl-10 bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] rounded-lg focus:border-[#C41E3A] focus:ring-[#C41E3A]"
           />
         </div>
         <Button

@@ -26,14 +26,14 @@ export function ContinueLearningCard({ data }: ContinueLearningCardProps) {
     >
       <div className="mb-6 flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-xl font-bold text-[#0A0A0A]">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5A524]/10">
-            <PlayCircle className="h-5 w-5 text-[#F5A524]" />
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C41E3A]/10">
+            <PlayCircle className="h-5 w-5 text-[#C41E3A]" />
           </span>
           繼續學習
         </h2>
       </div>
 
-      <Card className="overflow-hidden border-[#E5E5E5] bg-white transition-all duration-300 hover:border-[#F5A524]/30 hover:shadow-xl hover:shadow-[#F5A524]/5">
+      <Card className="overflow-hidden border-[#E5E5E5] bg-white transition-all duration-300 hover:border-[#C41E3A]/30 hover:shadow-xl hover:shadow-[#C41E3A]/5">
         <CardContent className="p-0">
           <div className="flex flex-col md:flex-row">
             {/* 封面圖片 */}
@@ -71,12 +71,12 @@ export function ContinueLearningCard({ data }: ContinueLearningCardProps) {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
                       <span className="font-medium text-[#525252]">目前進度</span>
-                      <span className="font-bold text-[#F5A524]">{progress.progressPercentage}%</span>
+                      <span className="font-bold text-[#C41E3A]">{progress.progressPercentage}%</span>
                     </div>
                     <Progress
                       value={progress.progressPercentage}
                       className="h-2 bg-[#F5F5F5]"
-                      indicatorClassName="bg-[#F5A524]"
+                      indicatorClassName="bg-[#C41E3A]"
                     />
                     <p className="text-xs text-[#A3A3A3]">
                       已完成 {progress.completedLessons} / {progress.totalLessons} 單元
@@ -95,7 +95,7 @@ export function ContinueLearningCard({ data }: ContinueLearningCardProps) {
               <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row">
                 <Button
                   asChild
-                  className="w-full rounded-full bg-[#F5A524] px-8 py-6 text-base font-semibold text-white transition-all hover:bg-[#E09000] hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
+                  className="w-full rounded-full bg-[#C41E3A] px-8 py-6 text-base font-semibold text-white transition-all hover:bg-[#A01830] hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
                 >
                   <Link href={`/courses/${course.slug}/lessons/${lesson.id}`}>
                     繼續上課

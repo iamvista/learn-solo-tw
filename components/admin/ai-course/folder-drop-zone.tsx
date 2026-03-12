@@ -184,8 +184,8 @@ export function FolderDropZone({ onFolderParsed, className }: FolderDropZoneProp
         className={cn(
           'border-2 border-dashed transition-all cursor-pointer rounded-xl',
           isDragging
-            ? 'border-[#F5A524] bg-[#F5A524]/10 scale-[1.02]'
-            : 'border-[#E5E5E5] bg-white hover:border-[#F5A524] hover:bg-[#FAFAFA]',
+            ? 'border-[#C41E3A] bg-[#C41E3A]/10 scale-[1.02]'
+            : 'border-[#E5E5E5] bg-white hover:border-[#C41E3A] hover:bg-[#FAFAFA]',
           isProcessing && 'opacity-50 pointer-events-none'
         )}
         onDragOver={handleDragOver}
@@ -196,7 +196,7 @@ export function FolderDropZone({ onFolderParsed, className }: FolderDropZoneProp
         <div className="flex flex-col items-center justify-center py-16 px-6 text-center">
           <div className="w-20 h-20 rounded-full bg-[#FAFAFA] flex items-center justify-center mb-6">
             {isDragging ? (
-              <Upload className="w-10 h-10 text-[#F5A524]" />
+              <Upload className="w-10 h-10 text-[#C41E3A]" />
             ) : (
               <FolderOpen className="w-10 h-10 text-[#A3A3A3]" />
             )}

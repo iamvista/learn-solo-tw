@@ -89,7 +89,7 @@ function formatDuration(seconds: number): string {
 }
 
 // 圓餅圖顏色
-const PIE_COLORS = ['#F5A524', '#525252', '#A3A3A3', '#D4D4D4', '#E5E5E5']
+const PIE_COLORS = ['#C41E3A', '#525252', '#A3A3A3', '#D4D4D4', '#E5E5E5']
 
 // 長條圖顏色
 const BAR_COLORS = [
@@ -126,7 +126,7 @@ export function AnalyticsPageClient({
               <CardTitle className="text-sm font-medium text-[#525252]">
                 總學員數
               </CardTitle>
-              <Users className="h-4 w-4 text-[#F5A524]" />
+              <Users className="h-4 w-4 text-[#C41E3A]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#0A0A0A]">
@@ -143,7 +143,7 @@ export function AnalyticsPageClient({
               <CardTitle className="text-sm font-medium text-[#525252]">
                 總銷售額
               </CardTitle>
-              <DollarSign className="h-4 w-4 text-[#F5A524]" />
+              <DollarSign className="h-4 w-4 text-[#C41E3A]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#0A0A0A]">
@@ -173,7 +173,7 @@ export function AnalyticsPageClient({
               <CardTitle className="text-sm font-medium text-[#525252]">
                 平均完課率
               </CardTitle>
-              <TrendingUp className="h-4 w-4 text-[#F5A524]" />
+              <TrendingUp className="h-4 w-4 text-[#C41E3A]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#0A0A0A]">
@@ -190,7 +190,7 @@ export function AnalyticsPageClient({
               <CardTitle className="text-sm font-medium text-[#525252]">
                 平均觀看時間
               </CardTitle>
-              <Clock className="h-4 w-4 text-[#F5A524]" />
+              <Clock className="h-4 w-4 text-[#C41E3A]" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-[#0A0A0A]">
@@ -209,7 +209,7 @@ export function AnalyticsPageClient({
           <Card className="bg-white border-[#E5E5E5]">
             <CardHeader>
               <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-                <DollarSign className="h-5 w-5 text-[#F5A524]" />
+                <DollarSign className="h-5 w-5 text-[#C41E3A]" />
                 近 30 天銷售趨勢
               </CardTitle>
             </CardHeader>
@@ -228,12 +228,12 @@ export function AnalyticsPageClient({
                         >
                           <stop
                             offset="5%"
-                            stopColor="#F5A524"
+                            stopColor="#C41E3A"
                             stopOpacity={0.3}
                           />
                           <stop
                             offset="95%"
-                            stopColor="#F5A524"
+                            stopColor="#C41E3A"
                             stopOpacity={0}
                           />
                         </linearGradient>
@@ -275,7 +275,7 @@ export function AnalyticsPageClient({
                       <Area
                         type="monotone"
                         dataKey="revenue"
-                        stroke="#F5A524"
+                        stroke="#C41E3A"
                         strokeWidth={2}
                         fill="url(#colorRevenue)"
                       />
@@ -302,7 +302,7 @@ export function AnalyticsPageClient({
           <Card className="bg-white border-[#E5E5E5]">
             <CardHeader>
               <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-[#F5A524]" />
+                <BookOpen className="h-5 w-5 text-[#C41E3A]" />
                 學員進度分佈
               </CardTitle>
             </CardHeader>
@@ -366,7 +366,7 @@ export function AnalyticsPageClient({
           <Card className="bg-white border-[#E5E5E5] lg:col-span-2">
             <CardHeader>
               <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-[#F5A524]" />
+                <TrendingUp className="h-5 w-5 text-[#C41E3A]" />
                 各單元完成率
               </CardTitle>
             </CardHeader>
@@ -419,10 +419,10 @@ export function AnalyticsPageClient({
                       <Line
                         type="monotone"
                         dataKey="completionRate"
-                        stroke="#F5A524"
+                        stroke="#C41E3A"
                         strokeWidth={2}
-                        dot={{ fill: '#F5A524', strokeWidth: 2, r: 3 }}
-                        activeDot={{ r: 6, fill: '#F5A524' }}
+                        dot={{ fill: '#C41E3A', strokeWidth: 2, r: 3 }}
+                        activeDot={{ r: 6, fill: '#C41E3A' }}
                       />
                     </LineChart>
                   </ResponsiveContainer>
@@ -439,7 +439,7 @@ export function AnalyticsPageClient({
           <Card className="bg-white border-[#E5E5E5]">
             <CardHeader>
               <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-                <Award className="h-5 w-5 text-[#F5A524]" />
+                <Award className="h-5 w-5 text-[#C41E3A]" />
                 付款方式
               </CardTitle>
             </CardHeader>
@@ -513,7 +513,7 @@ export function AnalyticsPageClient({
         <Card className="bg-white border-[#E5E5E5]">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-              <Users className="h-5 w-5 text-[#F5A524]" />
+              <Users className="h-5 w-5 text-[#C41E3A]" />
               學員列表
               <span className="text-sm font-normal text-[#A3A3A3]">
                 ({students.length} 人)
@@ -543,7 +543,7 @@ export function AnalyticsPageClient({
                       <div className="col-span-4 flex items-center gap-3">
                         <Avatar className="h-10 w-10">
                           <AvatarImage src={student.image || ''} />
-                          <AvatarFallback className="bg-[#F5A524] text-white">
+                          <AvatarFallback className="bg-[#C41E3A] text-white">
                             {student.name?.[0] || student.email[0].toUpperCase()}
                           </AvatarFallback>
                         </Avatar>

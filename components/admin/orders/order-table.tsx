@@ -25,7 +25,7 @@ interface OrderTableProps {
   orders: OrderWithDetails[]
 }
 
-// 訂單狀態 Badge 樣式 - VibeFlow 風格
+// 訂單狀態 Badge 樣式 - Solo Academy 風格
 const statusStyles: Record<OrderStatus, { label: string; className: string }> = {
   PENDING: {
     label: '待付款',

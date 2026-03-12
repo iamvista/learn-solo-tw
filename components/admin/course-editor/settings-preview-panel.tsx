@@ -96,7 +96,7 @@ function PreviewPanel({
       <div className="p-4">
         <h2 className="text-lg font-bold text-[#0A0A0A] mb-4">{title}</h2>
         {content ? (
-          <div className="prose prose-sm max-w-none prose-headings:text-[#0A0A0A] prose-p:text-[#525252] prose-a:text-[#F5A524] prose-strong:text-[#0A0A0A] prose-code:text-[#F5A524] prose-code:bg-[#FAFAFA] prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-[#FAFAFA] prose-blockquote:border-[#E5E5E5] prose-blockquote:text-[#525252] prose-li:text-[#525252]">
+          <div className="prose prose-sm max-w-none prose-headings:text-[#0A0A0A] prose-p:text-[#525252] prose-a:text-[#C41E3A] prose-strong:text-[#0A0A0A] prose-code:text-[#C41E3A] prose-code:bg-[#FAFAFA] prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-[#FAFAFA] prose-blockquote:border-[#E5E5E5] prose-blockquote:text-[#525252] prose-li:text-[#525252]">
             <Streamdown>{content}</Streamdown>
           </div>
         ) : (
@@ -213,7 +213,7 @@ function SettingsPanel({ streamCustomerCode }: SettingsPanelProps) {
           size="sm"
           onClick={handleSave}
           disabled={isPending}
-          className="h-7 bg-[#F5A524] hover:bg-[#E09000] text-white text-xs"
+          className="h-7 bg-[#C41E3A] hover:bg-[#A01830] text-white text-xs"
         >
           {isPending ? (
             <Loader2 className="h-3 w-3 animate-spin mr-1" />
@@ -282,7 +282,7 @@ function SettingsPanel({ streamCustomerCode }: SettingsPanelProps) {
           <>
             <div className="border-t border-[#E5E5E5] pt-4">
               <div className="flex items-center gap-2 mb-4">
-                <Clock className="h-4 w-4 text-[#F5A524]" />
+                <Clock className="h-4 w-4 text-[#C41E3A]" />
                 <span className="text-xs font-medium text-[#0A0A0A]">
                   即將上線設定
                 </span>
@@ -427,14 +427,14 @@ export function SettingsPreviewPanel({
           <TabsList className="w-full h-10 bg-transparent rounded-none p-0">
             <TabsTrigger
               value="settings"
-              className="flex-1 h-full rounded-none border-b-2 border-transparent data-[state=active]:border-[#F5A524] data-[state=active]:bg-transparent data-[state=active]:text-[#F5A524] text-[#525252]"
+              className="flex-1 h-full rounded-none border-b-2 border-transparent data-[state=active]:border-[#C41E3A] data-[state=active]:bg-transparent data-[state=active]:text-[#C41E3A] text-[#525252]"
             >
               <Settings className="h-4 w-4 mr-1.5" />
               編輯
             </TabsTrigger>
             <TabsTrigger
               value="preview"
-              className="flex-1 h-full rounded-none border-b-2 border-transparent data-[state=active]:border-[#F5A524] data-[state=active]:bg-transparent data-[state=active]:text-[#F5A524] text-[#525252]"
+              className="flex-1 h-full rounded-none border-b-2 border-transparent data-[state=active]:border-[#C41E3A] data-[state=active]:bg-transparent data-[state=active]:text-[#C41E3A] text-[#525252]"
             >
               <Eye className="h-4 w-4 mr-1.5" />
               預覽

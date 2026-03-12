@@ -1,6 +1,6 @@
 // components/main/landing/bonus-section.tsx
 // 贈品區塊
-// VibeFlow Design System - 獨家贈品
+// Solo Academy Design System - 獨家贈品
 
 'use client'
 
@@ -40,7 +40,7 @@ export function BonusSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-sm font-bold tracking-widest text-[#F5A524] uppercase"
+            className="text-sm font-bold tracking-widest text-[#C41E3A] uppercase"
           >
             Exclusive Bonuses
           </motion.p>
@@ -79,7 +79,7 @@ export function BonusSection() {
               transition={{ delay: index * 0.1 + 0.3 }}
               className="group flex gap-6 rounded-2xl border border-[#0A0A0A]/5 bg-[#0A0A0A] p-8 text-white transition-all hover:bg-[#1a1a1a]"
             >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#F5A524] transition-transform group-hover:scale-110">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#C41E3A] transition-transform group-hover:scale-110">
                 <bonus.icon className="h-6 w-6 text-white" />
               </div>
               <div>

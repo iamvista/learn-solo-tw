@@ -129,7 +129,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
                 <div className="h-px bg-[#E5E5E5] my-2" />
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-[#A3A3A3]">實付金額</span>
-                  <span className="text-[#F5A524] font-bold text-lg">
+                  <span className="text-[#C41E3A] font-bold text-lg">
                     NT$ {order.amount.toLocaleString("zh-TW")}
                   </span>
                 </div>
@@ -141,7 +141,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
               {course && !isGuestOrder ? (
                 <Button
                   asChild
-                  className="w-full rounded-full bg-[#F5A524] hover:bg-[#E09000] text-white py-8 text-lg font-bold transition-all shadow-lg shadow-[#F5A524]/20 hover:shadow-xl hover:shadow-[#F5A524]/30"
+                  className="w-full rounded-full bg-[#C41E3A] hover:bg-[#A01830] text-white py-8 text-lg font-bold transition-all shadow-lg shadow-[#C41E3A]/20 hover:shadow-xl hover:shadow-[#C41E3A]/30"
                 >
                   <Link
                     href={
@@ -157,7 +157,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
               ) : isGuestOrder ? (
                 <Button
                   asChild
-                  className="w-full rounded-full bg-[#F5A524] hover:bg-[#E09000] text-white py-8 text-lg font-bold transition-all shadow-lg shadow-[#F5A524]/20 hover:shadow-xl hover:shadow-[#F5A524]/30"
+                  className="w-full rounded-full bg-[#C41E3A] hover:bg-[#A01830] text-white py-8 text-lg font-bold transition-all shadow-lg shadow-[#C41E3A]/20 hover:shadow-xl hover:shadow-[#C41E3A]/30"
                 >
                   <Link href="/login">
                     前往登入頁
@@ -167,7 +167,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
               ) : (
                 <Button
                   asChild
-                  className="w-full rounded-full bg-[#F5A524] hover:bg-[#E09000] text-white py-8 text-lg font-bold"
+                  className="w-full rounded-full bg-[#C41E3A] hover:bg-[#A01830] text-white py-8 text-lg font-bold"
                 >
                   <Link href="/">瀏覽所有課程</Link>
                 </Button>

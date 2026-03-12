@@ -1,6 +1,6 @@
 // components/main/landing/service-section.tsx
 // 社群支援區塊
-// VibeFlow Design System - 終身校友社群 + 技術支援
+// Solo Academy Design System - 終身校友社群 + 技術支援
 
 'use client'
 
@@ -17,7 +17,7 @@ export function ServiceSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-sm font-bold tracking-widest text-[#F5A524] uppercase"
+            className="text-sm font-bold tracking-widest text-[#C41E3A] uppercase"
           >
             Learning Community
           </motion.p>
@@ -49,9 +49,9 @@ export function ServiceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="group rounded-2xl border border-[#E5E5E5] bg-white p-10 transition-all hover:border-[#F5A524]/40"
+            className="group rounded-2xl border border-[#E5E5E5] bg-white p-10 transition-all hover:border-[#C41E3A]/40"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0A0A0A] text-white transition-colors group-hover:bg-[#F5A524]">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0A0A0A] text-white transition-colors group-hover:bg-[#C41E3A]">
               <Users className="h-6 w-6" />
             </div>
             <h3 className="mt-8 text-xl font-bold text-[#0A0A0A]">
@@ -71,15 +71,15 @@ export function ServiceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="group rounded-2xl border border-[#E5E5E5] bg-white p-10 transition-all hover:border-[#F5A524]/40"
+            className="group rounded-2xl border border-[#E5E5E5] bg-white p-10 transition-all hover:border-[#C41E3A]/40"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0A0A0A] text-white transition-colors group-hover:bg-[#F5A524]">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0A0A0A] text-white transition-colors group-hover:bg-[#C41E3A]">
               <HeartHandshake className="h-6 w-6" />
             </div>
             <h3 className="mt-8 text-xl font-bold text-[#0A0A0A]">
               講師親自支援
             </h3>
-            <p className="mt-2 text-sm font-semibold text-[#F5A524]">
+            <p className="mt-2 text-sm font-semibold text-[#C41E3A]">
               7 日技術急診室
             </p>
             <p className="mt-4 text-base leading-relaxed text-[#525252]">

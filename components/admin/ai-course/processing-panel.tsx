@@ -140,7 +140,7 @@ function LessonProgressCard({
       case 'uploading':
         return <Upload className="w-4 h-4 text-blue-500 animate-pulse" />
       case 'generating':
-        return <Sparkles className="w-4 h-4 text-[#F5A524] animate-pulse" />
+        return <Sparkles className="w-4 h-4 text-[#C41E3A] animate-pulse" />
       case 'completed':
         return <CheckCircle className="w-4 h-4 text-green-500" />
       case 'error':

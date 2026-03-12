@@ -236,7 +236,7 @@ export function AICourseDialog({
             </Button>
             <Button
               onClick={handleStartProcessing}
-              className="bg-[#F5A524] hover:bg-[#E09000] text-white"
+              className="bg-[#C41E3A] hover:bg-[#A01830] text-white"
             >
               開始處理
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -266,7 +266,7 @@ export function AICourseDialog({
             <Button
               onClick={handleSave}
               disabled={isSaving || stats.completed === 0}
-              className="bg-[#F5A524] hover:bg-[#E09000] text-white"
+              className="bg-[#C41E3A] hover:bg-[#A01830] text-white"
             >
               {isSaving ? (
                 <>
@@ -331,8 +331,8 @@ export function AICourseDialog({
       >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#F5A524]/10 flex items-center justify-center">
-              <StageIcon className="w-4 h-4 text-[#F5A524]" />
+            <div className="w-8 h-8 rounded-lg bg-[#C41E3A]/10 flex items-center justify-center">
+              <StageIcon className="w-4 h-4 text-[#C41E3A]" />
             </div>
             {stageInfo.title}
           </DialogTitle>
@@ -347,7 +347,7 @@ export function AICourseDialog({
                 className={cn(
                   'w-2 h-2 rounded-full transition-colors',
                   stage === s
-                    ? 'bg-[#F5A524]'
+                    ? 'bg-[#C41E3A]'
                     : ['drop', 'preview', 'processing', 'confirm'].indexOf(stage) > i
                       ? 'bg-green-500'
                       : 'bg-[#E5E5E5]'

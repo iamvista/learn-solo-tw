@@ -216,8 +216,8 @@ export function ImageUpload({
         className={cn(
           'border-2 border-dashed transition-colors cursor-pointer rounded-xl',
           isDragging
-            ? 'border-[#F5A524] bg-[#F5A524]/10'
-            : 'border-[#E5E5E5] bg-white hover:border-[#F5A524]'
+            ? 'border-[#C41E3A] bg-[#C41E3A]/10'
+            : 'border-[#E5E5E5] bg-white hover:border-[#C41E3A]'
         )}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -271,7 +271,7 @@ export function ImageUpload({
                 {item.status === 'uploading' && (
                   <div className="absolute inset-0 bg-[#0A0A0A]/60 flex items-center justify-center">
                     <div className="text-center">
-                      <Loader2 className="w-8 h-8 text-[#F5A524] animate-spin mx-auto mb-2" />
+                      <Loader2 className="w-8 h-8 text-[#C41E3A] animate-spin mx-auto mb-2" />
                       <p className="text-white text-sm">上傳中...</p>
                     </div>
                   </div>

@@ -13,8 +13,8 @@ interface ConversionFunnelChartProps {
 }
 
 const FUNNEL_COLORS = [
-  '#F5A524',
-  '#E09000',
+  '#C41E3A',
+  '#A01830',
   '#525252',
   '#A3A3A3',
 ]

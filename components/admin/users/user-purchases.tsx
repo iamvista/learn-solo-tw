@@ -132,7 +132,7 @@ export function UserPurchases({ userId, purchases }: UserPurchasesProps) {
                           variant={purchase.orderId ? 'default' : 'secondary'}
                           className={
                             purchase.orderId
-                              ? 'bg-[#F5A524] hover:bg-[#E09000] text-white'
+                              ? 'bg-[#C41E3A] hover:bg-[#A01830] text-white'
                               : 'bg-[#FAFAFA] hover:bg-[#FAFAFA] text-[#525252] border border-[#E5E5E5]'
                           }
                         >

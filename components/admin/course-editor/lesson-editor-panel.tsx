@@ -209,7 +209,7 @@ function VideoSection({
             {isPollingDuration || (!videoDuration || videoDuration <= 0) ? (
               /* 影片處理中或時長未知 - 顯示處理中狀態而非 iframe（避免 Video Not Found） */
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0A0A0A]">
-                <Loader2 className="h-10 w-10 text-[#F5A524] animate-spin mb-3" />
+                <Loader2 className="h-10 w-10 text-[#C41E3A] animate-spin mb-3" />
                 <p className="text-white text-sm">影片處理中，請稍候...</p>
                 <p className="text-[#A3A3A3] text-xs mt-1">處理完成後將自動顯示預覽</p>
               </div>
@@ -233,7 +233,7 @@ function VideoSection({
                 <span>時長: {formatDuration(videoDuration)}</span>
               </div>
             ) : (
-              <div className="flex items-center gap-1 text-[#F5A524]">
+              <div className="flex items-center gap-1 text-[#C41E3A]">
                 <Loader2 className="h-3 w-3 animate-spin" />
                 <span>影片處理中...</span>
               </div>
@@ -262,7 +262,7 @@ function VideoSection({
               <Button
                 variant="outline"
                 onClick={() => setShowUploader(true)}
-                className="flex-1 h-20 flex-col gap-2 border-dashed border-[#E5E5E5] text-[#525252] hover:bg-[#FAFAFA] hover:text-[#0A0A0A] hover:border-[#F5A524]"
+                className="flex-1 h-20 flex-col gap-2 border-dashed border-[#E5E5E5] text-[#525252] hover:bg-[#FAFAFA] hover:text-[#0A0A0A] hover:border-[#C41E3A]"
               >
                 <Upload className="h-5 w-5" />
                 <span className="text-xs">上傳影片</span>
@@ -270,7 +270,7 @@ function VideoSection({
               <Button
                 variant="outline"
                 onClick={() => setShowPicker(true)}
-                className="flex-1 h-20 flex-col gap-2 border-dashed border-[#E5E5E5] text-[#525252] hover:bg-[#FAFAFA] hover:text-[#0A0A0A] hover:border-[#F5A524]"
+                className="flex-1 h-20 flex-col gap-2 border-dashed border-[#E5E5E5] text-[#525252] hover:bg-[#FAFAFA] hover:text-[#0A0A0A] hover:border-[#C41E3A]"
               >
                 <FolderOpen className="h-5 w-5" />
                 <span className="text-xs">從媒體庫選擇</span>
@@ -423,7 +423,7 @@ export function LessonEditorPanel({ streamCustomerCode }: LessonEditorPanelProps
         <Button
           onClick={handleSave}
           disabled={isPending}
-          className="bg-[#F5A524] hover:bg-[#E09000] text-white"
+          className="bg-[#C41E3A] hover:bg-[#A01830] text-white"
         >
           {isPending ? (
             <Loader2 className="h-4 w-4 animate-spin mr-2" />

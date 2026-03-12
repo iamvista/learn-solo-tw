@@ -48,13 +48,13 @@ export function ForgotPasswordForm() {
                 placeholder="your@email.com"
                 required
                 disabled={isPending}
-                className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-6 text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus:ring-[#F5A524]/20"
+                className="rounded-lg border border-[#E5E5E5] bg-white px-4 py-6 text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus:ring-[#C41E3A]/20"
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full rounded-full bg-[#F5A524] py-6 text-base font-semibold text-white transition-colors hover:bg-[#E09000]"
+              className="w-full rounded-full bg-[#C41E3A] py-6 text-base font-semibold text-white transition-colors hover:bg-[#A01830]"
               disabled={isPending}
             >
               {isPending ? (
@@ -72,7 +72,7 @@ export function ForgotPasswordForm() {
         <div className="text-center text-sm text-[#525252]">
           <Link
             href="/login"
-            className="font-semibold text-[#F5A524] hover:text-[#E09000] transition-colors"
+            className="font-semibold text-[#C41E3A] hover:text-[#A01830] transition-colors"
           >
             返回登入
           </Link>

@@ -89,7 +89,7 @@ export function AllCommentsTable({
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <h1 className="text-xl font-extrabold text-[#0A0A0A] flex items-center gap-2">
-            <MessageCircle className="h-5 w-5 text-[#F5A524]" />
+            <MessageCircle className="h-5 w-5 text-[#C41E3A]" />
             留言管理
           </h1>
           <p className="mt-1 text-sm text-[#525252]">
@@ -128,7 +128,7 @@ export function AllCommentsTable({
                     <td className="px-6 py-4">
                       <Link
                         href={`/admin/courses/${c.lesson.chapter.course.id}/content`}
-                        className="text-[#0A0A0A] font-semibold underline decoration-[#E5E5E5] underline-offset-2 hover:decoration-[#F5A524] transition-colors"
+                        className="text-[#0A0A0A] font-semibold underline decoration-[#E5E5E5] underline-offset-2 hover:decoration-[#C41E3A] transition-colors"
                       >
                         {c.lesson.chapter.course.title}
                       </Link>
@@ -136,7 +136,7 @@ export function AllCommentsTable({
                     <td className="px-6 py-4">
                       <Link
                         href={`/admin/courses/${c.lesson.chapter.course.id}/content?lesson=${c.lesson.id}`}
-                        className="text-[#525252] underline decoration-[#E5E5E5] underline-offset-2 hover:decoration-[#F5A524] hover:text-[#0A0A0A] transition-colors"
+                        className="text-[#525252] underline decoration-[#E5E5E5] underline-offset-2 hover:decoration-[#C41E3A] hover:text-[#0A0A0A] transition-colors"
                       >
                         {c.lesson.chapter.title}
                       </Link>
@@ -144,7 +144,7 @@ export function AllCommentsTable({
                     <td className="px-6 py-4">
                       <Link
                         href={`/admin/courses/${c.lesson.chapter.course.id}/content?lesson=${c.lesson.id}`}
-                        className="text-[#0A0A0A] underline decoration-[#E5E5E5] underline-offset-2 hover:decoration-[#F5A524] transition-colors"
+                        className="text-[#0A0A0A] underline decoration-[#E5E5E5] underline-offset-2 hover:decoration-[#C41E3A] transition-colors"
                       >
                         {c.lesson.title}
                       </Link>
@@ -155,7 +155,7 @@ export function AllCommentsTable({
                           {c.isAnonymous ? '學員（匿名）' : c.user.name || '未命名'}
                         </span>
                         {c.isAnonymous && (
-                          <Badge className="bg-[#F5A524]/10 text-[#F5A524] hover:bg-[#F5A524]/10">
+                          <Badge className="bg-[#C41E3A]/10 text-[#C41E3A] hover:bg-[#C41E3A]/10">
                             <ShieldOff className="mr-1 h-3 w-3" />
                             匿名
                           </Badge>
@@ -186,7 +186,7 @@ export function AllCommentsTable({
                             setCommentToReply(c)
                             setReplyOpen(true)
                           }}
-                          className="border-[#F5A524]/30 text-[#F5A524] hover:bg-[#F5A524]/5 hover:text-[#E09000] rounded-lg"
+                          className="border-[#C41E3A]/30 text-[#C41E3A] hover:bg-[#C41E3A]/5 hover:text-[#A01830] rounded-lg"
                         >
                           <Reply className="mr-2 h-4 w-4" />
                           回覆

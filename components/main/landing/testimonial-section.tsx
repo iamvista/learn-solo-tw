@@ -105,14 +105,14 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   const isInterview = testimonial.type === 'interview'
 
   return (
-    <div className={`relative w-[280px] sm:w-[340px] shrink-0 flex flex-col rounded-2xl border border-[#E5E5E5] bg-white p-4 sm:p-5 transition-all hover:border-[#F5A524]/40 hover:shadow-lg hover:shadow-[#F5A524]/5 overflow-visible ${testimonial.image ? 'pb-14 sm:pb-16' : ''}`}>
+    <div className={`relative w-[280px] sm:w-[340px] shrink-0 flex flex-col rounded-2xl border border-[#E5E5E5] bg-white p-4 sm:p-5 transition-all hover:border-[#C41E3A]/40 hover:shadow-lg hover:shadow-[#C41E3A]/5 overflow-visible ${testimonial.image ? 'pb-14 sm:pb-16' : ''}`}>
       {/* 上方：星星 */}
       <div className="flex items-center mb-4">
         <div className="flex gap-0.5">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star
               key={i}
-              className="h-3.5 w-3.5 fill-[#F5A524] text-[#F5A524]"
+              className="h-3.5 w-3.5 fill-[#C41E3A] text-[#C41E3A]"
             />
           ))}
         </div>
@@ -197,7 +197,7 @@ export function TestimonialSection({ courseId }: TestimonialSectionProps) {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-sm font-bold tracking-widest text-[#F5A524] uppercase"
+            className="text-sm font-bold tracking-widest text-[#C41E3A] uppercase"
           >
             Student Feedback
           </motion.p>
@@ -225,7 +225,7 @@ export function TestimonialSection({ courseId }: TestimonialSectionProps) {
           <div className="mt-6 text-center">
             <Link
               href={`/checkout?courseId=${courseId}`}
-              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#F5A524] hover:text-[#E09000] transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#C41E3A] hover:text-[#A01830] transition-colors"
             >
               加入 500+ 學員的行列
               <ArrowRight className="h-4 w-4" />

@@ -88,7 +88,7 @@ export function ActivateAccountClient({ token }: ActivateAccountClientProps) {
       <Button
         type="submit"
         disabled={isLoading}
-        className="w-full rounded-full bg-[#F5A524] py-6 text-base font-bold text-white hover:bg-[#E09000]"
+        className="w-full rounded-full bg-[#C41E3A] py-6 text-base font-bold text-white hover:bg-[#A01830]"
       >
         {isLoading ? (
           <>

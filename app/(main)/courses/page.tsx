@@ -1,6 +1,6 @@
 // app/(main)/courses/page.tsx
 // 前台課程列表頁面
-// VibeFlow Design System - 極簡白黑風格
+// Solo Academy Design System - 極簡白黑風格
 
 import type { Metadata } from 'next'
 import { CourseGrid, CourseGridEmpty } from '@/components/main/course-grid'
@@ -34,7 +34,7 @@ export default async function CoursesPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* 頁面標題區 - VibeFlow 風格 */}
+      {/* 頁面標題區 - Solo Academy 風格 */}
       <section className="bg-[#FAFAFA] border-b border-[#E5E5E5] py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight text-[#0A0A0A] sm:text-5xl">

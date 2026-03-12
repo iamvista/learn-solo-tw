@@ -29,7 +29,7 @@ function formatAmount(amount: number): string {
 
 // 排名樣式
 const rankStyles: Record<number, string> = {
-  1: 'bg-[#F5A524] text-white',
+  1: 'bg-[#C41E3A] text-white',
   2: 'bg-[#525252] text-white',
   3: 'bg-[#A3A3A3] text-white',
 }
@@ -40,7 +40,7 @@ export function TopCoursesTable({ courses }: TopCoursesTableProps) {
       <Card className="bg-white border-[#E5E5E5]">
         <CardHeader>
           <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-            <Trophy className="h-5 w-5 text-[#F5A524]" />
+            <Trophy className="h-5 w-5 text-[#C41E3A]" />
             熱門課程排行
           </CardTitle>
         </CardHeader>
@@ -65,7 +65,7 @@ export function TopCoursesTable({ courses }: TopCoursesTableProps) {
     <Card className="bg-white border-[#E5E5E5]">
       <CardHeader>
         <CardTitle className="text-[#0A0A0A] flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-[#F5A524]" />
+          <Trophy className="h-5 w-5 text-[#C41E3A]" />
           熱門課程排行
         </CardTitle>
       </CardHeader>
@@ -133,7 +133,7 @@ export function TopCoursesTable({ courses }: TopCoursesTableProps) {
 
                     {/* 總營收 */}
                     <TableCell className="text-right">
-                      <span className="text-[#F5A524] font-medium">
+                      <span className="text-[#C41E3A] font-medium">
                         {formatAmount(course.totalRevenue)}
                       </span>
                     </TableCell>

@@ -111,7 +111,7 @@ export function GrantAccessDialog({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg">
+        <Button className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg">
           <Plus className="mr-2 h-4 w-4" />
           手動授權課程
         </Button>
@@ -191,7 +191,7 @@ export function GrantAccessDialog({
           <Button
             onClick={handleGrant}
             disabled={isPending || !selectedCourseId || courses.length === 0}
-            className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg"
+            className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg"
           >
             {isPending ? (
               <>

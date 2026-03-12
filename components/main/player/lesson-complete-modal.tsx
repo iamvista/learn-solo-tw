@@ -47,7 +47,7 @@ function Confetti({ isActive }: { isActive: boolean }) {
 
   const createParticles = useCallback(() => {
     const colors = [
-      "#F5A524", // 橘色（強調色）
+      "#C41E3A", // 橘色（強調色）
       "#FCD34D", // 金黃色
       "#FB923C", // 淺橘色
       "#F97316", // 深橘色
@@ -265,14 +265,14 @@ export function LessonCompleteModal({
                   <div className="mt-8">
                     {/* 進度指示器 */}
                     <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5A524]">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C41E3A]">
                         <Check className="h-4 w-4 text-white" />
                       </div>
                       <Progress
                         value={courseProgress.progressPercentage}
-                        className="flex-1 h-2 bg-[#F5F5F5] [&>div]:bg-[#F5A524]"
+                        className="flex-1 h-2 bg-[#F5F5F5] [&>div]:bg-[#C41E3A]"
                       />
-                      <span className="text-sm font-bold text-[#F5A524]">
+                      <span className="text-sm font-bold text-[#C41E3A]">
                         {courseProgress.progressPercentage}%
                       </span>
                     </div>
@@ -293,7 +293,7 @@ export function LessonCompleteModal({
                     <Button
                       onClick={handleNextLesson}
                       disabled={isNavigating}
-                      className="rounded-full bg-[#F5A524] px-6 py-5 text-sm font-bold text-white hover:bg-[#E09000]"
+                      className="rounded-full bg-[#C41E3A] px-6 py-5 text-sm font-bold text-white hover:bg-[#A01830]"
                     >
                       <Check className="mr-2 h-4 w-4" />
                       下一單元
@@ -311,7 +311,7 @@ export function LessonCompleteModal({
                         });
                         router.push(`/courses/${courseSlug}`);
                       }}
-                      className="rounded-full bg-[#F5A524] px-6 py-5 text-sm font-bold text-white hover:bg-[#E09000]"
+                      className="rounded-full bg-[#C41E3A] px-6 py-5 text-sm font-bold text-white hover:bg-[#A01830]"
                     >
                       <Check className="mr-2 h-4 w-4" />
                       完成課程

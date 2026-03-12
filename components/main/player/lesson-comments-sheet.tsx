@@ -217,7 +217,7 @@ export function LessonCommentsSheet({
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
               <SheetTitle className="text-white text-lg font-bold flex items-center gap-2">
-                <MessageCircle className="h-5 w-5 text-[#F5A524]" />
+                <MessageCircle className="h-5 w-5 text-[#C41E3A]" />
                 評論
               </SheetTitle>
               <p className="mt-1 text-xs text-white/40 truncate">
@@ -247,7 +247,7 @@ export function LessonCommentsSheet({
               <Switch
                 checked={isAnonymous}
                 onCheckedChange={setIsAnonymous}
-                className="data-[state=checked]:bg-[#F5A524] data-[state=unchecked]:bg-white/15"
+                className="data-[state=checked]:bg-[#C41E3A] data-[state=unchecked]:bg-white/15"
               />
             </div>
           </div>
@@ -309,7 +309,7 @@ export function LessonCommentsSheet({
                         className={cn(
                           'rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap break-words',
                           isMine
-                            ? 'bg-[#F5A524] text-[#0A0A0A] rounded-tr-md'
+                            ? 'bg-[#C41E3A] text-[#0A0A0A] rounded-tr-md'
                             : 'bg-white/10 text-white rounded-tl-md'
                         )}
                       >
@@ -349,7 +349,7 @@ export function LessonCommentsSheet({
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="輸入留言..."
                   className={cn(
-                    'min-h-[44px] max-h-32 resize-none rounded-2xl border-white/10 bg-white/5 text-white placeholder:text-white/35 focus-visible:ring-[#F5A524]/30',
+                    'min-h-[44px] max-h-32 resize-none rounded-2xl border-white/10 bg-white/5 text-white placeholder:text-white/35 focus-visible:ring-[#C41E3A]/30',
                     cooldownText && 'opacity-80'
                   )}
                   onKeyDown={(e) => {
@@ -364,7 +364,7 @@ export function LessonCommentsSheet({
                   onClick={handleSend}
                   disabled={!canSend}
                   className={cn(
-                    'h-[44px] w-[44px] rounded-2xl bg-[#F5A524] text-[#0A0A0A] hover:bg-[#F5A524]/90',
+                    'h-[44px] w-[44px] rounded-2xl bg-[#C41E3A] text-[#0A0A0A] hover:bg-[#C41E3A]/90',
                     'disabled:opacity-50 disabled:cursor-not-allowed'
                   )}
                   aria-label="送出留言"

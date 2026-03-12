@@ -32,7 +32,7 @@ const roleConfig: Record<UserRole, { label: string; className: string }> = {
   },
   EDITOR: {
     label: '編輯者',
-    className: 'bg-[#F5A524] hover:bg-[#E09000] text-white',
+    className: 'bg-[#C41E3A] hover:bg-[#A01830] text-white',
   },
   ADMIN: {
     label: '管理員',

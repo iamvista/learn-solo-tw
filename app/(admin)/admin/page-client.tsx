@@ -99,15 +99,15 @@ function formatTooltipDate(dateStr: string): string {
 }
 
 const orderStatusMap: Record<string, { label: string; className: string }> = {
-  PENDING: { label: '待付款', className: 'text-[#F5A524]' },
+  PENDING: { label: '待付款', className: 'text-[#C41E3A]' },
   PAID: { label: '已付款', className: 'text-emerald-600' },
   FAILED: { label: '付款失敗', className: 'text-red-500' },
   REFUNDED: { label: '已退款', className: 'text-[#A3A3A3]' },
   CANCELLED: { label: '已取消', className: 'text-[#A3A3A3]' },
 }
 
-const PIE_COLORS = ['#F5A524', '#525252', '#A3A3A3', '#E5E5E5', '#0A0A0A']
-const FUNNEL_COLORS = ['#F5A524', '#E09000', '#525252', '#A3A3A3']
+const PIE_COLORS = ['#C41E3A', '#525252', '#A3A3A3', '#E5E5E5', '#0A0A0A']
+const FUNNEL_COLORS = ['#C41E3A', '#A01830', '#525252', '#A3A3A3']
 
 // ─── Tooltip 元件 ───
 
@@ -157,7 +157,7 @@ function DAUTooltip({ active, payload, label }: {
     <div className="bg-white border border-[#E5E5E5] rounded-xl p-3">
       <p className="text-[#0A0A0A] text-sm mb-1 font-medium">{formatTooltipDate(label || '')}</p>
       <div className="flex items-center gap-2">
-        <div className="w-3 h-3 rounded-full bg-[#F5A524]" />
+        <div className="w-3 h-3 rounded-full bg-[#C41E3A]" />
         <span className="text-[#525252] text-sm">學習人數:</span>
         <span className="text-[#0A0A0A] font-medium text-sm">{payload[0].value} 人</span>
       </div>
@@ -282,7 +282,7 @@ export function DashboardPageClient({
                     <YAxis yAxisId="orders" orientation="right" stroke="#A3A3A3" fontSize={12} />
                     <Tooltip content={<SalesTooltip />} />
                     <Legend formatter={(v) => <span className="text-[#525252] text-sm">{v === 'revenue' ? '營收' : '訂單數'}</span>} />
-                    <Line yAxisId="revenue" type="monotone" dataKey="revenue" name="revenue" stroke="#F5A524" strokeWidth={2} dot={{ fill: '#F5A524', strokeWidth: 2, r: 3 }} activeDot={{ r: 5, fill: '#F5A524' }} />
+                    <Line yAxisId="revenue" type="monotone" dataKey="revenue" name="revenue" stroke="#C41E3A" strokeWidth={2} dot={{ fill: '#C41E3A', strokeWidth: 2, r: 3 }} activeDot={{ r: 5, fill: '#C41E3A' }} />
                     <Line yAxisId="orders" type="monotone" dataKey="orders" name="orders" stroke="#525252" strokeWidth={2} dot={{ fill: '#525252', strokeWidth: 2, r: 3 }} activeDot={{ r: 5, fill: '#525252' }} />
                   </LineChart>
                 </ResponsiveContainer>
@@ -349,8 +349,8 @@ export function DashboardPageClient({
                 <ComposedChart data={userGrowth} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                   <defs>
                     <linearGradient id="colorCumulative" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#F5A524" stopOpacity={0.15} />
-                      <stop offset="95%" stopColor="#F5A524" stopOpacity={0} />
+                      <stop offset="5%" stopColor="#C41E3A" stopOpacity={0.15} />
+                      <stop offset="95%" stopColor="#C41E3A" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
@@ -358,7 +358,7 @@ export function DashboardPageClient({
                   <YAxis yAxisId="cumulative" orientation="left" stroke="#A3A3A3" fontSize={12} />
                   <YAxis yAxisId="daily" orientation="right" stroke="#A3A3A3" fontSize={12} />
                   <Tooltip content={<GrowthTooltip />} />
-                  <Area yAxisId="cumulative" type="monotone" dataKey="cumulativeUsers" name="cumulativeUsers" stroke="#F5A524" strokeWidth={2} fill="url(#colorCumulative)" />
+                  <Area yAxisId="cumulative" type="monotone" dataKey="cumulativeUsers" name="cumulativeUsers" stroke="#C41E3A" strokeWidth={2} fill="url(#colorCumulative)" />
                   <Bar yAxisId="daily" dataKey="newUsers" name="newUsers" fill="#525252" radius={[2, 2, 0, 0]} barSize={12} />
                 </ComposedChart>
               </ResponsiveContainer>
@@ -375,15 +375,15 @@ export function DashboardPageClient({
                 <AreaChart data={dauData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                   <defs>
                     <linearGradient id="colorDAU" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#F5A524" stopOpacity={0.2} />
-                      <stop offset="95%" stopColor="#F5A524" stopOpacity={0} />
+                      <stop offset="5%" stopColor="#C41E3A" stopOpacity={0.2} />
+                      <stop offset="95%" stopColor="#C41E3A" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
                   <XAxis dataKey="date" tickFormatter={formatXLabel} stroke="#A3A3A3" fontSize={12} />
                   <YAxis stroke="#A3A3A3" fontSize={12} />
                   <Tooltip content={<DAUTooltip />} />
-                  <Area type="monotone" dataKey="activeUsers" stroke="#F5A524" strokeWidth={2} fill="url(#colorDAU)" />
+                  <Area type="monotone" dataKey="activeUsers" stroke="#C41E3A" strokeWidth={2} fill="url(#colorDAU)" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -438,7 +438,7 @@ export function DashboardPageClient({
           )}
         </ChartCardWrapper>
 
-        <ChartCardWrapper title="熱門課程排行" icon={<Trophy className="h-5 w-5 text-[#F5A524]" />} onPeriodChange={handleTopCoursesPeriodChange}>
+        <ChartCardWrapper title="熱門課程排行" icon={<Trophy className="h-5 w-5 text-[#C41E3A]" />} onPeriodChange={handleTopCoursesPeriodChange}>
           {topCourses.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <div className="w-16 h-16 rounded-full bg-[#FAFAFA] border border-[#E5E5E5] flex items-center justify-center mb-4">
@@ -462,7 +462,7 @@ export function DashboardPageClient({
                 <tbody>
                   {topCourses.map((course, index) => {
                     const rank = index + 1
-                    const rankStyles: Record<number, string> = { 1: 'bg-[#F5A524] text-white', 2: 'bg-[#525252] text-white', 3: 'bg-[#A3A3A3] text-white' }
+                    const rankStyles: Record<number, string> = { 1: 'bg-[#C41E3A] text-white', 2: 'bg-[#525252] text-white', 3: 'bg-[#A3A3A3] text-white' }
                     const rankStyle = rankStyles[rank] || 'bg-[#E5E5E5] text-[#525252]'
                     return (
                       <tr key={course.courseId} className="border-t border-[#E5E5E5] hover:bg-[#FAFAFA]">
@@ -476,7 +476,7 @@ export function DashboardPageClient({
                           </div>
                         </td>
                         <td className="text-center p-3"><span className="text-[#525252]">{course.totalOrders} 筆</span></td>
-                        <td className="text-right p-3"><span className="text-[#F5A524] font-medium">{formatCurrency(course.totalRevenue)}</span></td>
+                        <td className="text-right p-3"><span className="text-[#C41E3A] font-medium">{formatCurrency(course.totalRevenue)}</span></td>
                         <td className="text-right p-3">
                           <Button variant="ghost" size="sm" asChild className="h-8 w-8 p-0 text-[#525252] hover:text-[#0A0A0A] hover:bg-[#FAFAFA]">
                             <Link href={`/admin/courses/${course.courseId}`}><ArrowRight className="h-4 w-4" /></Link>
@@ -500,7 +500,7 @@ export function DashboardPageClient({
             <CardDescription className="text-[#525252]">常用功能快捷入口</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button asChild className="w-full justify-start bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg">
+            <Button asChild className="w-full justify-start bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg">
               <Link href="/admin/courses/new"><Plus className="mr-2 h-4 w-4" />新增課程</Link>
             </Button>
             <Button asChild variant="outline" className="w-full justify-start border-[#E5E5E5] text-[#525252] hover:bg-[#FAFAFA] hover:text-[#0A0A0A] rounded-lg">

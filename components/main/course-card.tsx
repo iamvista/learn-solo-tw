@@ -1,6 +1,6 @@
 // components/main/course-card.tsx
 // 課程卡片元件
-// VibeFlow Design System - 極簡白黑橘風格
+// Solo Academy Design System - 極簡白黑橘風格
 
 'use client'
 
@@ -58,7 +58,7 @@ export function CourseCard({ course }: CourseCardProps) {
       transition={{ duration: 0.2 }}
     >
       <Link href={`/courses/${slug}`} className="group block h-full">
-        <Card className="h-full overflow-hidden border-[#E5E5E5] bg-white transition-all duration-300 hover:border-[#F5A524]/50 hover:shadow-xl hover:shadow-[#F5A524]/5">
+        <Card className="h-full overflow-hidden border-[#E5E5E5] bg-white transition-all duration-300 hover:border-[#C41E3A]/50 hover:shadow-xl hover:shadow-[#C41E3A]/5">
           {/* 封面圖片 */}
           <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#F5F5F5]">
             {coverImage ? (
@@ -79,7 +79,7 @@ export function CourseCard({ course }: CourseCardProps) {
             {/* 上的標籤 (如果有特價) */}
             {isOnSale && (
               <div className="absolute left-4 top-4">
-                <span className="rounded-full bg-[#F5A524] px-3 py-1 text-xs font-bold text-white shadow-sm">
+                <span className="rounded-full bg-[#C41E3A] px-3 py-1 text-xs font-bold text-white shadow-sm">
                   {resolvedSaleLabel}
                 </span>
               </div>
@@ -89,7 +89,7 @@ export function CourseCard({ course }: CourseCardProps) {
           <CardContent className="flex flex-col gap-4 p-6">
             <div className="flex flex-col gap-2">
               {/* 課程標題 */}
-              <h3 className="line-clamp-2 text-xl font-bold text-[#0A0A0A] transition-colors group-hover:text-[#F5A524]">
+              <h3 className="line-clamp-2 text-xl font-bold text-[#0A0A0A] transition-colors group-hover:text-[#C41E3A]">
                 {title}
               </h3>
 
@@ -125,7 +125,7 @@ export function CourseCard({ course }: CourseCardProps) {
             {/* 價格與進入按鈕 */}
             <div className="flex items-center justify-between pt-2">
               <div className="flex items-baseline gap-2">
-                <span className="text-xl font-bold text-[#F5A524]">
+                <span className="text-xl font-bold text-[#C41E3A]">
                   {formatPrice(finalPrice)}
                 </span>
                 {isOnSale && (
@@ -135,7 +135,7 @@ export function CourseCard({ course }: CourseCardProps) {
                 )}
               </div>
               
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FAFAFA] text-[#0A0A0A] transition-colors group-hover:bg-[#F5A524] group-hover:text-white">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FAFAFA] text-[#0A0A0A] transition-colors group-hover:bg-[#C41E3A] group-hover:text-white">
                 <ArrowRight className="h-5 w-5" />
               </div>
             </div>

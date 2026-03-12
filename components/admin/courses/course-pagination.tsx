@@ -121,7 +121,7 @@ export function CoursePagination({
                   disabled={isPending}
                   className={
                     currentPage === item
-                      ? 'bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg'
+                      ? 'bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg'
                       : 'border-[#E5E5E5] text-[#525252] hover:bg-[#FAFAFA] hover:text-[#0A0A0A] rounded-lg'
                   }
                 >

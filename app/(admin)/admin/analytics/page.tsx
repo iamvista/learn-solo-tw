@@ -36,20 +36,20 @@ async function RevenueStatsSection() {
   // 決定成長率圖示和顏色
   const growthIcon =
     analytics.monthlyGrowth >= 0 ? (
-      <TrendingUp className="h-4 w-4 text-[#F5A524]" />
+      <TrendingUp className="h-4 w-4 text-[#C41E3A]" />
     ) : (
       <TrendingDown className="h-4 w-4 text-red-500" />
     )
 
   const growthColor =
-    analytics.monthlyGrowth >= 0 ? 'text-[#F5A524]' : 'text-red-500'
+    analytics.monthlyGrowth >= 0 ? 'text-[#C41E3A]' : 'text-red-500'
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <StatCard
         title="總營收"
         value={`NT$ ${analytics.totalRevenue.toLocaleString()}`}
-        icon={<DollarSign className="h-4 w-4 text-[#F5A524]" />}
+        icon={<DollarSign className="h-4 w-4 text-[#C41E3A]" />}
       />
       <StatCard
         title="本月營收"
@@ -90,7 +90,7 @@ async function MonthComparisonSection() {
           {/* 本月 */}
           <div className="p-4 bg-[#FAFAFA] rounded-xl border border-[#E5E5E5]">
             <p className="text-[#525252] text-sm mb-1">本月營收</p>
-            <p className="text-2xl font-bold text-[#F5A524]">
+            <p className="text-2xl font-bold text-[#C41E3A]">
               NT$ {analytics.thisMonthRevenue.toLocaleString()}
             </p>
             <p className="text-[#A3A3A3] text-sm mt-1">
@@ -115,7 +115,7 @@ async function MonthComparisonSection() {
           <span className="text-[#525252]">月營收成長率</span>
           <span
             className={`text-lg font-bold ${
-              analytics.monthlyGrowth >= 0 ? 'text-[#F5A524]' : 'text-red-500'
+              analytics.monthlyGrowth >= 0 ? 'text-[#C41E3A]' : 'text-red-500'
             }`}
           >
             {analytics.monthlyGrowth >= 0 ? '+' : ''}

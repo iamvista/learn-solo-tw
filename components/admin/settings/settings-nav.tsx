@@ -31,7 +31,7 @@ export function SettingsNav() {
             className={cn(
               'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors',
               isActive
-                ? 'bg-[#F5A524] text-white'
+                ? 'bg-[#C41E3A] text-white'
                 : 'bg-white border border-[#E5E5E5] text-[#525252] hover:bg-[#FAFAFA]'
             )}
           >

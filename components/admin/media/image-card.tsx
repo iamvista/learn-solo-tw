@@ -142,8 +142,8 @@ export function ImageCard({
       <Card
         className={cn(
           'overflow-hidden bg-white border-[#E5E5E5] rounded-xl transition-all group',
-          selectable && 'cursor-pointer hover:border-[#F5A524]',
-          selected && 'ring-2 ring-[#F5A524] border-[#F5A524]'
+          selectable && 'cursor-pointer hover:border-[#C41E3A]',
+          selected && 'ring-2 ring-[#C41E3A] border-[#C41E3A]'
         )}
         onClick={handleClick}
       >
@@ -166,7 +166,7 @@ export function ImageCard({
           {/* 選中標記 */}
           {selectable && selected && (
             <div className="absolute top-2 right-2">
-              <div className="w-6 h-6 rounded-full bg-[#F5A524] flex items-center justify-center">
+              <div className="w-6 h-6 rounded-full bg-[#C41E3A] flex items-center justify-center">
                 <CheckCircle className="w-4 h-4 text-white" />
               </div>
             </div>
@@ -291,7 +291,7 @@ export function ImageCard({
             <Button
               onClick={handleRename}
               disabled={isRenaming || !renameName.trim()}
-              className="bg-[#F5A524] hover:bg-[#E09000] text-white rounded-lg"
+              className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-lg"
             >
               {isRenaming ? (
                 <>

@@ -60,7 +60,7 @@ export function LessonContent({
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 lg:px-8">
       {/* Markdown 內容 */}
-      <article className="prose prose-neutral max-w-none prose-headings:text-[#0A0A0A] prose-h1:text-4xl prose-h1:font-bold prose-h2:text-2xl prose-h2:font-bold prose-h2:border-b prose-h2:border-[#E5E5E5] prose-h2:pb-4 prose-h3:text-xl prose-h3:font-semibold prose-p:text-[#525252] prose-p:leading-relaxed prose-a:text-[#F5A524] prose-a:no-underline hover:prose-a:underline prose-strong:text-[#0A0A0A] prose-code:text-[#F5A524] prose-code:bg-[#F5F5F5] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-pre:bg-[#FAFAFA] prose-pre:border prose-pre:border-[#E5E5E5] prose-blockquote:border-l-[#F5A524] prose-blockquote:text-[#525252]/80 prose-li:text-[#525252] prose-li:marker:text-[#A3A3A3] prose-hr:border-[#E5E5E5] prose-img:rounded-2xl prose-table:text-[#525252] prose-th:text-[#0A0A0A] prose-th:border-[#E5E5E5] prose-td:border-[#E5E5E5]">
+      <article className="prose prose-neutral max-w-none prose-headings:text-[#0A0A0A] prose-h1:text-4xl prose-h1:font-bold prose-h2:text-2xl prose-h2:font-bold prose-h2:border-b prose-h2:border-[#E5E5E5] prose-h2:pb-4 prose-h3:text-xl prose-h3:font-semibold prose-p:text-[#525252] prose-p:leading-relaxed prose-a:text-[#C41E3A] prose-a:no-underline hover:prose-a:underline prose-strong:text-[#0A0A0A] prose-code:text-[#C41E3A] prose-code:bg-[#F5F5F5] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-pre:bg-[#FAFAFA] prose-pre:border prose-pre:border-[#E5E5E5] prose-blockquote:border-l-[#C41E3A] prose-blockquote:text-[#525252]/80 prose-li:text-[#525252] prose-li:marker:text-[#A3A3A3] prose-hr:border-[#E5E5E5] prose-img:rounded-2xl prose-table:text-[#525252] prose-th:text-[#0A0A0A] prose-th:border-[#E5E5E5] prose-td:border-[#E5E5E5]">
         <Streamdown
           components={{
             // 自訂連結樣式
@@ -130,7 +130,7 @@ export function LessonContent({
           >
             <Button
               size="lg"
-              className="w-full rounded-full bg-[#F5A524] py-8 text-lg font-bold text-white shadow-lg shadow-[#F5A524]/10 transition-all hover:bg-[#E09000] hover:scale-[1.01]"
+              className="w-full rounded-full bg-[#C41E3A] py-8 text-lg font-bold text-white shadow-lg shadow-[#C41E3A]/10 transition-all hover:bg-[#A01830] hover:scale-[1.01]"
             >
               <span>完成並前往下一章節：{adjacentLessons.next.title}</span>
               <ChevronRight className="ml-2 h-6 w-6" />
@@ -141,9 +141,9 @@ export function LessonContent({
 
       {/* 課程完成提示 */}
       {!adjacentLessons.next && (
-        <div className="mt-16 rounded-2xl border-2 border-[#F5A524] bg-white p-12 text-center shadow-xl shadow-[#F5A524]/5">
+        <div className="mt-16 rounded-2xl border-2 border-[#C41E3A] bg-white p-12 text-center shadow-xl shadow-[#C41E3A]/5">
           <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#FEF3C7]">
-            <ChevronRight className="h-10 w-10 rotate-[-90deg] text-[#F5A524]" />
+            <ChevronRight className="h-10 w-10 rotate-[-90deg] text-[#C41E3A]" />
           </div>
           <h3 className="text-2xl font-bold text-[#0A0A0A]">
             恭喜完成本課程！

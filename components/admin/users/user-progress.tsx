@@ -45,7 +45,7 @@ export function UserProgress({ progress }: UserProgressProps) {
             <p className="text-xs text-[#525252]">已購課程</p>
           </div>
           <div className="bg-[#FAFAFA] border border-[#E5E5E5] rounded-xl p-4 text-center">
-            <p className="text-2xl font-bold text-[#F5A524]">{completedCourses}</p>
+            <p className="text-2xl font-bold text-[#C41E3A]">{completedCourses}</p>
             <p className="text-xs text-[#525252]">已完成</p>
           </div>
           <div className="bg-[#FAFAFA] border border-[#E5E5E5] rounded-xl p-4 text-center">
@@ -78,7 +78,7 @@ export function UserProgress({ progress }: UserProgressProps) {
                     {courseProgress.courseTitle}
                   </h4>
                   {courseProgress.progressPercent === 100 ? (
-                    <Badge className="bg-[#F5A524] hover:bg-[#E09000] text-white">
+                    <Badge className="bg-[#C41E3A] hover:bg-[#A01830] text-white">
                       <CheckCircle2 className="h-3 w-3 mr-1" />
                       已完成
                     </Badge>
