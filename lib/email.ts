@@ -2,20 +2,24 @@
 // Email 發送功能
 // 使用 Resend SDK 發送各類通知郵件
 
-import { Resend } from 'resend'
+import { Resend } from "resend";
 import {
   purchaseConfirmationTemplate,
   passwordResetTemplate,
   guestActivationTemplate,
   testEmailTemplate,
   adminPurchaseNotificationTemplate,
+  welcomeUserTemplate,
+  adminSignupNotificationTemplate,
   type PurchaseConfirmationData,
   type AdminPurchaseNotificationData,
+  type WelcomeUserData,
+  type AdminSignupNotificationData,
   type EmailBranding,
-} from '@/lib/email-templates'
-import { prisma } from '@/lib/prisma'
-import { SETTING_KEYS } from '@/lib/validations/settings'
-import { getAppUrl } from '@/lib/app-url'
+} from "@/lib/email-templates";
+import { prisma } from "@/lib/prisma";
+import { SETTING_KEYS } from "@/lib/validations/settings";
+import { getAppUrl } from "@/lib/app-url";
 
 /**
  * 取得發送者 Email（優先從資料庫讀取，fallback 到環境變數）
@@ -24,10 +28,10 @@ async function getEmailFrom(): Promise<string> {
   try {
     const setting = await prisma.siteSetting.findUnique({
       where: { key: SETTING_KEYS.EMAIL_FROM },
-    })
-    return setting?.value || process.env.EMAIL_FROM || 'noreply@example.com'
+    });
+    return setting?.value || process.env.EMAIL_FROM || "noreply@example.com";
   } catch {
-    return process.env.EMAIL_FROM || 'noreply@example.com'
+    return process.env.EMAIL_FROM || "noreply@example.com";
   }
 }
 
@@ -35,7 +39,7 @@ async function getEmailFrom(): Promise<string> {
  * 取得 Resend API Key（從環境變數讀取）
  */
 function getResendApiKey(): string | null {
-  return process.env.RESEND_API_KEY || null
+  return process.env.RESEND_API_KEY || null;
 }
 
 /**
@@ -43,20 +47,20 @@ function getResendApiKey(): string | null {
  * 從環境變數讀取 API Key
  */
 function getResendClient(): Resend | null {
-  const apiKey = getResendApiKey()
+  const apiKey = getResendApiKey();
   if (!apiKey) {
-    return null
+    return null;
   }
-  return new Resend(apiKey)
+  return new Resend(apiKey);
 }
 
 /**
  * Email 發送結果
  */
 interface SendEmailResult {
-  success: boolean
-  messageId?: string
-  error?: string
+  success: boolean;
+  messageId?: string;
+  error?: string;
 }
 
 /**
@@ -66,14 +70,14 @@ async function getSenderName(): Promise<string> {
   try {
     const setting = await prisma.siteSetting.findUnique({
       where: { key: SETTING_KEYS.EMAIL_SENDER_NAME },
-    })
+    });
     const siteName = await prisma.siteSetting.findUnique({
       where: { key: SETTING_KEYS.SITE_NAME },
-    })
-    return setting?.value || siteName?.value || '自由人學院'
+    });
+    return setting?.value || siteName?.value || "自由人學院";
   } catch (error) {
-    console.error('取得發送者名稱失敗:', error)
-    return '自由人學院'
+    console.error("取得發送者名稱失敗:", error);
+    return "自由人學院";
   }
 }
 
@@ -82,20 +86,20 @@ async function getEmailBranding(): Promise<EmailBranding> {
     const [siteName, siteLogo] = await Promise.all([
       prisma.siteSetting.findUnique({ where: { key: SETTING_KEYS.SITE_NAME } }),
       prisma.siteSetting.findUnique({ where: { key: SETTING_KEYS.SITE_LOGO } }),
-    ])
+    ]);
 
-    const appUrl = getAppUrl()
+    const appUrl = getAppUrl();
 
     return {
-      siteName: siteName?.value || '自由人學院',
+      siteName: siteName?.value || "自由人學院",
       siteLogo: siteLogo?.value || `${appUrl}/icon.png`,
-    }
+    };
   } catch {
-    const appUrl = getAppUrl()
+    const appUrl = getAppUrl();
     return {
-      siteName: '自由人學院',
+      siteName: "自由人學院",
       siteLogo: `${appUrl}/icon.png`,
-    }
+    };
   }
 }
 
@@ -104,49 +108,49 @@ async function getEmailBranding(): Promise<EmailBranding> {
  */
 export async function sendPurchaseConfirmation(
   to: string,
-  data: PurchaseConfirmationData
+  data: PurchaseConfirmationData,
 ): Promise<SendEmailResult> {
   try {
-    const resend = getResendClient()
+    const resend = getResendClient();
     if (!resend) {
       return {
         success: false,
-        error: 'Email 服務未設定 (缺少 RESEND_API_KEY)',
-      }
+        error: "Email 服務未設定 (缺少 RESEND_API_KEY)",
+      };
     }
 
     const [senderName, branding, emailFrom] = await Promise.all([
       getSenderName(),
       getEmailBranding(),
       getEmailFrom(),
-    ])
-    const html = purchaseConfirmationTemplate(data, branding)
+    ]);
+    const html = purchaseConfirmationTemplate(data, branding);
 
     const result = await resend.emails.send({
       from: `${senderName} <${emailFrom}>`,
       to: [to],
       subject: `[${senderName}] 購課成功 - ${data.courseName}`,
       html,
-    })
+    });
 
     if (result.error) {
-      console.error('發送購課通知失敗:', result.error)
+      console.error("發送購課通知失敗:", result.error);
       return {
         success: false,
         error: result.error.message,
-      }
+      };
     }
 
     return {
       success: true,
       messageId: result.data?.id,
-    }
+    };
   } catch (error) {
-    console.error('發送購課通知失敗:', error)
+    console.error("發送購課通知失敗:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : '發送失敗',
-    }
+      error: error instanceof Error ? error.message : "發送失敗",
+    };
   }
 }
 
@@ -156,52 +160,55 @@ export async function sendPurchaseConfirmation(
 export async function sendPasswordReset(
   to: string,
   resetUrl: string,
-  userName?: string
+  userName?: string,
 ): Promise<SendEmailResult> {
   try {
-    const resend = getResendClient()
+    const resend = getResendClient();
     if (!resend) {
       return {
         success: false,
-        error: 'Email 服務未設定 (缺少 RESEND_API_KEY)',
-      }
+        error: "Email 服務未設定 (缺少 RESEND_API_KEY)",
+      };
     }
 
     const [senderName, branding, emailFrom] = await Promise.all([
       getSenderName(),
       getEmailBranding(),
       getEmailFrom(),
-    ])
-    const html = passwordResetTemplate({
-      userName: userName || '用戶',
-      resetUrl,
-    }, branding)
+    ]);
+    const html = passwordResetTemplate(
+      {
+        userName: userName || "用戶",
+        resetUrl,
+      },
+      branding,
+    );
 
     const result = await resend.emails.send({
       from: `${senderName} <${emailFrom}>`,
       to: [to],
       subject: `[${senderName}] 密碼重設請求`,
       html,
-    })
+    });
 
     if (result.error) {
-      console.error('發送密碼重設郵件失敗:', result.error)
+      console.error("發送密碼重設郵件失敗:", result.error);
       return {
         success: false,
         error: result.error.message,
-      }
+      };
     }
 
     return {
       success: true,
       messageId: result.data?.id,
-    }
+    };
   } catch (error) {
-    console.error('發送密碼重設郵件失敗:', error)
+    console.error("發送密碼重設郵件失敗:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : '發送失敗',
-    }
+      error: error instanceof Error ? error.message : "發送失敗",
+    };
   }
 }
 
@@ -211,52 +218,55 @@ export async function sendPasswordReset(
 export async function sendGuestActivation(
   to: string,
   activationUrl: string,
-  userName?: string
+  userName?: string,
 ): Promise<SendEmailResult> {
   try {
-    const resend = getResendClient()
+    const resend = getResendClient();
     if (!resend) {
       return {
         success: false,
-        error: 'Email 服務未設定 (缺少 RESEND_API_KEY)',
-      }
+        error: "Email 服務未設定 (缺少 RESEND_API_KEY)",
+      };
     }
 
     const [senderName, branding, emailFrom] = await Promise.all([
       getSenderName(),
       getEmailBranding(),
       getEmailFrom(),
-    ])
-    const html = guestActivationTemplate({
-      userName: userName || '學員',
-      activationUrl,
-    }, branding)
+    ]);
+    const html = guestActivationTemplate(
+      {
+        userName: userName || "學員",
+        activationUrl,
+      },
+      branding,
+    );
 
     const result = await resend.emails.send({
       from: `${senderName} <${emailFrom}>`,
       to: [to],
       subject: `[${senderName}] 請完成帳號啟用`,
       html,
-    })
+    });
 
     if (result.error) {
-      console.error('發送帳號啟用信失敗:', result.error)
+      console.error("發送帳號啟用信失敗:", result.error);
       return {
         success: false,
         error: result.error.message,
-      }
+      };
     }
 
     return {
       success: true,
       messageId: result.data?.id,
-    }
+    };
   } catch (error) {
-    console.error('發送帳號啟用信失敗:', error)
+    console.error("發送帳號啟用信失敗:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : '發送失敗',
-    }
+      error: error instanceof Error ? error.message : "發送失敗",
+    };
   }
 }
 
@@ -265,46 +275,46 @@ export async function sendGuestActivation(
  */
 export async function sendTestEmail(to: string): Promise<SendEmailResult> {
   try {
-    const resend = getResendClient()
+    const resend = getResendClient();
     if (!resend) {
       return {
         success: false,
-        error: 'Email 服務未設定 (缺少 RESEND_API_KEY)',
-      }
+        error: "Email 服務未設定 (缺少 RESEND_API_KEY)",
+      };
     }
 
     const [senderName, branding, emailFrom] = await Promise.all([
       getSenderName(),
       getEmailBranding(),
       getEmailFrom(),
-    ])
-    const html = testEmailTemplate(branding)
+    ]);
+    const html = testEmailTemplate(branding);
 
     const result = await resend.emails.send({
       from: `${senderName} <${emailFrom}>`,
       to: [to],
       subject: `[${senderName}] Email 設定測試`,
       html,
-    })
+    });
 
     if (result.error) {
-      console.error('發送測試郵件失敗:', result.error)
+      console.error("發送測試郵件失敗:", result.error);
       return {
         success: false,
         error: result.error.message,
-      }
+      };
     }
 
     return {
       success: true,
       messageId: result.data?.id,
-    }
+    };
   } catch (error) {
-    console.error('發送測試郵件失敗:', error)
+    console.error("發送測試郵件失敗:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : '發送失敗',
-    }
+      error: error instanceof Error ? error.message : "發送失敗",
+    };
   }
 }
 
@@ -312,49 +322,49 @@ export async function sendTestEmail(to: string): Promise<SendEmailResult> {
  * 發送自訂 HTML Email
  */
 export async function sendCustomHtmlEmail(params: {
-  to: string
-  subject: string
-  html: string
+  to: string;
+  subject: string;
+  html: string;
 }): Promise<SendEmailResult> {
   try {
-    const resend = getResendClient()
+    const resend = getResendClient();
     if (!resend) {
       return {
         success: false,
-        error: 'Email 服務未設定 (缺少 RESEND_API_KEY)',
-      }
+        error: "Email 服務未設定 (缺少 RESEND_API_KEY)",
+      };
     }
 
     const [senderName, emailFrom] = await Promise.all([
       getSenderName(),
       getEmailFrom(),
-    ])
+    ]);
 
     const result = await resend.emails.send({
       from: `${senderName} <${emailFrom}>`,
       to: [params.to],
       subject: params.subject,
       html: params.html,
-    })
+    });
 
     if (result.error) {
-      console.error('發送自訂郵件失敗:', result.error)
+      console.error("發送自訂郵件失敗:", result.error);
       return {
         success: false,
         error: result.error.message,
-      }
+      };
     }
 
     return {
       success: true,
       messageId: result.data?.id,
-    }
+    };
   } catch (error) {
-    console.error('發送自訂郵件失敗:', error)
+    console.error("發送自訂郵件失敗:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : '發送失敗',
-    }
+      error: error instanceof Error ? error.message : "發送失敗",
+    };
   }
 }
 
@@ -363,66 +373,184 @@ export async function sendCustomHtmlEmail(params: {
  * 寄送給所有 ADMIN 角色的用戶
  */
 export async function sendAdminPurchaseNotification(
-  data: AdminPurchaseNotificationData
+  data: AdminPurchaseNotificationData,
 ): Promise<SendEmailResult> {
   try {
-    const resend = getResendClient()
+    const resend = getResendClient();
     if (!resend) {
       return {
         success: false,
-        error: 'Email 服務未設定 (缺少 RESEND_API_KEY)',
-      }
+        error: "Email 服務未設定 (缺少 RESEND_API_KEY)",
+      };
     }
 
     // 查詢所有管理員的 email
     const admins = await prisma.user.findMany({
-      where: { role: 'ADMIN' },
+      where: { role: "ADMIN" },
       select: { email: true },
-    })
+    });
 
     const adminEmails = admins
       .map((a) => a.email)
-      .filter((email): email is string => !!email)
+      .filter((email): email is string => !!email);
 
     if (adminEmails.length === 0) {
       return {
         success: false,
-        error: '找不到任何管理員 Email',
-      }
+        error: "找不到任何管理員 Email",
+      };
     }
 
     const [senderName, branding, emailFrom] = await Promise.all([
       getSenderName(),
       getEmailBranding(),
       getEmailFrom(),
-    ])
-    const html = adminPurchaseNotificationTemplate(data, branding)
+    ]);
+    const html = adminPurchaseNotificationTemplate(data, branding);
 
     const result = await resend.emails.send({
       from: `${senderName} <${emailFrom}>`,
       to: adminEmails,
       subject: `[${senderName}] 新購買通知 - ${data.courseName}`,
       html,
-    })
+    });
 
     if (result.error) {
-      console.error('發送管理員購買通知失敗:', result.error)
+      console.error("發送管理員購買通知失敗:", result.error);
       return {
         success: false,
         error: result.error.message,
-      }
+      };
     }
 
     return {
       success: true,
       messageId: result.data?.id,
-    }
+    };
   } catch (error) {
-    console.error('發送管理員購買通知失敗:', error)
+    console.error("發送管理員購買通知失敗:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : '發送失敗',
+      error: error instanceof Error ? error.message : "發送失敗",
+    };
+  }
+}
+
+/**
+ * 發送歡迎信給新用戶
+ */
+export async function sendWelcomeEmail(
+  to: string,
+  data: WelcomeUserData,
+): Promise<SendEmailResult> {
+  try {
+    const resend = getResendClient();
+    if (!resend) {
+      return {
+        success: false,
+        error: "Email 服務未設定 (缺少 RESEND_API_KEY)",
+      };
     }
+
+    const [senderName, branding, emailFrom] = await Promise.all([
+      getSenderName(),
+      getEmailBranding(),
+      getEmailFrom(),
+    ]);
+    const html = welcomeUserTemplate(data, branding);
+
+    const result = await resend.emails.send({
+      from: `${senderName} <${emailFrom}>`,
+      to: [to],
+      subject: `歡迎加入 ${senderName}！`,
+      html,
+    });
+
+    if (result.error) {
+      console.error("發送歡迎信失敗:", result.error);
+      return {
+        success: false,
+        error: result.error.message,
+      };
+    }
+
+    return {
+      success: true,
+      messageId: result.data?.id,
+    };
+  } catch (error) {
+    console.error("發送歡迎信失敗:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "發送失敗",
+    };
+  }
+}
+
+/**
+ * 發送管理員新用戶註冊通知 Email
+ * 寄送給所有 ADMIN 角色的用戶
+ */
+export async function sendAdminSignupNotification(
+  data: AdminSignupNotificationData,
+): Promise<SendEmailResult> {
+  try {
+    const resend = getResendClient();
+    if (!resend) {
+      return {
+        success: false,
+        error: "Email 服務未設定 (缺少 RESEND_API_KEY)",
+      };
+    }
+
+    const admins = await prisma.user.findMany({
+      where: { role: "ADMIN" },
+      select: { email: true },
+    });
+
+    const adminEmails = admins
+      .map((a) => a.email)
+      .filter((email): email is string => !!email);
+
+    if (adminEmails.length === 0) {
+      return {
+        success: false,
+        error: "找不到任何管理員 Email",
+      };
+    }
+
+    const [senderName, branding, emailFrom] = await Promise.all([
+      getSenderName(),
+      getEmailBranding(),
+      getEmailFrom(),
+    ]);
+    const html = adminSignupNotificationTemplate(data, branding);
+
+    const result = await resend.emails.send({
+      from: `${senderName} <${emailFrom}>`,
+      to: adminEmails,
+      subject: `[${senderName}] 新用戶註冊 - ${data.newUserEmail}`,
+      html,
+    });
+
+    if (result.error) {
+      console.error("發送管理員註冊通知失敗:", result.error);
+      return {
+        success: false,
+        error: result.error.message,
+      };
+    }
+
+    return {
+      success: true,
+      messageId: result.data?.id,
+    };
+  } catch (error) {
+    console.error("發送管理員註冊通知失敗:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "發送失敗",
+    };
   }
 }
 
@@ -430,5 +558,5 @@ export async function sendAdminPurchaseNotification(
  * 檢查 Email 服務是否已設定
  */
 export function isEmailConfigured(): boolean {
-  return !!getResendApiKey()
+  return !!getResendApiKey();
 }

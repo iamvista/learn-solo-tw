@@ -2,20 +2,20 @@
 // Email 蝭
 // 鞈潸玨?????蝣潮?閮剔? HTML 蝭
 
-import { getAppUrl } from '@/lib/app-url'
+import { getAppUrl } from "@/lib/app-url";
 
-const appUrl = getAppUrl()
+const appUrl = getAppUrl();
 
 export interface EmailBranding {
-  siteName: string
-  siteLogo: string
+  siteName: string;
+  siteLogo: string;
 }
 
 function getEmailBranding(branding?: Partial<EmailBranding>): EmailBranding {
   return {
-    siteName: branding?.siteName || '自由人學院',
+    siteName: branding?.siteName || "自由人學院",
     siteLogo: branding?.siteLogo || `${appUrl}/icon.png`,
-  }
+  };
 }
 
 /**
@@ -25,25 +25,25 @@ const baseStyles = `
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   color: #333;
-`
+`;
 
 const containerStyles = `
   max-width: 600px;
   margin: 0 auto;
   padding: 40px 20px;
   background-color: #ffffff;
-`
+`;
 
 const headerStyles = `
   text-align: center;
   padding-bottom: 30px;
   border-bottom: 1px solid #eee;
   margin-bottom: 30px;
-`
+`;
 
 function getLogoHtml(branding?: Partial<EmailBranding>): string {
-  const resolved = getEmailBranding(branding)
-  return `<img src="${resolved.siteLogo}" alt="${resolved.siteName}" width="50" height="50" style="border-radius: 12px; margin-bottom: 10px; display: inline-block;" />`
+  const resolved = getEmailBranding(branding);
+  return `<img src="${resolved.siteLogo}" alt="${resolved.siteName}" width="50" height="50" style="border-radius: 12px; margin-bottom: 10px; display: inline-block;" />`;
 }
 
 const buttonStyles = `
@@ -56,7 +56,7 @@ const buttonStyles = `
   font-weight: 600;
   font-size: 16px;
   margin: 20px 0;
-`
+`;
 
 const footerStyles = `
   text-align: center;
@@ -65,31 +65,31 @@ const footerStyles = `
   margin-top: 30px;
   color: #666;
   font-size: 14px;
-`
+`;
 
 const infoBoxStyles = `
   background-color: #f8fafc;
   border-radius: 8px;
   padding: 20px;
   margin: 20px 0;
-`
+`;
 
 /**
  * 鞈潸玨???蝭
  */
 export interface PurchaseConfirmationData {
-  userName: string
-  courseName: string
-  orderNo: string
-  amount: number
+  userName: string;
+  courseName: string;
+  orderNo: string;
+  amount: number;
 }
 
 export function purchaseConfirmationTemplate(
   data: PurchaseConfirmationData,
-  branding?: Partial<EmailBranding>
+  branding?: Partial<EmailBranding>,
 ): string {
-  const resolved = getEmailBranding(branding)
-  const logoHtml = getLogoHtml(branding)
+  const resolved = getEmailBranding(branding);
+  const logoHtml = getLogoHtml(branding);
   return `
     <!DOCTYPE html>
     <html>
@@ -156,23 +156,23 @@ export function purchaseConfirmationTemplate(
       </div>
     </body>
     </html>
-  `
+  `;
 }
 
 /**
  * 撖Ⅳ?身蝭
  */
 export interface PasswordResetData {
-  userName: string
-  resetUrl: string
+  userName: string;
+  resetUrl: string;
 }
 
 export function passwordResetTemplate(
   data: PasswordResetData,
-  branding?: Partial<EmailBranding>
+  branding?: Partial<EmailBranding>,
 ): string {
-  const resolved = getEmailBranding(branding)
-  const logoHtml = getLogoHtml(branding)
+  const resolved = getEmailBranding(branding);
+  const logoHtml = getLogoHtml(branding);
   return `
     <!DOCTYPE html>
     <html>
@@ -238,20 +238,20 @@ export function passwordResetTemplate(
       </div>
     </body>
     </html>
-  `
+  `;
 }
 
 export interface GuestActivationData {
-  userName: string
-  activationUrl: string
+  userName: string;
+  activationUrl: string;
 }
 
 export function guestActivationTemplate(
   data: GuestActivationData,
-  branding?: Partial<EmailBranding>
+  branding?: Partial<EmailBranding>,
 ): string {
-  const resolved = getEmailBranding(branding)
-  const logoHtml = getLogoHtml(branding)
+  const resolved = getEmailBranding(branding);
+  const logoHtml = getLogoHtml(branding);
   return `
     <!DOCTYPE html>
     <html>
@@ -297,24 +297,24 @@ export function guestActivationTemplate(
       </div>
     </body>
     </html>
-  `
+  `;
 }
 
 /**
  * 皜祈岫 Email 蝭
  */
 export function testEmailTemplate(branding?: Partial<EmailBranding>): string {
-  const resolved = getEmailBranding(branding)
-  const logoHtml = getLogoHtml(branding)
-  const timestamp = new Date().toLocaleString('zh-TW', {
-    timeZone: 'Asia/Taipei',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  })
+  const resolved = getEmailBranding(branding);
+  const logoHtml = getLogoHtml(branding);
+  const timestamp = new Date().toLocaleString("zh-TW", {
+    timeZone: "Asia/Taipei",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
 
   return `
     <!DOCTYPE html>
@@ -371,7 +371,7 @@ export function testEmailTemplate(branding?: Partial<EmailBranding>): string {
       </div>
     </body>
     </html>
-  `
+  `;
 }
 
 /**
@@ -381,28 +381,28 @@ export function testEmailTemplate(branding?: Partial<EmailBranding>): string {
  * 管理員購買通知 Email 資料
  */
 export interface AdminPurchaseNotificationData {
-  studentName: string
-  studentEmail: string
-  courseName: string
-  orderNo: string
-  amount: number
-  paidAt: Date
+  studentName: string;
+  studentEmail: string;
+  courseName: string;
+  orderNo: string;
+  amount: number;
+  paidAt: Date;
 }
 
 export function adminPurchaseNotificationTemplate(
   data: AdminPurchaseNotificationData,
-  branding?: Partial<EmailBranding>
+  branding?: Partial<EmailBranding>,
 ): string {
-  const resolved = getEmailBranding(branding)
-  const logoHtml = getLogoHtml(branding)
-  const paidAtStr = data.paidAt.toLocaleString('zh-TW', {
-    timeZone: 'Asia/Taipei',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
+  const resolved = getEmailBranding(branding);
+  const logoHtml = getLogoHtml(branding);
+  const paidAtStr = data.paidAt.toLocaleString("zh-TW", {
+    timeZone: "Asia/Taipei",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return `
     <!DOCTYPE html>
@@ -480,29 +480,180 @@ export function adminPurchaseNotificationTemplate(
       </div>
     </body>
     </html>
-  `
+  `;
+}
+
+/**
+ * 歡迎新用戶 Email 模板
+ */
+export interface WelcomeUserData {
+  userName: string;
+}
+
+export function welcomeUserTemplate(
+  data: WelcomeUserData,
+  branding?: Partial<EmailBranding>,
+): string {
+  const resolved = getEmailBranding(branding);
+  const logoHtml = getLogoHtml(branding);
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>歡迎加入 ${resolved.siteName}</title>
+    </head>
+    <body style="${baseStyles} background-color: #f5f5f5; margin: 0; padding: 20px;">
+      <div style="${containerStyles}">
+        <!-- Header -->
+        <div style="${headerStyles}">
+          ${logoHtml}
+          <h1 style="color: #333; margin: 10px 0 0 0; font-size: 24px;">${resolved.siteName}</h1>
+        </div>
+
+        <!-- Content -->
+        <div style="text-align: center;">
+          <div style="font-size: 48px; margin-bottom: 10px;">
+            <span role="img" aria-label="wave">&#x1F44B;</span>
+          </div>
+          <h2 style="color: #333; margin: 0 0 20px 0; font-size: 28px;">歡迎加入 ${resolved.siteName}！</h2>
+          <p style="color: #666; font-size: 16px; margin: 0 0 10px 0;">
+            嗨 ${data.userName}，
+          </p>
+          <p style="color: #666; font-size: 16px; margin: 0 0 30px 0;">
+            感謝你的註冊！你現在可以瀏覽並購買我們的課程，開始你的學習旅程。
+          </p>
+        </div>
+
+        <!-- CTA Button -->
+        <div style="text-align: center;">
+          <a href="${appUrl}/courses" style="${buttonStyles}">
+            探索課程
+          </a>
+        </div>
+
+        <!-- Footer -->
+        <div style="${footerStyles}">
+          <p style="margin: 0 0 10px 0;">
+            如有任何問題，歡迎隨時聯繫我們。
+          </p>
+          <p style="margin: 0; color: #999; font-size: 12px;">
+            &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
+/**
+ * 管理員新用戶註冊通知 Email 模板
+ */
+export interface AdminSignupNotificationData {
+  newUserName: string;
+  newUserEmail: string;
+  signupMethod: string;
+  signupTime: string;
+}
+
+export function adminSignupNotificationTemplate(
+  data: AdminSignupNotificationData,
+  branding?: Partial<EmailBranding>,
+): string {
+  const resolved = getEmailBranding(branding);
+  const logoHtml = getLogoHtml(branding);
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>新用戶註冊通知</title>
+    </head>
+    <body style="${baseStyles} background-color: #f5f5f5; margin: 0; padding: 20px;">
+      <div style="${containerStyles}">
+        <!-- Header -->
+        <div style="${headerStyles}">
+          ${logoHtml}
+          <h1 style="color: #333; margin: 10px 0 0 0; font-size: 24px;">${resolved.siteName}</h1>
+        </div>
+
+        <!-- Content -->
+        <div style="text-align: center;">
+          <div style="font-size: 48px; margin-bottom: 10px;">
+            <span role="img" aria-label="new">&#x1F195;</span>
+          </div>
+          <h2 style="color: #333; margin: 0 0 20px 0; font-size: 28px;">新用戶註冊通知</h2>
+          <p style="color: #666; font-size: 16px; margin: 0 0 30px 0;">
+            有新用戶完成了註冊！
+          </p>
+        </div>
+
+        <!-- User Info -->
+        <div style="${infoBoxStyles}">
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 8px 0; color: #666;">用戶名稱</td>
+              <td style="padding: 8px 0; color: #333; font-weight: 600; text-align: right;">${data.newUserName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Email</td>
+              <td style="padding: 8px 0; color: #333; text-align: right;">${data.newUserEmail}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">註冊方式</td>
+              <td style="padding: 8px 0; color: #333; text-align: right;">${data.signupMethod}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">註冊時間</td>
+              <td style="padding: 8px 0; color: #333; text-align: right;">${data.signupTime}</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- CTA Button -->
+        <div style="text-align: center;">
+          <a href="${appUrl}/admin/users" style="${buttonStyles}">
+            查看學員管理
+          </a>
+        </div>
+
+        <!-- Footer -->
+        <div style="${footerStyles}">
+          <p style="margin: 0 0 10px 0;">
+            此為系統自動發送的管理員通知信件
+          </p>
+          <p style="margin: 0; color: #999; font-size: 12px;">
+            &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
 }
 
 export const emailTemplateDescriptions = {
   purchase: {
-    name: '鞈潸玨???',
-    description: '?嗥?嗆??頃鞎瑁玨蝔??潮???萎辣',
-    variables: ['userName', 'courseName', 'orderNo', 'amount'],
+    name: "鞈潸玨???",
+    description: "?嗥?嗆??頃鞎瑁玨蝔??潮???萎辣",
+    variables: ["userName", "courseName", "orderNo", "amount"],
   },
   passwordReset: {
-    name: '撖Ⅳ?身',
-    description: '?嗥?嗉?瘙?閮剖?蝣潭??潮??萎辣',
-    variables: ['userName', 'resetUrl'],
+    name: "撖Ⅳ?身",
+    description: "?嗥?嗉?瘙?閮剖?蝣潭??潮??萎辣",
+    variables: ["userName", "resetUrl"],
   },
   guestActivation: {
-    name: '撣唾??',
-    description: '???∟頃鞎瑕?嚗?身摰?蝣澆??典董???',
-    variables: ['userName', 'activationUrl'],
+    name: "撣唾??",
+    description: "???∟頃鞎瑕?嚗?身摰?蝣澆??典董???",
+    variables: ["userName", "activationUrl"],
   },
   test: {
-    name: '皜祈岫?萎辣',
-    description: '?冽皜祈岫 Email ???臬甇?虜??',
+    name: "皜祈岫?萎辣",
+    description: "?冽皜祈岫 Email ???臬甇?虜??",
     variables: [],
   },
-}
-
+};
