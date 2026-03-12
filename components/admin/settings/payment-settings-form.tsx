@@ -1,25 +1,25 @@
 // components/admin/settings/payment-settings-form.tsx
 // 金流設定表單元件 — PAYUNi 統一金流
 
-'use client'
+"use client";
 
-import { useState, useTransition } from 'react'
-import { toast } from 'sonner'
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
 import {
   updatePaymentSettings,
   testPaymentConnection,
-} from '@/lib/actions/settings'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+} from "@/lib/actions/settings";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Loader2,
   RefreshCw,
@@ -29,91 +29,92 @@ import {
   CheckCircle,
   ExternalLink,
   Save,
-} from 'lucide-react'
+} from "lucide-react";
 
 interface PaymentSettingsFormProps {
   payuni: {
-    merchantId: string
-    hashKeyHint: string
-    hashIVHint: string
-    testMode: boolean
-    returnUrl: string
-    notifyUrl: string
-    isConfigured: boolean
-  }
+    merchantId: string;
+    hashKeyHint: string;
+    hashIVHint: string;
+    testMode: boolean;
+    returnUrl: string;
+    notifyUrl: string;
+    isConfigured: boolean;
+  };
 }
 
 export function PaymentSettingsForm({
   payuni: initialPayuni,
 }: PaymentSettingsFormProps) {
-  const [isSaving, startSaveTransition] = useTransition()
-  const [isTesting, startTestTransition] = useTransition()
+  const [isSaving, startSaveTransition] = useTransition();
+  const [isTesting, startTestTransition] = useTransition();
 
   // PAYUNi 欄位
-  const [payuniMerchantId, setPayuniMerchantId] = useState(initialPayuni.merchantId)
-  const [payuniHashKey, setPayuniHashKey] = useState('')
-  const [payuniHashIV, setPayuniHashIV] = useState('')
-  const [payuniTestMode, setPayuniTestMode] = useState(initialPayuni.testMode)
+  const [payuniMerchantId, setPayuniMerchantId] = useState(
+    initialPayuni.merchantId,
+  );
+  const [payuniHashKey, setPayuniHashKey] = useState("");
+  const [payuniHashIV, setPayuniHashIV] = useState("");
+  const [payuniTestMode, setPayuniTestMode] = useState(initialPayuni.testMode);
 
   const [testResult, setTestResult] = useState<{
-    success: boolean
-    message: string
-  } | null>(null)
-  const [copied, setCopied] = useState<string | null>(null)
+    success: boolean;
+    message: string;
+  } | null>(null);
+  const [copied, setCopied] = useState<string | null>(null);
 
   async function handleSave() {
     startSaveTransition(async () => {
       try {
         const result = await updatePaymentSettings({
-          gateway: 'payuni',
           payuniMerchantId: payuniMerchantId || undefined,
           payuniHashKey: payuniHashKey || undefined,
           payuniHashIV: payuniHashIV || undefined,
           payuniTestMode,
-        })
+        });
 
         if (result.success) {
-          toast.success('金流設定已儲存')
+          toast.success("金流設定已儲存");
         } else {
-          toast.error(result.error || '儲存失敗')
+          toast.error(result.error || "儲存失敗");
         }
       } catch {
-        toast.error('儲存設定失敗')
+        toast.error("儲存設定失敗");
       }
-    })
+    });
   }
 
   async function handleTestConnection() {
-    setTestResult(null)
+    setTestResult(null);
     startTestTransition(async () => {
       try {
-        const result = await testPaymentConnection('payuni', {
+        const result = await testPaymentConnection("payuni", {
           payuniMerchantId: payuniMerchantId || undefined,
           payuniHashKey: payuniHashKey || undefined,
           payuniHashIV: payuniHashIV || undefined,
           payuniTestMode,
-        })
-        setTestResult(result)
+        });
+        setTestResult(result);
         if (result.success) {
-          toast.success('連線測試成功')
+          toast.success("連線測試成功");
         } else {
-          toast.error(result.message)
+          toast.error(result.message);
         }
       } catch {
-        toast.error('測試連線失敗')
-        setTestResult({ success: false, message: '測試連線時發生錯誤' })
+        toast.error("測試連線失敗");
+        setTestResult({ success: false, message: "測試連線時發生錯誤" });
       }
-    })
+    });
   }
 
   async function handleCopy(text: string, key: string) {
     try {
-      await navigator.clipboard.writeText(text)
-      setCopied(key)
-      toast.success('已複製到剪貼簿')
-      setTimeout(() => setCopied(null), 2000)
+      await navigator.clipboard.writeText(text);
+      setCopied(key);
+      toast.success("已複製到剪貼簿");
+      setTimeout(() => setCopied(null), 2000);
     } catch {
-      toast.error('複製失敗')
+      toast.error("複製失敗");
     }
   }
 
@@ -124,7 +125,9 @@ export function PaymentSettingsForm({
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-[#0A0A0A]">PAYUNi 統一金流設定</CardTitle>
+              <CardTitle className="text-[#0A0A0A]">
+                PAYUNi 統一金流設定
+              </CardTitle>
               <CardDescription className="text-[#525252]">
                 PAYUNi 商店代號與加密金鑰設定
               </CardDescription>
@@ -133,11 +136,11 @@ export function PaymentSettingsForm({
               variant="outline"
               className={
                 initialPayuni.isConfigured
-                  ? 'border-green-500 text-green-600 bg-green-50'
-                  : 'border-[#F5A524] text-[#F5A524] bg-[#F5A524]/10'
+                  ? "border-green-500 text-green-600 bg-green-50"
+                  : "border-[#F5A524] text-[#F5A524] bg-[#F5A524]/10"
               }
             >
-              {initialPayuni.isConfigured ? '已設定' : '未設定'}
+              {initialPayuni.isConfigured ? "已設定" : "未設定"}
             </Badge>
           </div>
         </CardHeader>
@@ -158,7 +161,7 @@ export function PaymentSettingsForm({
               type="password"
               value={payuniHashKey}
               onChange={(e) => setPayuniHashKey(e.target.value)}
-              placeholder={initialPayuni.hashKeyHint || '32 字元加密金鑰'}
+              placeholder={initialPayuni.hashKeyHint || "32 字元加密金鑰"}
               className="border-[#E5E5E5] font-mono"
               maxLength={32}
             />
@@ -175,7 +178,7 @@ export function PaymentSettingsForm({
               type="password"
               value={payuniHashIV}
               onChange={(e) => setPayuniHashIV(e.target.value)}
-              placeholder={initialPayuni.hashIVHint || '16 字元加密向量'}
+              placeholder={initialPayuni.hashIVHint || "16 字元加密向量"}
               className="border-[#E5E5E5] font-mono"
               maxLength={16}
             />
@@ -194,7 +197,9 @@ export function PaymentSettingsForm({
                 onChange={(e) => setPayuniTestMode(e.target.checked)}
                 className="h-4 w-4 rounded border-[#D4D4D4]"
               />
-              <span className="text-sm text-[#0A0A0A]">測試模式（Sandbox）</span>
+              <span className="text-sm text-[#0A0A0A]">
+                測試模式（Sandbox）
+              </span>
             </label>
           </div>
 
@@ -211,10 +216,12 @@ export function PaymentSettingsForm({
                 type="button"
                 variant="outline"
                 size="icon"
-                onClick={() => handleCopy(initialPayuni.notifyUrl, 'payuni-notify')}
+                onClick={() =>
+                  handleCopy(initialPayuni.notifyUrl, "payuni-notify")
+                }
                 className="border-[#E5E5E5] shrink-0"
               >
-                {copied === 'payuni-notify' ? (
+                {copied === "payuni-notify" ? (
                   <Check className="h-4 w-4 text-green-500" />
                 ) : (
                   <Copy className="h-4 w-4" />
@@ -235,10 +242,12 @@ export function PaymentSettingsForm({
                 type="button"
                 variant="outline"
                 size="icon"
-                onClick={() => handleCopy(initialPayuni.returnUrl, 'payuni-return')}
+                onClick={() =>
+                  handleCopy(initialPayuni.returnUrl, "payuni-return")
+                }
                 className="border-[#E5E5E5] shrink-0"
               >
-                {copied === 'payuni-return' ? (
+                {copied === "payuni-return" ? (
                   <Check className="h-4 w-4 text-green-500" />
                 ) : (
                   <Copy className="h-4 w-4" />
@@ -297,8 +306,8 @@ export function PaymentSettingsForm({
         <div
           className={`rounded-xl p-4 ${
             testResult.success
-              ? 'bg-green-50 border border-green-200'
-              : 'bg-red-50 border border-red-200'
+              ? "bg-green-50 border border-green-200"
+              : "bg-red-50 border border-red-200"
           }`}
         >
           <div className="flex items-start gap-3">
@@ -310,10 +319,10 @@ export function PaymentSettingsForm({
             <div>
               <p
                 className={`text-sm font-medium ${
-                  testResult.success ? 'text-green-600' : 'text-red-600'
+                  testResult.success ? "text-green-600" : "text-red-600"
                 }`}
               >
-                {testResult.success ? '連線成功' : '連線失敗'}
+                {testResult.success ? "連線成功" : "連線失敗"}
               </p>
               <p className="text-sm text-[#525252] mt-1">
                 {testResult.message}
@@ -353,5 +362,5 @@ export function PaymentSettingsForm({
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
