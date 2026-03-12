@@ -132,20 +132,17 @@ export default async function LessonPage({ params }: LessonPageProps) {
   };
 
   // VideoObject：僅在有 Cloudflare Stream 影片時產生
-  const videoJsonLd = lesson.media?.cfStreamId
+  const videoJsonLd = lesson.videoId
     ? {
         "@context": "https://schema.org",
         "@type": "VideoObject",
         name: lesson.title,
         description: `${courseTitle} - ${lesson.chapter.title} - ${lesson.title}`,
-        uploadDate: lesson.createdAt
-          ? new Date(lesson.createdAt).toISOString()
-          : undefined,
-        duration: lesson.media.duration
-          ? `PT${lesson.media.duration}S`
+        duration: lesson.videoDuration
+          ? `PT${lesson.videoDuration}S`
           : undefined,
         contentUrl: `${baseUrl}/courses/${slug}/lessons/${id}`,
-        thumbnailUrl: `https://customer-${process.env.CLOUDFLARE_STREAM_CUSTOMER_CODE}.cloudflarestream.com/${lesson.media.cfStreamId}/thumbnails/thumbnail.jpg`,
+        thumbnailUrl: `https://customer-${process.env.CLOUDFLARE_STREAM_CUSTOMER_CODE}.cloudflarestream.com/${lesson.videoId}/thumbnails/thumbnail.jpg`,
         publisher: {
           "@type": "Organization",
           name: siteName,
