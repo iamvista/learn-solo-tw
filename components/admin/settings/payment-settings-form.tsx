@@ -88,7 +88,7 @@ export function PaymentSettingsForm({
     setTestResult(null);
     startTestTransition(async () => {
       try {
-        const result = await testPaymentConnection("payuni", {
+        const result = await testPaymentConnection({
           payuniMerchantId: payuniMerchantId || undefined,
           payuniHashKey: payuniHashKey || undefined,
           payuniHashIV: payuniHashIV || undefined,
