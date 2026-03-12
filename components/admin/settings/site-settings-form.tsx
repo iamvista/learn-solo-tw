@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // components/admin/settings/site-settings-form.tsx
-// 站點設定表單元件
+// 網站設定表單元件
 // 包含基本設定、社群連結和分析追蹤設定
 
 "use client";
@@ -159,14 +159,14 @@ export function SiteSettingsForm({ initialSettings }: SiteSettingsFormProps) {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {/* 站點名稱 */}
+                {/* 網站名稱 */}
                 <FormField
                   control={form.control}
                   name="siteName"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-[#0A0A0A]">
-                        站點名稱 <span className="text-red-500">*</span>
+                        網站名稱 <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input

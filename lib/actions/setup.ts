@@ -161,7 +161,7 @@ export async function completeSetup(
       });
     }
 
-    // 批量寫入設定
+    // 批次寫入設定
     if (settingsToSave.length > 0) {
       await Promise.all(
         settingsToSave.map((s) =>

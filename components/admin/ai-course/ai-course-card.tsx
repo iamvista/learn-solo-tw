@@ -1,21 +1,27 @@
 // components/admin/ai-course/ai-course-card.tsx
 // AI 快速建立課程入口卡片
 
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Sparkles, FolderUp, Zap } from 'lucide-react'
-import { AICourseDialog } from './ai-course-dialog'
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Sparkles, FolderUp, Zap } from "lucide-react";
+import { AICourseDialog } from "./ai-course-dialog";
 
 interface AICourseCardProps {
-  courseId: string
-  onSuccess?: () => void
+  courseId: string;
+  onSuccess?: () => void;
 }
 
 export function AICourseCard({ courseId, onSuccess }: AICourseCardProps) {
-  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
     <>
@@ -26,7 +32,9 @@ export function AICourseCard({ courseId, onSuccess }: AICourseCardProps) {
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
-              <CardTitle className="text-lg text-[#0A0A0A]">AI 快速建立課程</CardTitle>
+              <CardTitle className="text-lg text-[#0A0A0A]">
+                AI 快速建立課程
+              </CardTitle>
               <CardDescription className="text-[#525252]">
                 拖入資料夾，自動生成課程內容
               </CardDescription>
@@ -39,7 +47,7 @@ export function AICourseCard({ courseId, onSuccess }: AICourseCardProps) {
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div className="flex items-center gap-2 text-[#525252]">
                 <FolderUp className="w-4 h-4 text-[#C41E3A]" />
-                <span>批量上傳影片</span>
+                <span>批次上傳影片</span>
               </div>
               <div className="flex items-center gap-2 text-[#525252]">
                 <Zap className="w-4 h-4 text-[#C41E3A]" />
@@ -66,5 +74,5 @@ export function AICourseCard({ courseId, onSuccess }: AICourseCardProps) {
         onSuccess={onSuccess}
       />
     </>
-  )
+  );
 }

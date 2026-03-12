@@ -1,12 +1,12 @@
 // lib/utils/concurrency.ts
 // 並行任務控制器
 
-export type TaskFunction<T> = () => Promise<T>
+export type TaskFunction<T> = () => Promise<T>;
 
 export interface QueuedTask<T> {
-  task: TaskFunction<T>
-  resolve: (value: T) => void
-  reject: (error: unknown) => void
+  task: TaskFunction<T>;
+  resolve: (value: T) => void;
+  reject: (error: unknown) => void;
 }
 
 /**
@@ -22,12 +22,12 @@ export interface QueuedTask<T> {
  * })
  */
 export class ConcurrencyController<T = unknown> {
-  private queue: QueuedTask<T>[] = []
-  private running = 0
-  private maxConcurrent: number
+  private queue: QueuedTask<T>[] = [];
+  private running = 0;
+  private maxConcurrent: number;
 
   constructor(maxConcurrent: number = 5) {
-    this.maxConcurrent = Math.max(1, maxConcurrent)
+    this.maxConcurrent = Math.max(1, maxConcurrent);
   }
 
   /**
@@ -38,9 +38,9 @@ export class ConcurrencyController<T = unknown> {
    */
   add(task: TaskFunction<T>): Promise<T> {
     return new Promise((resolve, reject) => {
-      this.queue.push({ task, resolve, reject })
-      this.processQueue()
-    })
+      this.queue.push({ task, resolve, reject });
+      this.processQueue();
+    });
   }
 
   /**
@@ -49,49 +49,50 @@ export class ConcurrencyController<T = unknown> {
   private processQueue(): void {
     // 如果已達到並行上限或佇列為空，不做任何事
     if (this.running >= this.maxConcurrent || this.queue.length === 0) {
-      return
+      return;
     }
 
     // 取出佇列中的第一個任務
-    const queued = this.queue.shift()
-    if (!queued) return
+    const queued = this.queue.shift();
+    if (!queued) return;
 
-    this.running++
+    this.running++;
 
     // 執行任務
-    queued.task()
-      .then(result => {
-        queued.resolve(result)
+    queued
+      .task()
+      .then((result) => {
+        queued.resolve(result);
       })
-      .catch(error => {
-        queued.reject(error)
+      .catch((error) => {
+        queued.reject(error);
       })
       .finally(() => {
-        this.running--
+        this.running--;
         // 繼續處理佇列
-        this.processQueue()
-      })
+        this.processQueue();
+      });
   }
 
   /**
    * 取得目前執行中的任務數量
    */
   get runningCount(): number {
-    return this.running
+    return this.running;
   }
 
   /**
    * 取得目前佇列中等待的任務數量
    */
   get queuedCount(): number {
-    return this.queue.length
+    return this.queue.length;
   }
 
   /**
    * 取得並行上限
    */
   get limit(): number {
-    return this.maxConcurrent
+    return this.maxConcurrent;
   }
 
   /**
@@ -100,14 +101,14 @@ export class ConcurrencyController<T = unknown> {
   clear(): void {
     // 拒絕所有等待中的任務
     for (const queued of this.queue) {
-      queued.reject(new Error('任務已取消'))
+      queued.reject(new Error("任務已取消"));
     }
-    this.queue = []
+    this.queue = [];
   }
 }
 
 /**
- * 批量執行任務，帶有並行限制
+ * 批次執行任務，帶有並行限制
  *
  * @param tasks 任務陣列
  * @param maxConcurrent 最大並行數量
@@ -121,16 +122,16 @@ export class ConcurrencyController<T = unknown> {
  */
 export async function runWithConcurrency<T>(
   tasks: TaskFunction<T>[],
-  maxConcurrent: number = 5
+  maxConcurrent: number = 5,
 ): Promise<PromiseSettledResult<T>[]> {
-  const controller = new ConcurrencyController<T>(maxConcurrent)
+  const controller = new ConcurrencyController<T>(maxConcurrent);
 
-  const promises = tasks.map(task =>
+  const promises = tasks.map((task) =>
     controller.add(task).then(
-      value => ({ status: 'fulfilled' as const, value }),
-      reason => ({ status: 'rejected' as const, reason })
-    )
-  )
+      (value) => ({ status: "fulfilled" as const, value }),
+      (reason) => ({ status: "rejected" as const, reason }),
+    ),
+  );
 
-  return Promise.all(promises)
+  return Promise.all(promises);
 }

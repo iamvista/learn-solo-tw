@@ -44,14 +44,14 @@ export const SETTING_KEYS = {
 export type SettingKey = (typeof SETTING_KEYS)[keyof typeof SETTING_KEYS];
 
 /**
- * 站點設定 Schema
+ * 網站設定 Schema
  */
 export const siteSettingsSchema = z.object({
-  // 站點名稱
+  // 網站名稱
   siteName: z
     .string()
-    .min(1, { message: "站點名稱不能為空" })
-    .max(100, { message: "站點名稱不能超過 100 個字元" }),
+    .min(1, { message: "網站名稱不能為空" })
+    .max(100, { message: "網站名稱不能超過 100 個字元" }),
 
   // Logo URL
   siteLogo: z

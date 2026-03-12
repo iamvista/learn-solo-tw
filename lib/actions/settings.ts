@@ -104,7 +104,7 @@ async function upsertSetting(key: string, value: string): Promise<void> {
 }
 
 /**
- * 更新站點設定
+ * 更新網站設定
  */
 export async function updateSiteSettings(
   data: SiteSettingsFormData,
@@ -177,7 +177,7 @@ export async function updateSiteSettings(
 
     return { success: true };
   } catch (error) {
-    console.error("更新站點設定失敗:", error);
+    console.error("更新網站設定失敗:", error);
 
     if (error instanceof Error) {
       return { success: false, error: error.message };
@@ -605,12 +605,12 @@ export async function getSettingsCompleteness(): Promise<{
   const checks = [
     {
       key: SETTING_KEYS.SITE_NAME,
-      label: "站點名稱",
-      suggestion: "請在基本設定填寫站點名稱",
+      label: "網站名稱",
+      suggestion: "請在基本設定填寫網站名稱",
     },
     {
       key: SETTING_KEYS.SITE_LOGO,
-      label: "站點 Logo（也作為 Icon）",
+      label: "網站 Logo（也作為 Icon）",
       suggestion: "請上傳/填入 Logo URL，會同步成 favicon",
     },
     {

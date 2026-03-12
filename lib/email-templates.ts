@@ -1,6 +1,6 @@
-﻿// lib/email-templates.ts
-// Email 蝭
-// 鞈潸玨?????蝣潮?閮剔? HTML 蝭
+// lib/email-templates.ts
+// Email 模板
+// 購買確認、密碼重設等通知信 HTML 模板
 
 import { getAppUrl } from "@/lib/app-url";
 
@@ -19,7 +19,7 @@ function getEmailBranding(branding?: Partial<EmailBranding>): EmailBranding {
 }
 
 /**
- * ?梁 Email 璅??
+ * 共用 Email 樣式
  */
 const baseStyles = `
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -75,7 +75,7 @@ const infoBoxStyles = `
 `;
 
 /**
- * 鞈潸玨???蝭
+ * 購買確認信模板
  */
 export interface PurchaseConfirmationData {
   userName: string;
@@ -96,7 +96,7 @@ export function purchaseConfirmationTemplate(
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>鞈潸玨??</title>
+      <title>購買確認</title>
     </head>
     <body style="${baseStyles} background-color: #f5f5f5; margin: 0; padding: 20px;">
       <div style="${containerStyles}">
@@ -111,9 +111,9 @@ export function purchaseConfirmationTemplate(
           <div style="font-size: 48px; margin-bottom: 10px;">
             <span role="img" aria-label="party">&#x1F389;</span>
           </div>
-          <h2 style="color: #333; margin: 0 0 20px 0; font-size: 28px;">鞈潸玨??嚗?/h2>
+          <h2 style="color: #333; margin: 0 0 20px 0; font-size: 28px;">購買確認成功！</h2>
           <p style="color: #666; font-size: 16px; margin: 0 0 30px 0;">
-            閬芣???${data.userName}嚗?雓???
+            親愛的 ${data.userName}，感謝您的購買！
           </p>
         </div>
 
@@ -121,15 +121,15 @@ export function purchaseConfirmationTemplate(
         <div style="${infoBoxStyles}">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
-              <td style="padding: 8px 0; color: #666;">隤脩??迂</td>
+              <td style="padding: 8px 0; color: #666;">購買課程</td>
               <td style="padding: 8px 0; color: #333; font-weight: 600; text-align: right;">${data.courseName}</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; color: #666;">閮蝺刻?</td>
+              <td style="padding: 8px 0; color: #666;">訂單編號</td>
               <td style="padding: 8px 0; color: #333; text-align: right; font-family: monospace;">${data.orderNo}</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; color: #666;">隞狡??</td>
+              <td style="padding: 8px 0; color: #666;">付款金額</td>
               <td style="padding: 8px 0; color: #3b82f6; font-weight: 600; text-align: right;">NT$ ${data.amount.toLocaleString()}</td>
             </tr>
           </table>
@@ -138,9 +138,10 @@ export function purchaseConfirmationTemplate(
         <!-- CTA Button -->
         <div style="text-align: center;">
           <p style="color: #666; font-size: 16px; margin: 0 0 10px 0;">
-            ?函?典隞仿?憪飛蝧?嚗?          </p>
+            您已可以開始觀看課程！
+          </p>
           <a href="${appUrl}/courses" style="${buttonStyles}">
-            ??摮貊?
+            前往課程
           </a>
         </div>
 
@@ -160,7 +161,7 @@ export function purchaseConfirmationTemplate(
 }
 
 /**
- * 撖Ⅳ?身蝭
+ * 密碼重設模板
  */
 export interface PasswordResetData {
   userName: string;
@@ -179,7 +180,7 @@ export function passwordResetTemplate(
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>撖Ⅳ?身</title>
+      <title>密碼重設</title>
     </head>
     <body style="${baseStyles} background-color: #f5f5f5; margin: 0; padding: 20px;">
       <div style="${containerStyles}">
@@ -194,32 +195,35 @@ export function passwordResetTemplate(
           <div style="font-size: 48px; margin-bottom: 10px;">
             <span role="img" aria-label="key">&#x1F511;</span>
           </div>
-          <h2 style="color: #333; margin: 0 0 20px 0; font-size: 28px;">撖Ⅳ?身隢?</h2>
+          <h2 style="color: #333; margin: 0 0 20px 0; font-size: 28px;">密碼重設請求</h2>
           <p style="color: #666; font-size: 16px; margin: 0 0 20px 0;">
-            閬芣???${data.userName}嚗?          </p>
+            親愛的 ${data.userName}，
+          </p>
           <p style="color: #666; font-size: 16px; margin: 0 0 30px 0;">
-            ??唬??函?撖Ⅳ?身隢???br>
-            隢????寞????身?函?撖Ⅳ??          </p>
+            我們收到了您的密碼重設請求。<br>
+            請點擊下方按鈕來重設您的密碼。
+          </p>
         </div>
 
         <!-- CTA Button -->
         <div style="text-align: center;">
           <a href="${data.resetUrl}" style="${buttonStyles}">
-            ?身撖Ⅳ
+            重設密碼
           </a>
         </div>
 
         <!-- Warning -->
         <div style="${infoBoxStyles} background-color: #fff7ed; border-left: 4px solid #f97316;">
           <p style="color: #9a3412; font-size: 14px; margin: 0;">
-            <strong>瘜冽?嚗?/strong>甇日??撠 24 撠?敺仃??br>
-            憒??冽???瘙?閮剖?蝣潘?隢蕭?交迨?萎辣??          </p>
+            <strong>注意：</strong>此連結將在 24 小時後失效。<br>
+            如果您未曾請求重設密碼，請忽略此封信件。
+          </p>
         </div>
 
         <!-- Alternative Link -->
         <div style="margin-top: 20px;">
           <p style="color: #666; font-size: 14px; margin: 0 0 10px 0;">
-            憒????⊥?暺?嚗?銴ˊ隞乩?????啁汗?剁?
+            如果按鈕無法點擊，請複製以下連結到瀏覽器：
           </p>
           <p style="color: #3b82f6; font-size: 12px; word-break: break-all; margin: 0;">
             ${data.resetUrl}
@@ -258,7 +262,7 @@ export function guestActivationTemplate(
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>??函?隤脩?撣唾?</title>
+      <title>啟用您的課程帳號</title>
     </head>
     <body style="${baseStyles} background-color: #f5f5f5; margin: 0; padding: 20px;">
       <div style="${containerStyles}">
@@ -268,22 +272,25 @@ export function guestActivationTemplate(
         </div>
 
         <div style="text-align: center;">
-          <h2 style="color: #333; margin: 0 0 20px 0; font-size: 28px;">?敺?甇伐???函?撣唾?</h2>
+          <h2 style="color: #333; margin: 0 0 20px 0; font-size: 28px;">完成購買，啟用您的帳號</h2>
           <p style="color: #666; font-size: 16px; margin: 0 0 20px 0;">
-            ${data.userName} ?典末嚗歇?嗅?函?隞狡??          </p>
+            ${data.userName} 你好！感謝您的購買！
+          </p>
           <p style="color: #666; font-size: 16px; margin: 0 0 30px 0;">
-            隢?閮剖?撖Ⅳ摰?撣唾??嚗?舫?憪飛蝧玨蝔?          </p>
+            請點擊下方按鈕設定密碼並啟用帳號，即可開始觀看課程。
+          </p>
         </div>
 
         <div style="text-align: center;">
           <a href="${data.activationUrl}" style="${buttonStyles}">
-            蝡?撣唾?
+            啟用帳號
           </a>
         </div>
 
         <div style="${infoBoxStyles} background-color: #fff7ed; border-left: 4px solid #f97316;">
           <p style="color: #9a3412; font-size: 14px; margin: 0;">
-            <strong>??嚗?/strong>甇日?? 24 撠??扳???銝??賭蝙?其?甈～?          </p>
+            <strong>注意：</strong>此連結將在 24 小時後失效。如連結過期，請聯繫我們重新發送。
+          </p>
         </div>
 
         <div style="${footerStyles}">
@@ -301,7 +308,7 @@ export function guestActivationTemplate(
 }
 
 /**
- * 皜祈岫 Email 蝭
+ * 測試 Email 模板
  */
 export function testEmailTemplate(branding?: Partial<EmailBranding>): string {
   const resolved = getEmailBranding(branding);
@@ -322,7 +329,7 @@ export function testEmailTemplate(branding?: Partial<EmailBranding>): string {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Email 皜祈岫</title>
+      <title>Email 測試</title>
     </head>
     <body style="${baseStyles} background-color: #f5f5f5; margin: 0; padding: 20px;">
       <div style="${containerStyles}">
@@ -337,25 +344,26 @@ export function testEmailTemplate(branding?: Partial<EmailBranding>): string {
           <div style="font-size: 48px; margin-bottom: 10px;">
             <span role="img" aria-label="check">&#x2705;</span>
           </div>
-          <h2 style="color: #333; margin: 0 0 20px 0; font-size: 28px;">Email 閮剖?皜祈岫??嚗?/h2>
+          <h2 style="color: #333; margin: 0 0 20px 0; font-size: 28px;">Email 設定測試成功！</h2>
           <p style="color: #666; font-size: 16px; margin: 0 0 30px 0;">
-            ?剖?嚗??Email ??撌脫迤蝣箄身摰?          </p>
+            恭喜！您的 Email 設定已正確配置。
+          </p>
         </div>
 
         <!-- Info -->
         <div style="${infoBoxStyles}">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
-              <td style="padding: 8px 0; color: #666;">?潮???/td>
+              <td style="padding: 8px 0; color: #666;">發送時間</td>
               <td style="padding: 8px 0; color: #333; text-align: right;">${timestamp}</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; color: #666;">Email ??</td>
+              <td style="padding: 8px 0; color: #666;">Email 服務</td>
               <td style="padding: 8px 0; color: #333; text-align: right;">Resend</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; color: #666;">???/td>
-              <td style="padding: 8px 0; color: #22c55e; font-weight: 600; text-align: right;">甇?虜??</td>
+              <td style="padding: 8px 0; color: #666;">狀態</td>
+              <td style="padding: 8px 0; color: #22c55e; font-weight: 600; text-align: right;">正常運作</td>
             </tr>
           </table>
         </div>
@@ -364,6 +372,7 @@ export function testEmailTemplate(branding?: Partial<EmailBranding>): string {
         <div style="${footerStyles}">
           <p style="margin: 0 0 10px 0;">
             此為測試信件，Email 設定正常運作。
+          </p>
           <p style="margin: 0; color: #999; font-size: 12px;">
             &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
           </p>
@@ -375,7 +384,7 @@ export function testEmailTemplate(branding?: Partial<EmailBranding>): string {
 }
 
 /**
- * ?汗?函???蝭
+ * 管理員購買通知模板
  */
 /**
  * 管理員購買通知 Email 資料
@@ -637,23 +646,23 @@ export function adminSignupNotificationTemplate(
 
 export const emailTemplateDescriptions = {
   purchase: {
-    name: "鞈潸玨???",
-    description: "?嗥?嗆??頃鞎瑁玨蝔??潮???萎辣",
+    name: "購買確認信",
+    description: "當學員完成課程購買時自動發送的確認信件",
     variables: ["userName", "courseName", "orderNo", "amount"],
   },
   passwordReset: {
-    name: "撖Ⅳ?身",
-    description: "?嗥?嗉?瘙?閮剖?蝣潭??潮??萎辣",
+    name: "密碼重設",
+    description: "當學員請求重設密碼時自動發送的信件",
     variables: ["userName", "resetUrl"],
   },
   guestActivation: {
-    name: "撣唾??",
-    description: "???∟頃鞎瑕?嚗?身摰?蝣澆??典董???",
+    name: "帳號啟用",
+    description: "訪客購買課程後，設定密碼並啟用帳號的信件",
     variables: ["userName", "activationUrl"],
   },
   test: {
-    name: "皜祈岫?萎辣",
-    description: "?冽皜祈岫 Email ???臬甇?虜??",
+    name: "測試信件",
+    description: "用於測試 Email 設定是否正常運作",
     variables: [],
   },
 };

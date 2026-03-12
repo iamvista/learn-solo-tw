@@ -2,87 +2,93 @@
 // 圖片管理客戶端元件
 // 處理搜尋、上傳和刪除操作
 
-'use client'
+"use client";
 
-import { useState, useCallback, useTransition } from 'react'
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { useState, useCallback, useTransition } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { ImageCard } from '@/components/admin/media/image-card'
-import { ImageUpload } from '@/components/admin/media/image-upload'
-import { Search, Upload, Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react'
-import { toast } from 'sonner'
-import type { GetMediaResult } from '@/lib/actions/media'
+} from "@/components/ui/dialog";
+import { ImageCard } from "@/components/admin/media/image-card";
+import { ImageUpload } from "@/components/admin/media/image-upload";
+import {
+  Search,
+  Upload,
+  Image as ImageIcon,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { toast } from "sonner";
+import type { GetMediaResult } from "@/lib/actions/media";
 
 interface ImagesClientProps {
-  initialData: GetMediaResult
-  searchQuery?: string
+  initialData: GetMediaResult;
+  searchQuery?: string;
 }
 
 export function ImagesClient({ initialData, searchQuery }: ImagesClientProps) {
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const [isPending, startTransition] = useTransition()
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
-  const [search, setSearch] = useState(searchQuery || '')
-  const [showUploadDialog, setShowUploadDialog] = useState(false)
-  const [data, setData] = useState(initialData)
+  const [search, setSearch] = useState(searchQuery || "");
+  const [showUploadDialog, setShowUploadDialog] = useState(false);
+  const [data, setData] = useState(initialData);
 
   // 建立查詢字串
   const createQueryString = useCallback(
     (params: Record<string, string | null>) => {
-      const current = new URLSearchParams(searchParams.toString())
+      const current = new URLSearchParams(searchParams.toString());
 
       Object.entries(params).forEach(([key, value]) => {
         if (value === null) {
-          current.delete(key)
+          current.delete(key);
         } else {
-          current.set(key, value)
+          current.set(key, value);
         }
-      })
+      });
 
-      return current.toString()
+      return current.toString();
     },
-    [searchParams]
-  )
+    [searchParams],
+  );
 
   // 處理搜尋
   const handleSearch = useCallback(
     (value: string) => {
-      setSearch(value)
+      setSearch(value);
 
       const timeoutId = setTimeout(() => {
         startTransition(() => {
           const query = createQueryString({
             search: value || null,
             page: null, // 重置頁碼
-          })
-          router.push(`${pathname}?${query}`)
-        })
-      }, 300)
+          });
+          router.push(`${pathname}?${query}`);
+        });
+      }, 300);
 
-      return () => clearTimeout(timeoutId)
+      return () => clearTimeout(timeoutId);
     },
-    [createQueryString, pathname, router]
-  )
+    [createQueryString, pathname, router],
+  );
 
   // 處理分頁
   const handlePageChange = (page: number) => {
     startTransition(() => {
       const query = createQueryString({
         page: page.toString(),
-      })
-      router.push(`${pathname}?${query}`)
-    })
-  }
+      });
+      router.push(`${pathname}?${query}`);
+    });
+  };
 
   // 處理刪除
   const handleDelete = (id: string) => {
@@ -90,26 +96,26 @@ export function ImagesClient({ initialData, searchQuery }: ImagesClientProps) {
       ...prev,
       media: prev.media.filter((item) => item.id !== id),
       total: prev.total - 1,
-    }))
-  }
+    }));
+  };
 
-  // 追蹤批量上傳數量
-  const [uploadCount, setUploadCount] = useState(0)
+  // 追蹤批次上傳數量
+  const [uploadCount, setUploadCount] = useState(0);
 
   // 處理單張圖片上傳完成
   const handleUploadComplete = () => {
-    setUploadCount((prev) => prev + 1)
-  }
+    setUploadCount((prev) => prev + 1);
+  };
 
   // 關閉上傳對話框時重新整理
   const handleUploadDialogClose = (open: boolean) => {
-    setShowUploadDialog(open)
+    setShowUploadDialog(open);
     if (!open && uploadCount > 0) {
-      toast.success(`${uploadCount} 張圖片上傳成功`)
-      setUploadCount(0)
-      router.refresh()
+      toast.success(`${uploadCount} 張圖片上傳成功`);
+      setUploadCount(0);
+      router.refresh();
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -137,7 +143,7 @@ export function ImagesClient({ initialData, searchQuery }: ImagesClientProps) {
           <DialogContent className="bg-white border-[#E5E5E5] max-w-2xl rounded-xl">
             <DialogHeader>
               <DialogTitle className="text-[#0A0A0A]">
-                批量上傳圖片
+                批次上傳圖片
                 {uploadCount > 0 && (
                   <span className="ml-2 text-sm font-normal text-[#C41E3A]">
                     （已完成 {uploadCount} 張）
@@ -145,9 +151,7 @@ export function ImagesClient({ initialData, searchQuery }: ImagesClientProps) {
                 )}
               </DialogTitle>
             </DialogHeader>
-            <p className="text-sm text-[#525252]">
-              支援一次選取或拖放多張圖片
-            </p>
+            <p className="text-sm text-[#525252]">支援一次選取或拖放多張圖片</p>
             <ImageUpload
               onUploadComplete={handleUploadComplete}
               onError={(error) => toast.error(error)}
@@ -161,10 +165,12 @@ export function ImagesClient({ initialData, searchQuery }: ImagesClientProps) {
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <ImageIcon className="w-16 h-16 text-[#A3A3A3] mb-4" />
           <h3 className="text-xl font-medium text-[#0A0A0A] mb-2">
-            {search ? '沒有找到符合的圖片' : '還沒有上傳任何圖片'}
+            {search ? "沒有找到符合的圖片" : "還沒有上傳任何圖片"}
           </h3>
           <p className="text-[#525252] mb-6">
-            {search ? '請嘗試其他搜尋關鍵字' : '點擊上方按鈕開始上傳您的第一張圖片'}
+            {search
+              ? "請嘗試其他搜尋關鍵字"
+              : "點擊上方按鈕開始上傳您的第一張圖片"}
           </p>
           {!search && (
             <Button
@@ -181,11 +187,7 @@ export function ImagesClient({ initialData, searchQuery }: ImagesClientProps) {
           {/* 圖片網格 */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {data.media.map((image) => (
-              <ImageCard
-                key={image.id}
-                image={image}
-                onDelete={handleDelete}
-              />
+              <ImageCard key={image.id} image={image} onDelete={handleDelete} />
             ))}
           </div>
 
@@ -222,5 +224,5 @@ export function ImagesClient({ initialData, searchQuery }: ImagesClientProps) {
         </>
       )}
     </div>
-  )
+  );
 }

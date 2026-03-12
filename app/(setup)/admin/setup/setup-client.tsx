@@ -2,23 +2,23 @@
 // 系統初始化表單客戶端元件
 // 分步驟引導用戶完成網站基本設定
 
-'use client'
+"use client";
 
-import { useState, useTransition } from 'react'
-import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
-import { toast } from 'sonner'
-import { completeSetup, type SetupFormData } from '@/lib/actions/setup'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { toast } from "sonner";
+import { completeSetup, type SetupFormData } from "@/lib/actions/setup";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from "@/components/ui/card";
 import {
   Loader2,
   Globe,
@@ -28,50 +28,50 @@ import {
   ChevronLeft,
   Rocket,
   SkipForward,
-} from 'lucide-react'
+} from "lucide-react";
 
 interface SetupClientProps {
   user: {
-    name: string
-    email: string
-  }
+    name: string;
+    email: string;
+  };
 }
 
 const STEPS = [
-  { id: 'welcome', label: '歡迎', icon: Rocket },
-  { id: 'basic', label: '基本設定', icon: Globe },
-  { id: 'payment', label: '金流設定', icon: CreditCard },
-  { id: 'analytics', label: '追蹤像素', icon: BarChart3 },
-] as const
+  { id: "welcome", label: "歡迎", icon: Rocket },
+  { id: "basic", label: "基本設定", icon: Globe },
+  { id: "payment", label: "金流設定", icon: CreditCard },
+  { id: "analytics", label: "追蹤像素", icon: BarChart3 },
+] as const;
 
-type GatewayType = 'payuni' | ''
+type GatewayType = "payuni" | "";
 
 export function SetupClient({ user }: SetupClientProps) {
-  const router = useRouter()
-  const { update: updateSession } = useSession()
-  const [isPending, startTransition] = useTransition()
-  const [currentStep, setCurrentStep] = useState(0)
+  const router = useRouter();
+  const { update: updateSession } = useSession();
+  const [isPending, startTransition] = useTransition();
+  const [currentStep, setCurrentStep] = useState(0);
 
   // 表單狀態
-  const [siteName, setSiteName] = useState('')
-  const [contactEmail, setContactEmail] = useState('')
-  const [paymentGateway, setPaymentGateway] = useState<GatewayType>('')
-  const [payuniMerchantId, setPayuniMerchantId] = useState('')
-  const [payuniHashKey, setPayuniHashKey] = useState('')
-  const [payuniHashIV, setPayuniHashIV] = useState('')
-  const [payuniTestMode, setPayuniTestMode] = useState(true)
-  const [gaId, setGaId] = useState('')
-  const [metaPixelId, setMetaPixelId] = useState('')
-  const [metaCapiAccessToken, setMetaCapiAccessToken] = useState('')
+  const [siteName, setSiteName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [paymentGateway, setPaymentGateway] = useState<GatewayType>("");
+  const [payuniMerchantId, setPayuniMerchantId] = useState("");
+  const [payuniHashKey, setPayuniHashKey] = useState("");
+  const [payuniHashIV, setPayuniHashIV] = useState("");
+  const [payuniTestMode, setPayuniTestMode] = useState(true);
+  const [gaId, setGaId] = useState("");
+  const [metaPixelId, setMetaPixelId] = useState("");
+  const [metaCapiAccessToken, setMetaCapiAccessToken] = useState("");
   function goNext() {
     if (currentStep < STEPS.length - 1) {
-      setCurrentStep((s) => s + 1)
+      setCurrentStep((s) => s + 1);
     }
   }
 
   function goPrev() {
     if (currentStep > 0) {
-      setCurrentStep((s) => s - 1)
+      setCurrentStep((s) => s - 1);
     }
   }
 
@@ -87,24 +87,24 @@ export function SetupClient({ user }: SetupClientProps) {
       gaId: gaId || undefined,
       metaPixelId: metaPixelId || undefined,
       metaCapiAccessToken: metaCapiAccessToken || undefined,
-    }
+    };
 
     startTransition(async () => {
-      const result = await completeSetup(data)
+      const result = await completeSetup(data);
       if (result.success) {
         // 傳入物件才會觸發 JWT callback 的 trigger: 'update'
         // 使 JWT 從 DB 讀取最新的 ADMIN 角色並更新 cookie
-        await updateSession({ role: 'ADMIN' })
-        toast.success('系統初始化完成！歡迎使用後臺管理系統')
+        await updateSession({ role: "ADMIN" });
+        toast.success("系統初始化完成！歡迎使用後臺管理系統");
         // 使用硬導向確保瀏覽器帶著更新後的 JWT cookie 發起請求
-        window.location.href = '/admin'
+        window.location.href = "/admin";
       } else {
-        toast.error(result.error || '初始化失敗')
+        toast.error(result.error || "初始化失敗");
       }
-    })
+    });
   }
 
-  const isLastStep = currentStep === STEPS.length - 1
+  const isLastStep = currentStep === STEPS.length - 1;
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
@@ -122,7 +122,7 @@ export function SetupClient({ user }: SetupClientProps) {
               <div
                 key={step.id}
                 className={`h-1.5 flex-1 rounded-full transition-colors ${
-                  i <= currentStep ? 'bg-[#C41E3A]' : 'bg-[#E5E5E5]'
+                  i <= currentStep ? "bg-[#C41E3A]" : "bg-[#E5E5E5]"
                 }`}
               />
             ))}
@@ -144,7 +144,8 @@ export function SetupClient({ user }: SetupClientProps) {
                   歡迎使用課程平臺！
                 </h2>
                 <p className="text-[#525252] max-w-md mx-auto">
-                  嗨 {user.name || user.email}，讓我們花幾分鐘完成基本設定，幫助你快速開始使用。
+                  嗨 {user.name || user.email}
+                  ，讓我們花幾分鐘完成基本設定，幫助你快速開始使用。
                 </p>
               </div>
               <Card className="bg-white border border-[#E5E5E5] rounded-xl text-left">
@@ -155,7 +156,7 @@ export function SetupClient({ user }: SetupClientProps) {
                     </p>
                     <ul className="space-y-2">
                       {STEPS.slice(1).map((step) => {
-                        const Icon = step.icon
+                        const Icon = step.icon;
                         return (
                           <li
                             key={step.id}
@@ -166,7 +167,7 @@ export function SetupClient({ user }: SetupClientProps) {
                             </div>
                             {step.label}
                           </li>
-                        )
+                        );
                       })}
                     </ul>
                     <p className="text-xs text-[#A3A3A3] pt-2 border-t border-[#F5F5F5]">
@@ -195,7 +196,7 @@ export function SetupClient({ user }: SetupClientProps) {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="text-[#0A0A0A]">站點名稱</Label>
+                  <Label className="text-[#0A0A0A]">網站名稱</Label>
                   <Input
                     value={siteName}
                     onChange={(e) => setSiteName(e.target.value)}
@@ -234,21 +235,29 @@ export function SetupClient({ user }: SetupClientProps) {
                     金流設定
                   </CardTitle>
                   <CardDescription className="text-[#525252]">
-                    設定 PAYUNi 統一金流。如果還沒有金流帳號，可以先跳過，之後到「設定 → 金流」再設定。
+                    設定 PAYUNi
+                    統一金流。如果還沒有金流帳號，可以先跳過，之後到「設定 →
+                    金流」再設定。
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex gap-3">
                     <button
                       type="button"
-                      onClick={() => setPaymentGateway(paymentGateway === 'payuni' ? '' : 'payuni')}
+                      onClick={() =>
+                        setPaymentGateway(
+                          paymentGateway === "payuni" ? "" : "payuni",
+                        )
+                      }
                       className={`flex-1 rounded-xl border-2 p-4 text-left transition-all ${
-                        paymentGateway === 'payuni'
-                          ? 'border-[#C41E3A] bg-[#C41E3A]/5'
-                          : 'border-[#E5E5E5] hover:border-[#A3A3A3]'
+                        paymentGateway === "payuni"
+                          ? "border-[#C41E3A] bg-[#C41E3A]/5"
+                          : "border-[#E5E5E5] hover:border-[#A3A3A3]"
                       }`}
                     >
-                      <p className="font-semibold text-[#0A0A0A]">PAYUNi 統一金流</p>
+                      <p className="font-semibold text-[#0A0A0A]">
+                        PAYUNi 統一金流
+                      </p>
                       <p className="text-xs text-[#525252] mt-1">
                         臺灣在地金流，支援信用卡、超商代碼、ATM
                       </p>
@@ -258,10 +267,12 @@ export function SetupClient({ user }: SetupClientProps) {
               </Card>
 
               {/* PAYUNi 詳細設定 */}
-              {paymentGateway === 'payuni' && (
+              {paymentGateway === "payuni" && (
                 <Card className="bg-white border border-[#E5E5E5] rounded-xl">
                   <CardHeader>
-                    <CardTitle className="text-[#0A0A0A] text-base">PAYUNi 設定</CardTitle>
+                    <CardTitle className="text-[#0A0A0A] text-base">
+                      PAYUNi 設定
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
@@ -274,7 +285,9 @@ export function SetupClient({ user }: SetupClientProps) {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-[#0A0A0A]">Hash Key（32 字元）</Label>
+                      <Label className="text-[#0A0A0A]">
+                        Hash Key（32 字元）
+                      </Label>
                       <Input
                         type="password"
                         value={payuniHashKey}
@@ -285,7 +298,9 @@ export function SetupClient({ user }: SetupClientProps) {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-[#0A0A0A]">Hash IV（16 字元）</Label>
+                      <Label className="text-[#0A0A0A]">
+                        Hash IV（16 字元）
+                      </Label>
                       <Input
                         type="password"
                         value={payuniHashIV}
@@ -321,7 +336,9 @@ export function SetupClient({ user }: SetupClientProps) {
                   追蹤像素
                 </CardTitle>
                 <CardDescription className="text-[#525252]">
-                  設定 Google Analytics 和 Meta Pixel，追蹤網站流量和轉換。可以之後再到「設定 → 基本設定」補填。
+                  設定 Google Analytics 和 Meta
+                  Pixel，追蹤網站流量和轉換。可以之後再到「設定 →
+                  基本設定」補填。
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -334,7 +351,8 @@ export function SetupClient({ user }: SetupClientProps) {
                     className="border-[#E5E5E5] font-mono text-sm"
                   />
                   <p className="text-xs text-[#A3A3A3]">
-                    在 Google Analytics 後臺 → 管理 → 資料串流中找到，格式為 G- 開頭
+                    在 Google Analytics 後臺 → 管理 → 資料串流中找到，格式為 G-
+                    開頭
                   </p>
                 </div>
 
@@ -406,7 +424,7 @@ export function SetupClient({ user }: SetupClientProps) {
                   onClick={goNext}
                   className="bg-[#C41E3A] hover:bg-[#A01830] text-white rounded-full px-6"
                 >
-                  {currentStep === 0 ? '開始設定' : '下一步'}
+                  {currentStep === 0 ? "開始設定" : "下一步"}
                   <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               ) : (
@@ -434,5 +452,5 @@ export function SetupClient({ user }: SetupClientProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
