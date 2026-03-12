@@ -268,11 +268,6 @@ export function PurchasedCurriculumList({
           )}
         </div>
 
-        {/* 社群 */}
-        {course.slug === "vibe-coding-for-ios-app" &&
-          {
-            /* 課程社群連結（可於後台設定歡迎信提供） */
-          }}
         {/* 章節列表 */}
         <div className="space-y-4">
           {course.chapters.map((chapter, chapterIndex) => (
