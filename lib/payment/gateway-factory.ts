@@ -4,7 +4,6 @@
 import { prisma } from '@/lib/prisma'
 import { SETTING_KEYS } from '@/lib/validations/settings'
 import type { PaymentGateway, PaymentGatewayType, PaymentGatewaySettings } from './types'
-import { StripeGateway } from './stripe-gateway'
 import { PayUniGateway } from './payuni-gateway'
 
 /**
@@ -12,9 +11,6 @@ import { PayUniGateway } from './payuni-gateway'
  */
 export async function getPaymentGatewaySettings(): Promise<PaymentGatewaySettings> {
   const keys = [
-    SETTING_KEYS.PAYMENT_GATEWAY,
-    SETTING_KEYS.STRIPE_SECRET_KEY,
-    SETTING_KEYS.STRIPE_WEBHOOK_SECRET,
     SETTING_KEYS.PAYUNI_MERCHANT_ID,
     SETTING_KEYS.PAYUNI_HASH_KEY,
     SETTING_KEYS.PAYUNI_HASH_IV,
@@ -28,17 +24,7 @@ export async function getPaymentGatewaySettings(): Promise<PaymentGatewaySetting
   const settingMap = new Map(settings.map((s) => [s.key, s.value]))
 
   return {
-    gateway: (settingMap.get(SETTING_KEYS.PAYMENT_GATEWAY) as PaymentGatewayType) || 'stripe',
-    stripe: {
-      secretKey:
-        settingMap.get(SETTING_KEYS.STRIPE_SECRET_KEY) ||
-        process.env.STRIPE_SECRET_KEY ||
-        '',
-      webhookSecret:
-        settingMap.get(SETTING_KEYS.STRIPE_WEBHOOK_SECRET) ||
-        process.env.STRIPE_WEBHOOK_SECRET ||
-        '',
-    },
+    gateway: 'payuni',
     payuni: {
       merchantId:
         settingMap.get(SETTING_KEYS.PAYUNI_MERCHANT_ID) ||
@@ -62,10 +48,7 @@ export async function getPaymentGatewaySettings(): Promise<PaymentGatewaySetting
  * 取得當前啟用的金流閘道類型
  */
 export async function getActiveGatewayType(): Promise<PaymentGatewayType> {
-  const setting = await prisma.siteSetting.findUnique({
-    where: { key: SETTING_KEYS.PAYMENT_GATEWAY },
-  })
-  return (setting?.value as PaymentGatewayType) || 'stripe'
+  return 'payuni'
 }
 
 /**
@@ -82,28 +65,13 @@ export async function getActivePaymentGateway(): Promise<PaymentGateway> {
 export function createGatewayFromSettings(
   settings: PaymentGatewaySettings
 ): PaymentGateway {
-  if (settings.gateway === 'payuni') {
-    const { merchantId, hashKey, hashIV, testMode } = settings.payuni
+  const { merchantId, hashKey, hashIV, testMode } = settings.payuni
 
-    if (!merchantId || !hashKey || !hashIV) {
-      throw new Error('PAYUNi 金流設定不完整，請至後台設定商店代號、Hash Key 和 Hash IV')
-    }
-
-    return new PayUniGateway({ merchantId, hashKey, hashIV, testMode })
+  if (!merchantId || !hashKey || !hashIV) {
+    throw new Error('PAYUNi 金流設定不完整，請至後台設定商店代號、Hash Key 和 Hash IV')
   }
 
-  // 預設 Stripe
-  const { secretKey, webhookSecret } = settings.stripe
-
-  if (!secretKey) {
-    throw new Error('Stripe 金流設定不完整，請設定 Secret Key')
-  }
-
-  if (!webhookSecret) {
-    throw new Error('Stripe 金流設定不完整，請設定 Webhook Secret')
-  }
-
-  return new StripeGateway({ secretKey, webhookSecret })
+  return new PayUniGateway({ merchantId, hashKey, hashIV, testMode })
 }
 
 /**

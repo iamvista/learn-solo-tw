@@ -1,38 +1,38 @@
 // components/admin/courses/course-welcome-email-form.tsx
 // 課程歡迎信編輯表單（整合版：Milkdown 編輯器 + 關鍵字面板一體式設計）
 
-'use client'
+"use client";
 
-import { useMemo, useState, useTransition } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from 'sonner'
-import { Loader2, Save, Send, Copy, AlertCircle } from 'lucide-react'
+import { useMemo, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { Loader2, Save, Send, Copy, AlertCircle } from "lucide-react";
 import {
   courseWelcomeEmailSchema,
   type CourseWelcomeEmailFormData,
-} from '@/lib/validations/course-welcome-email'
-import type { CourseWelcomeEmailSettings } from '@/lib/actions/course-welcome-email'
+} from "@/lib/validations/course-welcome-email";
+import type { CourseWelcomeEmailSettings } from "@/lib/actions/course-welcome-email";
 import {
   updateCourseWelcomeEmailSettings,
   sendCourseWelcomeEmailTest,
-} from '@/lib/actions/course-welcome-email'
+} from "@/lib/actions/course-welcome-email";
 import {
   buildWelcomeEmailContext,
   getUnknownWelcomeEmailTokens,
   renderWelcomeEmailHtmlFromMarkdown,
   renderWelcomeEmailTemplate,
-} from '@/lib/welcome-email'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Switch } from '@/components/ui/switch'
+} from "@/lib/welcome-email";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -41,15 +41,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Badge } from '@/components/ui/badge'
-import { MilkdownSimpleEditor } from '@/components/admin/comments/milkdown-simple-editor'
+} from "@/components/ui/form";
+import { Badge } from "@/components/ui/badge";
+import { MilkdownSimpleEditor } from "@/components/admin/comments/milkdown-simple-editor";
 
 interface CourseWelcomeEmailFormProps {
-  courseId: string
-  courseTitle: string
-  courseSlug: string
-  initialSettings: CourseWelcomeEmailSettings
+  courseId: string;
+  courseTitle: string;
+  courseSlug: string;
+  initialSettings: CourseWelcomeEmailSettings;
 }
 
 export function CourseWelcomeEmailForm({
@@ -58,9 +58,9 @@ export function CourseWelcomeEmailForm({
   courseSlug,
   initialSettings,
 }: CourseWelcomeEmailFormProps) {
-  const [isPending, startTransition] = useTransition()
-  const [isSendingTest, setIsSendingTest] = useState(false)
-  const [testEmail, setTestEmail] = useState('')
+  const [isPending, startTransition] = useTransition();
+  const [isSendingTest, setIsSendingTest] = useState(false);
+  const [testEmail, setTestEmail] = useState("");
 
   const form = useForm<CourseWelcomeEmailFormData>({
     resolver: zodResolver(courseWelcomeEmailSchema),
@@ -69,80 +69,86 @@ export function CourseWelcomeEmailForm({
       subjectTemplate: initialSettings.subjectTemplate,
       markdownTemplate: initialSettings.markdownTemplate,
     },
-  })
+  });
 
-  const subjectTemplate = form.watch('subjectTemplate')
-  const markdownTemplate = form.watch('markdownTemplate')
-  const enabled = form.watch('enabled')
+  const subjectTemplate = form.watch("subjectTemplate");
+  const markdownTemplate = form.watch("markdownTemplate");
+  const enabled = form.watch("enabled");
 
   const unknownTokens = useMemo(() => {
     return Array.from(
       new Set([
-        ...getUnknownWelcomeEmailTokens(subjectTemplate || ''),
-        ...getUnknownWelcomeEmailTokens(markdownTemplate || ''),
-      ])
-    )
-  }, [subjectTemplate, markdownTemplate])
+        ...getUnknownWelcomeEmailTokens(subjectTemplate || ""),
+        ...getUnknownWelcomeEmailTokens(markdownTemplate || ""),
+      ]),
+    );
+  }, [subjectTemplate, markdownTemplate]);
 
   const previewContext = useMemo(
     () =>
       buildWelcomeEmailContext({
-        userName: '測試學員',
+        userName: "測試學員",
         courseTitle,
         courseSlug,
-        supportEmail: 'support@ray-realms.com',
+        supportEmail: "hello@solo.tw",
         purchaseDate: new Date(),
       }),
-    [courseTitle, courseSlug]
-  )
+    [courseTitle, courseSlug],
+  );
 
-  const previewSubject = renderWelcomeEmailTemplate(subjectTemplate || '', previewContext)
-  const previewMarkdown = renderWelcomeEmailTemplate(markdownTemplate || '', previewContext)
-  const previewHtml = renderWelcomeEmailHtmlFromMarkdown(previewMarkdown)
+  const previewSubject = renderWelcomeEmailTemplate(
+    subjectTemplate || "",
+    previewContext,
+  );
+  const previewMarkdown = renderWelcomeEmailTemplate(
+    markdownTemplate || "",
+    previewContext,
+  );
+  const previewHtml = renderWelcomeEmailHtmlFromMarkdown(previewMarkdown);
 
   async function onSubmit(data: CourseWelcomeEmailFormData) {
     startTransition(async () => {
-      const result = await updateCourseWelcomeEmailSettings(courseId, data)
+      const result = await updateCourseWelcomeEmailSettings(courseId, data);
 
       if (result.success) {
-        toast.success('課程歡迎信設定已儲存')
+        toast.success("課程歡迎信設定已儲存");
       } else {
-        toast.error(result.error || '儲存失敗')
+        toast.error(result.error || "儲存失敗");
       }
-    })
+    });
   }
 
   async function handleSendTest() {
     if (!testEmail.trim()) {
-      toast.error('請先輸入測試 Email')
-      return
+      toast.error("請先輸入測試 Email");
+      return;
     }
 
-    setIsSendingTest(true)
+    setIsSendingTest(true);
     try {
       const result = await sendCourseWelcomeEmailTest(courseId, {
         toEmail: testEmail.trim(),
-        subjectTemplate: subjectTemplate || '',
-        markdownTemplate: markdownTemplate || '',
-      })
+        subjectTemplate: subjectTemplate || "",
+        markdownTemplate: markdownTemplate || "",
+      });
 
       if (result.success) {
-        toast.success('測試信已發送')
-        setTestEmail('')
+        toast.success("測試信已發送");
+        setTestEmail("");
       } else {
-        toast.error(result.error || '發送失敗')
+        toast.error(result.error || "發送失敗");
       }
     } finally {
-      setIsSendingTest(false)
+      setIsSendingTest(false);
     }
   }
 
   async function copyToken(token: string) {
     try {
-      await navigator.clipboard.writeText(token)
-      toast.success(`已複製 ${token}`)
+      await navigator.clipboard.writeText(token);
+      toast.success(`已複製 ${token}`);
     } catch {
-      toast.error('複製失敗，請手動複製')
+      toast.error("複製失敗，請手動複製");
     }
   }
 
@@ -166,22 +172,31 @@ export function CourseWelcomeEmailForm({
                   <FormItem className="rounded-xl border border-[#E5E5E5] p-4 sm:p-5">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                       <div className="space-y-1">
-                        <FormLabel className="text-[#0A0A0A] text-base">啟用自動寄送</FormLabel>
+                        <FormLabel className="text-[#0A0A0A] text-base">
+                          啟用自動寄送
+                        </FormLabel>
                         <FormDescription className="text-[#737373]">
                           {enabled
-                            ? '目前為啟用狀態，付款成功後會自動寄出歡迎信。'
-                            : '目前為關閉狀態，付款成功後不會寄出歡迎信。'}
+                            ? "目前為啟用狀態，付款成功後會自動寄出歡迎信。"
+                            : "目前為關閉狀態，付款成功後不會寄出歡迎信。"}
                         </FormDescription>
                       </div>
                       <div className="flex items-center justify-between rounded-lg bg-[#FAFAFA] border border-[#E5E5E5] px-3 py-2 sm:justify-end sm:gap-3">
                         <Badge
-                          variant={enabled ? 'default' : 'outline'}
-                          className={enabled ? 'bg-emerald-600 hover:bg-emerald-600 text-white' : 'border-[#D4D4D4] text-[#525252]'}
+                          variant={enabled ? "default" : "outline"}
+                          className={
+                            enabled
+                              ? "bg-emerald-600 hover:bg-emerald-600 text-white"
+                              : "border-[#D4D4D4] text-[#525252]"
+                          }
                         >
-                          {enabled ? '已啟用' : '已關閉'}
+                          {enabled ? "已啟用" : "已關閉"}
                         </Badge>
                         <FormControl>
-                          <Switch checked={field.value} onCheckedChange={field.onChange} />
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
                         </FormControl>
                       </div>
                     </div>
@@ -194,9 +209,12 @@ export function CourseWelcomeEmailForm({
           {/* 一體式編輯區：標題 + Milkdown + 關鍵字 */}
           <Card className="bg-white border-[#E5E5E5] rounded-xl">
             <CardHeader>
-              <CardTitle className="text-[#0A0A0A]">模板內容與可用關鍵字</CardTitle>
+              <CardTitle className="text-[#0A0A0A]">
+                模板內容與可用關鍵字
+              </CardTitle>
               <CardDescription className="text-[#525252]">
-                後台只需填 Markdown 文案，寄送時系統會自動套用固定版型（灰底＋白色圓角容器）。
+                後台只需填 Markdown
+                文案，寄送時系統會自動套用固定版型（灰底＋白色圓角容器）。
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -230,7 +248,9 @@ export function CourseWelcomeEmailForm({
                     name="markdownTemplate"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-[#0A0A0A]">Markdown 內容</FormLabel>
+                        <FormLabel className="text-[#0A0A0A]">
+                          Markdown 內容
+                        </FormLabel>
                         <FormControl>
                           <MilkdownSimpleEditor
                             value={field.value}
@@ -248,7 +268,7 @@ export function CourseWelcomeEmailForm({
                     <div className="rounded-xl bg-red-50 border border-red-200 p-4 text-red-700 text-sm">
                       <div className="flex items-start gap-2">
                         <AlertCircle className="h-4 w-4 mt-0.5" />
-                        <p>發現未支援關鍵字：{unknownTokens.join(', ')}</p>
+                        <p>發現未支援關鍵字：{unknownTokens.join(", ")}</p>
                       </div>
                     </div>
                   )}
@@ -257,8 +277,12 @@ export function CourseWelcomeEmailForm({
                 {/* 右側：可用關鍵字 */}
                 <div className="space-y-3">
                   <div className="rounded-lg border border-[#E5E5E5] bg-[#FAFAFA] p-3">
-                    <p className="text-sm font-medium text-[#0A0A0A]">可用關鍵字</p>
-                    <p className="mt-1 text-xs text-[#737373]">點擊即可複製，並貼到標題或 Markdown 模板中。</p>
+                    <p className="text-sm font-medium text-[#0A0A0A]">
+                      可用關鍵字
+                    </p>
+                    <p className="mt-1 text-xs text-[#737373]">
+                      點擊即可複製，並貼到標題或 Markdown 模板中。
+                    </p>
                   </div>
 
                   {initialSettings.availableVariables.map((variable) => (
@@ -268,10 +292,15 @@ export function CourseWelcomeEmailForm({
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="space-y-1 min-w-0">
-                          <Badge variant="outline" className="text-[#0A0A0A] border-[#E5E5E5] max-w-full break-all whitespace-normal">
+                          <Badge
+                            variant="outline"
+                            className="text-[#0A0A0A] border-[#E5E5E5] max-w-full break-all whitespace-normal"
+                          >
                             {variable.token}
                           </Badge>
-                          <p className="text-xs text-[#525252]">{variable.label}</p>
+                          <p className="text-xs text-[#525252]">
+                            {variable.label}
+                          </p>
                         </div>
                         <Button
                           type="button"
@@ -284,8 +313,12 @@ export function CourseWelcomeEmailForm({
                           複製
                         </Button>
                       </div>
-                      <p className="text-xs text-[#737373]">{variable.description}</p>
-                      <p className="text-xs text-[#A3A3A3]">範例：{variable.example}</p>
+                      <p className="text-xs text-[#737373]">
+                        {variable.description}
+                      </p>
+                      <p className="text-xs text-[#A3A3A3]">
+                        範例：{variable.example}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -365,5 +398,5 @@ export function CourseWelcomeEmailForm({
         </form>
       </Form>
     </div>
-  )
+  );
 }

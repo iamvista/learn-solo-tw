@@ -1,6 +1,5 @@
 // components/admin/settings/payment-settings-form.tsx
-// 金流設定表單元件
-// 支援 Stripe / PAYUNi 雙金流切換與設定
+// 金流設定表單元件 — PAYUNi 統一金流
 
 'use client'
 
@@ -32,17 +31,7 @@ import {
   Save,
 } from 'lucide-react'
 
-type GatewayType = 'stripe' | 'payuni'
-
 interface PaymentSettingsFormProps {
-  initialGateway: GatewayType
-  stripe: {
-    secretKeyHint: string
-    webhookSecretHint: string
-    webhookUrl: string
-    isConfigured: boolean
-    isTestMode: boolean
-  }
   payuni: {
     merchantId: string
     hashKeyHint: string
@@ -55,18 +44,10 @@ interface PaymentSettingsFormProps {
 }
 
 export function PaymentSettingsForm({
-  initialGateway,
-  stripe: initialStripe,
   payuni: initialPayuni,
 }: PaymentSettingsFormProps) {
   const [isSaving, startSaveTransition] = useTransition()
   const [isTesting, startTestTransition] = useTransition()
-
-  const [gateway, setGateway] = useState<GatewayType>(initialGateway)
-
-  // Stripe 欄位（不預填原始秘鑰，只有使用者主動輸入新值時才提交）
-  const [stripeSecretKey, setStripeSecretKey] = useState('')
-  const [stripeWebhookSecret, setStripeWebhookSecret] = useState('')
 
   // PAYUNi 欄位
   const [payuniMerchantId, setPayuniMerchantId] = useState(initialPayuni.merchantId)
@@ -84,9 +65,7 @@ export function PaymentSettingsForm({
     startSaveTransition(async () => {
       try {
         const result = await updatePaymentSettings({
-          gateway,
-          stripeSecretKey: stripeSecretKey || undefined,
-          stripeWebhookSecret: stripeWebhookSecret || undefined,
+          gateway: 'payuni',
           payuniMerchantId: payuniMerchantId || undefined,
           payuniHashKey: payuniHashKey || undefined,
           payuniHashIV: payuniHashIV || undefined,
@@ -108,9 +87,7 @@ export function PaymentSettingsForm({
     setTestResult(null)
     startTestTransition(async () => {
       try {
-        const result = await testPaymentConnection(gateway, {
-          stripeSecretKey: stripeSecretKey || undefined,
-          stripeWebhookSecret: stripeWebhookSecret || undefined,
+        const result = await testPaymentConnection('payuni', {
           payuniMerchantId: payuniMerchantId || undefined,
           payuniHashKey: payuniHashKey || undefined,
           payuniHashIV: payuniHashIV || undefined,
@@ -142,305 +119,138 @@ export function PaymentSettingsForm({
 
   return (
     <div className="space-y-6">
-      {/* Gateway 選擇 */}
+      {/* PAYUNi 設定 */}
       <Card className="bg-white border border-[#E5E5E5] rounded-xl">
         <CardHeader>
-          <CardTitle className="text-[#0A0A0A]">金流閘道</CardTitle>
-          <CardDescription className="text-[#525252]">
-            選擇要使用的金流服務（二擇一）
-          </CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-[#0A0A0A]">PAYUNi 統一金流設定</CardTitle>
+              <CardDescription className="text-[#525252]">
+                PAYUNi 商店代號與加密金鑰設定
+              </CardDescription>
+            </div>
+            <Badge
+              variant="outline"
+              className={
+                initialPayuni.isConfigured
+                  ? 'border-green-500 text-green-600 bg-green-50'
+                  : 'border-[#F5A524] text-[#F5A524] bg-[#F5A524]/10'
+              }
+            >
+              {initialPayuni.isConfigured ? '已設定' : '未設定'}
+            </Badge>
+          </div>
         </CardHeader>
-        <CardContent>
-          <div className="flex gap-4">
-            <button
-              type="button"
-              onClick={() => {
-                setGateway('stripe')
-                setTestResult(null)
-              }}
-              className={`flex-1 rounded-xl border-2 p-4 text-left transition-all ${
-                gateway === 'stripe'
-                  ? 'border-[#F5A524] bg-[#F5A524]/5'
-                  : 'border-[#E5E5E5] hover:border-[#A3A3A3]'
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-semibold text-[#0A0A0A]">Stripe</p>
-                  <p className="text-sm text-[#525252] mt-1">
-                    國際金流，支援信用卡、Apple Pay、Google Pay
-                  </p>
-                </div>
-                <div
-                  className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${
-                    gateway === 'stripe'
-                      ? 'border-[#F5A524]'
-                      : 'border-[#D4D4D4]'
-                  }`}
-                >
-                  {gateway === 'stripe' && (
-                    <div className="h-2.5 w-2.5 rounded-full bg-[#F5A524]" />
-                  )}
-                </div>
-              </div>
-            </button>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label className="text-[#0A0A0A]">商店代號 (MerID)</Label>
+            <Input
+              value={payuniMerchantId}
+              onChange={(e) => setPayuniMerchantId(e.target.value)}
+              placeholder="U00000000"
+              className="border-[#E5E5E5] font-mono"
+            />
+          </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                setGateway('payuni')
-                setTestResult(null)
-              }}
-              className={`flex-1 rounded-xl border-2 p-4 text-left transition-all ${
-                gateway === 'payuni'
-                  ? 'border-[#F5A524] bg-[#F5A524]/5'
-                  : 'border-[#E5E5E5] hover:border-[#A3A3A3]'
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-semibold text-[#0A0A0A]">PAYUNi 統一金流</p>
-                  <p className="text-sm text-[#525252] mt-1">
-                    台灣在地金流，支援信用卡、ATM、超商代碼
-                  </p>
-                </div>
-                <div
-                  className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${
-                    gateway === 'payuni'
-                      ? 'border-[#F5A524]'
-                      : 'border-[#D4D4D4]'
-                  }`}
-                >
-                  {gateway === 'payuni' && (
-                    <div className="h-2.5 w-2.5 rounded-full bg-[#F5A524]" />
-                  )}
-                </div>
-              </div>
-            </button>
+          <div className="space-y-2">
+            <Label className="text-[#0A0A0A]">Hash Key（32 字元）</Label>
+            <Input
+              type="password"
+              value={payuniHashKey}
+              onChange={(e) => setPayuniHashKey(e.target.value)}
+              placeholder={initialPayuni.hashKeyHint || '32 字元加密金鑰'}
+              className="border-[#E5E5E5] font-mono"
+              maxLength={32}
+            />
+            <p className="text-xs text-[#A3A3A3]">
+              {initialPayuni.hashKeyHint
+                ? `目前已設定（${initialPayuni.hashKeyHint}），留空則不變更`
+                : `目前長度：${payuniHashKey.length}/32 字元`}
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-[#0A0A0A]">Hash IV（16 字元）</Label>
+            <Input
+              type="password"
+              value={payuniHashIV}
+              onChange={(e) => setPayuniHashIV(e.target.value)}
+              placeholder={initialPayuni.hashIVHint || '16 字元加密向量'}
+              className="border-[#E5E5E5] font-mono"
+              maxLength={16}
+            />
+            <p className="text-xs text-[#A3A3A3]">
+              {initialPayuni.hashIVHint
+                ? `目前已設定（${initialPayuni.hashIVHint}），留空則不變更`
+                : `目前長度：${payuniHashIV.length}/16 字元`}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={payuniTestMode}
+                onChange={(e) => setPayuniTestMode(e.target.checked)}
+                className="h-4 w-4 rounded border-[#D4D4D4]"
+              />
+              <span className="text-sm text-[#0A0A0A]">測試模式（Sandbox）</span>
+            </label>
+          </div>
+
+          {/* 回調 URL */}
+          <div className="space-y-2">
+            <Label className="text-[#0A0A0A]">Notify URL</Label>
+            <div className="flex items-center gap-2">
+              <Input
+                value={initialPayuni.notifyUrl}
+                disabled
+                className="bg-[#FAFAFA] border-[#E5E5E5] text-[#525252] font-mono text-sm"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={() => handleCopy(initialPayuni.notifyUrl, 'payuni-notify')}
+                className="border-[#E5E5E5] shrink-0"
+              >
+                {copied === 'payuni-notify' ? (
+                  <Check className="h-4 w-4 text-green-500" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-[#0A0A0A]">Return URL</Label>
+            <div className="flex items-center gap-2">
+              <Input
+                value={initialPayuni.returnUrl}
+                disabled
+                className="bg-[#FAFAFA] border-[#E5E5E5] text-[#525252] font-mono text-sm"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={() => handleCopy(initialPayuni.returnUrl, 'payuni-return')}
+                className="border-[#E5E5E5] shrink-0"
+              >
+                {copied === 'payuni-return' ? (
+                  <Check className="h-4 w-4 text-green-500" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+            <p className="text-xs text-[#A3A3A3]">
+              請在 PAYUNi 商家後台設定以上 Return URL 和 Notify URL
+            </p>
           </div>
         </CardContent>
       </Card>
-
-      {/* Stripe 設定 */}
-      {gateway === 'stripe' && (
-        <Card className="bg-white border border-[#E5E5E5] rounded-xl">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-[#0A0A0A]">Stripe 設定</CardTitle>
-                <CardDescription className="text-[#525252]">
-                  Stripe 支付服務金鑰與 Webhook 設定
-                </CardDescription>
-              </div>
-              <Badge
-                variant="outline"
-                className={
-                  initialStripe.isConfigured
-                    ? 'border-green-500 text-green-600 bg-green-50'
-                    : 'border-[#F5A524] text-[#F5A524] bg-[#F5A524]/10'
-                }
-              >
-                {initialStripe.isConfigured ? '已設定' : '未設定'}
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label className="text-[#0A0A0A]">Secret Key</Label>
-              <Input
-                type="password"
-                value={stripeSecretKey}
-                onChange={(e) => setStripeSecretKey(e.target.value)}
-                placeholder={initialStripe.secretKeyHint || 'sk_test_... 或 sk_live_...'}
-                className="border-[#E5E5E5] font-mono"
-              />
-              <p className="text-xs text-[#A3A3A3]">
-                {initialStripe.secretKeyHint
-                  ? `目前已設定（${initialStripe.secretKeyHint}），留空則不變更`
-                  : 'Stripe Dashboard → Developers → API Keys'}
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-[#0A0A0A]">Webhook Signing Secret</Label>
-              <Input
-                type="password"
-                value={stripeWebhookSecret}
-                onChange={(e) => setStripeWebhookSecret(e.target.value)}
-                placeholder={initialStripe.webhookSecretHint || 'whsec_...'}
-                className="border-[#E5E5E5] font-mono"
-              />
-              {initialStripe.webhookSecretHint && (
-                <p className="text-xs text-[#A3A3A3]">
-                  目前已設定（{initialStripe.webhookSecretHint}），留空則不變更
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-[#0A0A0A]">Webhook URL</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  value={initialStripe.webhookUrl}
-                  disabled
-                  className="bg-[#FAFAFA] border-[#E5E5E5] text-[#525252] font-mono text-sm"
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => handleCopy(initialStripe.webhookUrl, 'stripe-webhook')}
-                  className="border-[#E5E5E5] shrink-0"
-                >
-                  {copied === 'stripe-webhook' ? (
-                    <Check className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-              <p className="text-xs text-[#A3A3A3]">
-                請在 Stripe Dashboard 的 Webhooks 頁面設定此 URL，並監聽 checkout.session.completed 事件
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* PAYUNi 設定 */}
-      {gateway === 'payuni' && (
-        <Card className="bg-white border border-[#E5E5E5] rounded-xl">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-[#0A0A0A]">PAYUNi 統一金流設定</CardTitle>
-                <CardDescription className="text-[#525252]">
-                  PAYUNi 商店代號與加密金鑰設定
-                </CardDescription>
-              </div>
-              <Badge
-                variant="outline"
-                className={
-                  initialPayuni.isConfigured
-                    ? 'border-green-500 text-green-600 bg-green-50'
-                    : 'border-[#F5A524] text-[#F5A524] bg-[#F5A524]/10'
-                }
-              >
-                {initialPayuni.isConfigured ? '已設定' : '未設定'}
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label className="text-[#0A0A0A]">商店代號 (MerID)</Label>
-              <Input
-                value={payuniMerchantId}
-                onChange={(e) => setPayuniMerchantId(e.target.value)}
-                placeholder="U00000000"
-                className="border-[#E5E5E5] font-mono"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-[#0A0A0A]">Hash Key（32 字元）</Label>
-              <Input
-                type="password"
-                value={payuniHashKey}
-                onChange={(e) => setPayuniHashKey(e.target.value)}
-                placeholder={initialPayuni.hashKeyHint || '32 字元加密金鑰'}
-                className="border-[#E5E5E5] font-mono"
-                maxLength={32}
-              />
-              <p className="text-xs text-[#A3A3A3]">
-                {initialPayuni.hashKeyHint
-                  ? `目前已設定（${initialPayuni.hashKeyHint}），留空則不變更`
-                  : `目前長度：${payuniHashKey.length}/32 字元`}
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-[#0A0A0A]">Hash IV（16 字元）</Label>
-              <Input
-                type="password"
-                value={payuniHashIV}
-                onChange={(e) => setPayuniHashIV(e.target.value)}
-                placeholder={initialPayuni.hashIVHint || '16 字元加密向量'}
-                className="border-[#E5E5E5] font-mono"
-                maxLength={16}
-              />
-              <p className="text-xs text-[#A3A3A3]">
-                {initialPayuni.hashIVHint
-                  ? `目前已設定（${initialPayuni.hashIVHint}），留空則不變更`
-                  : `目前長度：${payuniHashIV.length}/16 字元`}
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={payuniTestMode}
-                  onChange={(e) => setPayuniTestMode(e.target.checked)}
-                  className="h-4 w-4 rounded border-[#D4D4D4]"
-                />
-                <span className="text-sm text-[#0A0A0A]">測試模式（Sandbox）</span>
-              </label>
-            </div>
-
-            {/* 回調 URL */}
-            <div className="space-y-2">
-              <Label className="text-[#0A0A0A]">Notify URL</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  value={initialPayuni.notifyUrl}
-                  disabled
-                  className="bg-[#FAFAFA] border-[#E5E5E5] text-[#525252] font-mono text-sm"
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => handleCopy(initialPayuni.notifyUrl, 'payuni-notify')}
-                  className="border-[#E5E5E5] shrink-0"
-                >
-                  {copied === 'payuni-notify' ? (
-                    <Check className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-[#0A0A0A]">Return URL</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  value={initialPayuni.returnUrl}
-                  disabled
-                  className="bg-[#FAFAFA] border-[#E5E5E5] text-[#525252] font-mono text-sm"
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => handleCopy(initialPayuni.returnUrl, 'payuni-return')}
-                  className="border-[#E5E5E5] shrink-0"
-                >
-                  {copied === 'payuni-return' ? (
-                    <Check className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-              <p className="text-xs text-[#A3A3A3]">
-                請在 PAYUNi 商家後台設定以上 Return URL 和 Notify URL
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* 測試連線 + 儲存設定 */}
       <div className="flex items-center justify-between">
@@ -518,62 +328,28 @@ export function PaymentSettingsForm({
         <CardHeader>
           <CardTitle className="text-[#0A0A0A]">相關資源</CardTitle>
           <CardDescription className="text-[#525252]">
-            {gateway === 'stripe' ? 'Stripe' : 'PAYUNi'} 開發文件和後台連結
+            PAYUNi 開發文件和後台連結
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          {gateway === 'stripe' ? (
-            <>
-              <a
-                href="https://dashboard.stripe.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#F5A524] hover:text-[#E09000] transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" />
-                Stripe Dashboard
-              </a>
-              <a
-                href="https://docs.stripe.com/checkout"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#F5A524] hover:text-[#E09000] transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" />
-                Checkout 開發文件
-              </a>
-              <a
-                href="https://docs.stripe.com/webhooks"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#F5A524] hover:text-[#E09000] transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" />
-                Webhooks 開發文件
-              </a>
-            </>
-          ) : (
-            <>
-              <a
-                href="https://www.payuni.com.tw/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#F5A524] hover:text-[#E09000] transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" />
-                PAYUNi 官網
-              </a>
-              <a
-                href="https://docs.payuni.com.tw/web/#/7/24"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#F5A524] hover:text-[#E09000] transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" />
-                統一金流 API 文件
-              </a>
-            </>
-          )}
+          <a
+            href="https://www.payuni.com.tw/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-[#F5A524] hover:text-[#E09000] transition-colors"
+          >
+            <ExternalLink className="h-4 w-4" />
+            PAYUNi 官網
+          </a>
+          <a
+            href="https://docs.payuni.com.tw/web/#/7/24"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-[#F5A524] hover:text-[#E09000] transition-colors"
+          >
+            <ExternalLink className="h-4 w-4" />
+            統一金流 API 文件
+          </a>
         </CardContent>
       </Card>
     </div>

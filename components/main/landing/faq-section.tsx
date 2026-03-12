@@ -1,16 +1,16 @@
 // components/main/landing/faq-section.tsx
 // 常見問題區塊 — 精簡為 4 題（最影響購買決策的問題）
 
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion'
-import { courseFAQs } from '@/lib/constants/faq'
+} from "@/components/ui/accordion";
+import { courseFAQs } from "@/lib/constants/faq";
 
 export function FAQSection() {
   return (
@@ -76,7 +76,7 @@ export function FAQSection() {
           <p className="text-sm text-[#A3A3A3]">
             還有其他問題？
             <a
-              href="mailto:ray@ray-realms.com"
+              href="mailto:hello@solo.tw"
               className="ml-1.5 font-bold text-[#0A0A0A] underline decoration-[#F5A524] decoration-2 underline-offset-4 hover:text-[#F5A524] transition-colors"
             >
               聯繫我們
@@ -85,5 +85,5 @@ export function FAQSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

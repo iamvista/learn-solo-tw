@@ -45,7 +45,7 @@ function formatDuration(seconds: number | null): string {
 
 function getChapterCompletedCount(
   lessons: { id: string }[],
-  completedLessons: string[]
+  completedLessons: string[],
 ): number {
   return lessons.filter((lesson) => completedLessons.includes(lesson.id))
     .length;
@@ -62,7 +62,7 @@ export function CurriculumList({
 }: CurriculumListProps) {
   const router = useRouter();
   const currentChapterId = curriculum.chapters.find((chapter) =>
-    chapter.lessons.some((lesson) => lesson.id === currentLessonId)
+    chapter.lessons.some((lesson) => lesson.id === currentLessonId),
   )?.id;
 
   /**
@@ -71,7 +71,7 @@ export function CurriculumList({
   const handleToggleComplete = (
     e: React.MouseEvent,
     lessonId: string,
-    isCurrentlyCompleted: boolean
+    isCurrentlyCompleted: boolean,
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -85,7 +85,7 @@ export function CurriculumList({
         {curriculum.chapters.map((chapter) => {
           const chapterCompletedCount = getChapterCompletedCount(
             chapter.lessons,
-            completedLessons
+            completedLessons,
           );
           const isChapterCompleted =
             chapterCompletedCount === chapter.lessons.length &&
@@ -104,7 +104,7 @@ export function CurriculumList({
                       "flex h-6 w-6 items-center justify-center rounded-full border text-[10px]",
                       isChapterCompleted
                         ? "bg-[#F5A524]/10 border-[#F5A524] text-[#F5A524]"
-                        : "border-gray-200 text-gray-400 group-hover:border-gray-300"
+                        : "border-gray-200 text-gray-400 group-hover:border-gray-300",
                     )}
                   >
                     {isChapterCompleted ? (
@@ -140,12 +140,12 @@ export function CurriculumList({
                                 ? "bg-[#FEF3C7]/50 font-bold text-[#F5A524] rounded-r-xl before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[#F5A524]"
                                 : isCompleted
                                   ? "text-gray-500 hover:bg-gray-50 rounded-r-xl"
-                                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-r-xl"
+                                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-r-xl",
                           )}
                           onClick={() => {
                             onItemClick?.();
                             router.push(
-                              `/courses/${courseSlug}/lessons/${lesson.id}`
+                              `/courses/${courseSlug}/lessons/${lesson.id}`,
                             );
                           }}
                         >
@@ -164,7 +164,7 @@ export function CurriculumList({
                                   ? "bg-[#F5A524] hover:bg-[#E09000]"
                                   : isCurrentLesson
                                     ? "border-2 border-[#F5A524] hover:bg-[#F5A524]/10"
-                                    : "border-2 border-gray-200 hover:border-[#F5A524] hover:bg-[#F5A524]/10"
+                                    : "border-2 border-gray-200 hover:border-[#F5A524] hover:bg-[#F5A524]/10",
                             )}
                             title={
                               isComingSoon
@@ -269,41 +269,10 @@ export function PurchasedCurriculumList({
         </div>
 
         {/* 社群 */}
-        {
-          course.slug === "vibe-coding-for-ios-app" && (
-
-            <div className="mb-8 space-y-4">
-              <div className="flex flex-col items-center text-center sm:flex-row sm:justify-between sm:text-left">
-                <div>
-                  <div className="inline-flex items-center gap-2">
-                    <Users className="h-4 w-4" />
-                    請幫我加入課程社群
-                  </div>
-                  <p className="mt-2 text-[#525252]">
-                    <span className="mr-2 text-sm text-[#A3A3A3]">Line 群組（台灣學員）</span>
-                    <a
-                      href="https://goto.ray-realms.com/ios-app-vibe-coding-course-group"
-                      target="_blank"
-                      className="text-[#F5A524] hover:underline"
-                    >
-                      https://goto.ray-realms.com/ios-app-vibe-coding-course-group
-                    </a>
-                  </p>
-                  <p className="mt-1 text-[#525252]">
-                    <span className="mr-2 text-sm text-[#A3A3A3]">Discord 社群（港澳及海外學員）</span>
-                    <a
-                      href="https://goto.ray-realms.com/ios-app-vibe-coding-course-discord"
-                      target="_blank"
-                      className="text-[#F5A524] hover:underline"
-                    >
-                      https://goto.ray-realms.com/ios-app-vibe-coding-course-discord
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          )
-        }
+        {course.slug === "vibe-coding-for-ios-app" &&
+          {
+            /* 課程社群連結（可於後台設定歡迎信提供） */
+          }}
         {/* 章節列表 */}
         <div className="space-y-4">
           {course.chapters.map((chapter, chapterIndex) => (
@@ -341,7 +310,7 @@ export function PurchasedCurriculumList({
                             href={`/courses/${course.slug}/lessons/${lesson.id}`}
                             className={cn(
                               "flex items-center gap-4 py-4 transition-colors hover:bg-gray-50",
-                              isComingSoon && "opacity-60"
+                              isComingSoon && "opacity-60",
                             )}
                           >
                             <div
@@ -349,7 +318,7 @@ export function PurchasedCurriculumList({
                                 "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
                                 isComingSoon
                                   ? "bg-gray-100 text-gray-400"
-                                  : "bg-[#FAFAFA] text-[#F5A524]"
+                                  : "bg-[#FAFAFA] text-[#F5A524]",
                               )}
                             >
                               {isComingSoon ? (
@@ -363,7 +332,7 @@ export function PurchasedCurriculumList({
                                 "flex-1",
                                 isComingSoon
                                   ? "text-gray-400"
-                                  : "text-[#525252]"
+                                  : "text-[#525252]",
                               )}
                             >
                               {lesson.title}

@@ -2,16 +2,16 @@
 // 訂單詳情卡片元件
 // 顯示訂單完整資訊，包含時間軸
 
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { format } from 'date-fns'
-import { zhTW } from 'date-fns/locale'
-import type { OrderWithDetails } from '@/lib/actions/orders'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
+import Link from "next/link";
+import { format } from "date-fns";
+import { zhTW } from "date-fns/locale";
+import type { OrderWithDetails } from "@/lib/actions/orders";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import {
   User,
   BookOpen,
@@ -22,126 +22,132 @@ import {
   RotateCcw,
   Ban,
   ExternalLink,
-} from 'lucide-react'
-import type { OrderStatus, PaymentMethod } from '@prisma/client'
+} from "lucide-react";
+import type { OrderStatus, PaymentMethod } from "@prisma/client";
 
 interface OrderDetailCardProps {
-  order: OrderWithDetails
+  order: OrderWithDetails;
 }
 
 // 訂單狀態 Badge 樣式 - VibeFlow 風格
-const statusStyles: Record<OrderStatus, { label: string; className: string }> = {
-  PENDING: {
-    label: '待付款',
-    className: 'bg-[#FEF3C7] text-[#92400E] hover:bg-[#FEF3C7] border border-[#FCD34D]',
-  },
-  PAID: {
-    label: '已付款',
-    className: 'bg-[#D1FAE5] text-[#065F46] hover:bg-[#D1FAE5] border border-[#6EE7B7]',
-  },
-  FAILED: {
-    label: '付款失敗',
-    className: 'bg-[#FEE2E2] text-[#991B1B] hover:bg-[#FEE2E2] border border-[#FCA5A5]',
-  },
-  REFUNDED: {
-    label: '已退款',
-    className: 'bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#EDE9FE] border border-[#C4B5FD]',
-  },
-  CANCELLED: {
-    label: '已取消',
-    className: 'bg-[#F5F5F5] text-[#525252] hover:bg-[#F5F5F5] border border-[#E5E5E5]',
-  },
-}
+const statusStyles: Record<OrderStatus, { label: string; className: string }> =
+  {
+    PENDING: {
+      label: "待付款",
+      className:
+        "bg-[#FEF3C7] text-[#92400E] hover:bg-[#FEF3C7] border border-[#FCD34D]",
+    },
+    PAID: {
+      label: "已付款",
+      className:
+        "bg-[#D1FAE5] text-[#065F46] hover:bg-[#D1FAE5] border border-[#6EE7B7]",
+    },
+    FAILED: {
+      label: "付款失敗",
+      className:
+        "bg-[#FEE2E2] text-[#991B1B] hover:bg-[#FEE2E2] border border-[#FCA5A5]",
+    },
+    REFUNDED: {
+      label: "已退款",
+      className:
+        "bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#EDE9FE] border border-[#C4B5FD]",
+    },
+    CANCELLED: {
+      label: "已取消",
+      className:
+        "bg-[#F5F5F5] text-[#525252] hover:bg-[#F5F5F5] border border-[#E5E5E5]",
+    },
+  };
 
 // 付款方式標籤
 const paymentMethodLabels: Record<PaymentMethod, string> = {
-  CREDIT_CARD: '信用卡',
-  APPLE_PAY: 'Apple Pay',
-  GOOGLE_PAY: 'Google Pay',
-  ATM: 'ATM 轉帳',
-  CVS: '超商代碼',
-}
+  CREDIT_CARD: "信用卡",
+  APPLE_PAY: "Apple Pay",
+  GOOGLE_PAY: "Google Pay",
+  ATM: "ATM 轉帳",
+  CVS: "超商代碼",
+};
 
 // 時間軸事件
 interface TimelineEvent {
-  icon: React.ReactNode
-  title: string
-  time: Date | null
-  description?: string
-  status: 'completed' | 'current' | 'pending' | 'error'
+  icon: React.ReactNode;
+  title: string;
+  time: Date | null;
+  description?: string;
+  status: "completed" | "current" | "pending" | "error";
 }
 
 // 格式化金額
 function formatAmount(amount: number): string {
-  return `NT$ ${amount.toLocaleString()}`
+  return `NT$ ${amount.toLocaleString()}`;
 }
 
 export function OrderDetailCard({ order }: OrderDetailCardProps) {
-  const status = statusStyles[order.status]
+  const status = statusStyles[order.status];
 
   // 建立時間軸事件
   const getTimelineEvents = (): TimelineEvent[] => {
     const events: TimelineEvent[] = [
       {
         icon: <Clock className="h-4 w-4" />,
-        title: '訂單建立',
+        title: "訂單建立",
         time: order.createdAt,
-        status: 'completed',
+        status: "completed",
       },
-    ]
+    ];
 
     // 根據狀態添加事件
-    if (order.status === 'PAID') {
+    if (order.status === "PAID") {
       events.push({
         icon: <CheckCircle className="h-4 w-4" />,
-        title: '付款成功',
+        title: "付款成功",
         time: order.paidAt,
         description: order.paymentMethod
           ? `使用 ${paymentMethodLabels[order.paymentMethod]} 付款`
           : undefined,
-        status: 'completed',
-      })
-    } else if (order.status === 'FAILED') {
+        status: "completed",
+      });
+    } else if (order.status === "FAILED") {
       events.push({
         icon: <XCircle className="h-4 w-4" />,
-        title: '付款失敗',
+        title: "付款失敗",
         time: order.updatedAt,
-        status: 'error',
-      })
-    } else if (order.status === 'REFUNDED') {
+        status: "error",
+      });
+    } else if (order.status === "REFUNDED") {
       events.push({
         icon: <CheckCircle className="h-4 w-4" />,
-        title: '付款成功',
+        title: "付款成功",
         time: order.paidAt,
-        status: 'completed',
-      })
+        status: "completed",
+      });
       events.push({
         icon: <RotateCcw className="h-4 w-4" />,
-        title: '已退款',
+        title: "已退款",
         time: order.refundedAt,
         description: order.refundReason || undefined,
-        status: 'completed',
-      })
-    } else if (order.status === 'CANCELLED') {
+        status: "completed",
+      });
+    } else if (order.status === "CANCELLED") {
       events.push({
         icon: <Ban className="h-4 w-4" />,
-        title: '訂單取消',
+        title: "訂單取消",
         time: order.updatedAt,
-        status: 'error',
-      })
-    } else if (order.status === 'PENDING') {
+        status: "error",
+      });
+    } else if (order.status === "PENDING") {
       events.push({
         icon: <CreditCard className="h-4 w-4" />,
-        title: '等待付款',
+        title: "等待付款",
         time: null,
-        status: 'current',
-      })
+        status: "current",
+      });
     }
 
-    return events
-  }
+    return events;
+  };
 
-  const timelineEvents = getTimelineEvents()
+  const timelineEvents = getTimelineEvents();
 
   return (
     <div className="grid gap-6 lg:grid-cols-3">
@@ -163,11 +169,11 @@ export function OrderDetailCard({ order }: OrderDetailCardProps) {
             </div>
             <Separator className="bg-[#E5E5E5]" />
 
-            {/* Stripe Session ID */}
+            {/* 交易 Session ID */}
             {order.stripeSessionId && (
               <>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-[#525252]">Stripe Session ID</span>
+                  <span className="text-[#525252]">交易 Session ID</span>
                   <span className="font-mono text-[#0A0A0A] text-xs">
                     {order.stripeSessionId}
                   </span>
@@ -176,11 +182,11 @@ export function OrderDetailCard({ order }: OrderDetailCardProps) {
               </>
             )}
 
-            {/* Stripe Payment Intent ID */}
+            {/* 交易編號 */}
             {order.stripePaymentIntentId && (
               <>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-[#525252]">Stripe Payment Intent ID</span>
+                  <span className="text-[#525252]">交易編號</span>
                   <span className="font-mono text-[#0A0A0A] text-xs">
                     {order.stripePaymentIntentId}
                   </span>
@@ -218,7 +224,7 @@ export function OrderDetailCard({ order }: OrderDetailCardProps) {
               <span className="text-[#0A0A0A]">
                 {order.paymentMethod
                   ? paymentMethodLabels[order.paymentMethod]
-                  : '-'}
+                  : "-"}
               </span>
             </div>
 
@@ -250,7 +256,7 @@ export function OrderDetailCard({ order }: OrderDetailCardProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-[#0A0A0A] font-medium">
-                    {order.user.name || '未設定姓名'}
+                    {order.user.name || "未設定姓名"}
                   </p>
                   <p className="text-[#525252] text-sm">{order.user.email}</p>
                 </div>
@@ -323,15 +329,18 @@ export function OrderDetailCard({ order }: OrderDetailCardProps) {
           <CardContent>
             <div className="relative">
               {timelineEvents.map((event, index) => {
-                const isLast = index === timelineEvents.length - 1
+                const isLast = index === timelineEvents.length - 1;
 
                 // 狀態顏色 - VibeFlow 風格
                 const statusColors = {
-                  completed: 'bg-[#D1FAE5] text-[#065F46] border border-[#6EE7B7]',
-                  current: 'bg-[#FEF3C7] text-[#92400E] border border-[#FCD34D]',
-                  pending: 'bg-[#F5F5F5] text-[#525252] border border-[#E5E5E5]',
-                  error: 'bg-[#FEE2E2] text-[#991B1B] border border-[#FCA5A5]',
-                }
+                  completed:
+                    "bg-[#D1FAE5] text-[#065F46] border border-[#6EE7B7]",
+                  current:
+                    "bg-[#FEF3C7] text-[#92400E] border border-[#FCD34D]",
+                  pending:
+                    "bg-[#F5F5F5] text-[#525252] border border-[#E5E5E5]",
+                  error: "bg-[#FEE2E2] text-[#991B1B] border border-[#FCA5A5]",
+                };
 
                 return (
                   <div key={index} className="flex gap-4 pb-6 last:pb-0">
@@ -350,10 +359,12 @@ export function OrderDetailCard({ order }: OrderDetailCardProps) {
 
                     {/* 內容 */}
                     <div className="flex-1 pt-1">
-                      <p className="text-[#0A0A0A] font-medium">{event.title}</p>
+                      <p className="text-[#0A0A0A] font-medium">
+                        {event.title}
+                      </p>
                       {event.time && (
                         <p className="text-[#A3A3A3] text-sm">
-                          {format(new Date(event.time), 'yyyy/MM/dd HH:mm:ss', {
+                          {format(new Date(event.time), "yyyy/MM/dd HH:mm:ss", {
                             locale: zhTW,
                           })}
                         </p>
@@ -365,12 +376,12 @@ export function OrderDetailCard({ order }: OrderDetailCardProps) {
                       )}
                     </div>
                   </div>
-                )
+                );
               })}
             </div>
           </CardContent>
         </Card>
       </div>
     </div>
-  )
+  );
 }

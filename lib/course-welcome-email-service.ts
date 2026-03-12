@@ -1,26 +1,26 @@
 // lib/course-welcome-email-service.ts
 // 課程購買後自動歡迎信寄送服務
 
-import { Prisma } from '@prisma/client'
-import { prisma } from '@/lib/prisma'
-import { sendCustomHtmlEmail } from '@/lib/email'
-import { SETTING_KEYS } from '@/lib/validations/settings'
+import { Prisma } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+import { sendCustomHtmlEmail } from "@/lib/email";
+import { SETTING_KEYS } from "@/lib/validations/settings";
 import {
   buildWelcomeEmailContext,
   getUnknownWelcomeEmailTokens,
   renderWelcomeEmailHtmlFromMarkdown,
   renderWelcomeEmailTemplate,
-} from '@/lib/welcome-email'
+} from "@/lib/welcome-email";
 
 interface SendCourseWelcomeEmailForPaidOrderParams {
-  orderId: string
-  userId: string
-  courseId: string
-  toEmail: string
-  userName?: string | null
-  courseTitle: string
-  courseSlug: string
-  paidAt?: Date
+  orderId: string;
+  userId: string;
+  courseId: string;
+  toEmail: string;
+  userName?: string | null;
+  courseTitle: string;
+  courseSlug: string;
+  paidAt?: Date;
 }
 
 async function getSupportEmail(): Promise<string> {
@@ -28,23 +28,23 @@ async function getSupportEmail(): Promise<string> {
     const setting = await prisma.siteSetting.findUnique({
       where: { key: SETTING_KEYS.CONTACT_EMAIL },
       select: { value: true },
-    })
+    });
 
     if (setting?.value) {
-      return setting.value
+      return setting.value;
     }
   } catch (error) {
-    console.error('[Course Welcome Email] 讀取客服信箱失敗:', error)
+    console.error("[Course Welcome Email] 讀取客服信箱失敗:", error);
   }
 
-  return process.env.EMAIL_FROM || 'noreply@ray-realms.com'
+  return process.env.EMAIL_FROM || "noreply@learn.solo.tw";
 }
 
 export async function sendCourseWelcomeEmailForPaidOrder(
-  params: SendCourseWelcomeEmailForPaidOrderParams
+  params: SendCourseWelcomeEmailForPaidOrderParams,
 ): Promise<void> {
   if (!params.toEmail) {
-    return
+    return;
   }
 
   const welcomeEmail = await prisma.courseWelcomeEmail.findUnique({
@@ -54,19 +54,19 @@ export async function sendCourseWelcomeEmailForPaidOrder(
       subjectTemplate: true,
       markdownTemplate: true,
     },
-  })
+  });
 
   if (!welcomeEmail?.enabled) {
-    return
+    return;
   }
 
-  let deliveryLogId: string
+  let deliveryLogId: string;
 
   try {
     const log = await prisma.emailDeliveryLog.create({
       data: {
-        type: 'COURSE_WELCOME',
-        status: 'PENDING',
+        type: "COURSE_WELCOME",
+        status: "PENDING",
         orderId: params.orderId,
         userId: params.userId,
         courseId: params.courseId,
@@ -74,22 +74,22 @@ export async function sendCourseWelcomeEmailForPaidOrder(
         subject: welcomeEmail.subjectTemplate,
       },
       select: { id: true },
-    })
+    });
 
-    deliveryLogId = log.id
+    deliveryLogId = log.id;
   } catch (error) {
     // 唯一鍵衝突代表該訂單已處理過歡迎信（避免 webhook 重送造成重複發信）
     if (
-      error instanceof Prisma.PrismaClientKnownRequestError
-      && error.code === 'P2002'
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002"
     ) {
-      return
+      return;
     }
 
-    throw error
+    throw error;
   }
 
-  const supportEmail = await getSupportEmail()
+  const supportEmail = await getSupportEmail();
 
   const context = buildWelcomeEmailContext({
     userName: params.userName,
@@ -97,59 +97,59 @@ export async function sendCourseWelcomeEmailForPaidOrder(
     courseSlug: params.courseSlug,
     supportEmail,
     purchaseDate: params.paidAt,
-  })
+  });
 
   const unknownTokens = [
     ...getUnknownWelcomeEmailTokens(welcomeEmail.subjectTemplate),
     ...getUnknownWelcomeEmailTokens(welcomeEmail.markdownTemplate),
-  ]
+  ];
 
   if (unknownTokens.length > 0) {
     await prisma.emailDeliveryLog.update({
       where: { id: deliveryLogId },
       data: {
-        status: 'SKIPPED',
-        errorMessage: `模板包含未支援關鍵字: ${Array.from(new Set(unknownTokens)).join(', ')}`,
+        status: "SKIPPED",
+        errorMessage: `模板包含未支援關鍵字: ${Array.from(new Set(unknownTokens)).join(", ")}`,
       },
-    })
-    return
+    });
+    return;
   }
 
   const renderedSubject = renderWelcomeEmailTemplate(
     welcomeEmail.subjectTemplate,
-    context
-  )
+    context,
+  );
   const renderedMarkdown = renderWelcomeEmailTemplate(
     welcomeEmail.markdownTemplate,
-    context
-  )
-  const renderedHtml = renderWelcomeEmailHtmlFromMarkdown(renderedMarkdown)
+    context,
+  );
+  const renderedHtml = renderWelcomeEmailHtmlFromMarkdown(renderedMarkdown);
 
   const sendResult = await sendCustomHtmlEmail({
     to: params.toEmail,
     subject: renderedSubject,
     html: renderedHtml,
-  })
+  });
 
   if (sendResult.success) {
     await prisma.emailDeliveryLog.update({
       where: { id: deliveryLogId },
       data: {
-        status: 'SENT',
+        status: "SENT",
         subject: renderedSubject,
         providerMessageId: sendResult.messageId || null,
         sentAt: new Date(),
       },
-    })
-    return
+    });
+    return;
   }
 
   await prisma.emailDeliveryLog.update({
     where: { id: deliveryLogId },
     data: {
-      status: 'FAILED',
+      status: "FAILED",
       subject: renderedSubject,
-      errorMessage: sendResult.error || '發送失敗',
+      errorMessage: sendResult.error || "發送失敗",
     },
-  })
+  });
 }

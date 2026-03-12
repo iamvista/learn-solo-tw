@@ -43,7 +43,7 @@
 | 症狀 | 原因 | 修復 |
 |------|------|------|
 | 付款後訂單未更新 | Webhook 未收到 | 檢查 webhook URL 和環境變數 |
-| "Invalid signature" | 加密金鑰錯誤 | 檢查 PayUni/Stripe 金鑰設定 |
+| "Invalid signature" | 加密金鑰錯誤 | 檢查 PayUni 金鑰設定 |
 | 結帳頁空白 | 課程 ID 錯誤 | 確認 URL `?courseId=` 參數正確 |
 
 ## 影片串流

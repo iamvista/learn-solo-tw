@@ -4,16 +4,15 @@
 /**
  * 支援的金流閘道類型
  */
-export type PaymentGatewayType = 'stripe' | 'payuni'
+export type PaymentGatewayType = 'payuni'
 
 /**
  * 建立付款的統一結果
  */
 export interface CreatePaymentResult {
-  /** Stripe: 'redirect' (跳轉到 Stripe hosted checkout)
-   *  PAYUNi: 'form_post' (透過靜態頁 POST 表單到 PAYUNi) */
+  /** 'redirect' (跳轉) 或 'form_post' (透過靜態頁 POST 表單到 PAYUNi) */
   type: 'redirect' | 'form_post'
-  /** Stripe 用：Checkout Session URL */
+  /** 跳轉 URL */
   checkoutUrl?: string
   /** PAYUNi 用：加密後的表單資料 */
   formData?: {
@@ -40,10 +39,7 @@ export interface CreatePaymentSessionParams {
   identityType: 'auth' | 'guest_shell'
   userId: string
   courseId: string
-  // Stripe 專用：預建的 Price ID
   isOnSale: boolean
-  stripePriceId?: string | null
-  stripeSalePriceId?: string | null
 }
 
 /**
@@ -78,10 +74,6 @@ export interface PaymentGateway {
  */
 export interface PaymentGatewaySettings {
   gateway: PaymentGatewayType
-  stripe: {
-    secretKey: string
-    webhookSecret: string
-  }
   payuni: {
     merchantId: string
     hashKey: string

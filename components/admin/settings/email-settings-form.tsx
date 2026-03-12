@@ -2,21 +2,21 @@
 // Email 設定表單元件
 // 包含發送者名稱設定和測試發送功能
 
-'use client'
+"use client";
 
-import { useState, useTransition } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from 'sonner'
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import {
   emailSettingsSchema,
   testEmailSchema,
   type EmailSettingsFormData,
   type TestEmailFormData,
-} from '@/lib/validations/settings'
-import { updateEmailSettings } from '@/lib/actions/settings'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+} from "@/lib/validations/settings";
+import { updateEmailSettings } from "@/lib/actions/settings";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -25,16 +25,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
+} from "@/components/ui/form";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Badge } from '@/components/ui/badge'
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import {
   Loader2,
   Save,
@@ -42,12 +42,12 @@ import {
   Mail,
   AlertCircle,
   CheckCircle,
-} from 'lucide-react'
+} from "lucide-react";
 
 interface EmailSettingsFormProps {
-  senderName: string
-  fromEmail: string
-  isConfigured: boolean
+  senderName: string;
+  fromEmail: string;
+  isConfigured: boolean;
 }
 
 export function EmailSettingsForm({
@@ -55,12 +55,12 @@ export function EmailSettingsForm({
   fromEmail,
   isConfigured,
 }: EmailSettingsFormProps) {
-  const [isPending, startTransition] = useTransition()
-  const [isSendingTest, setIsSendingTest] = useState(false)
+  const [isPending, startTransition] = useTransition();
+  const [isSendingTest, setIsSendingTest] = useState(false);
   const [testResult, setTestResult] = useState<{
-    success: boolean
-    message: string
-  } | null>(null)
+    success: boolean;
+    message: string;
+  } | null>(null);
 
   // 設定表單
   const settingsForm = useForm<EmailSettingsFormData>({
@@ -69,71 +69,71 @@ export function EmailSettingsForm({
       emailSenderName: senderName,
       emailFrom: fromEmail,
     },
-  })
+  });
 
   // 測試表單
   const testForm = useForm<TestEmailFormData>({
     resolver: zodResolver(testEmailSchema),
     defaultValues: {
-      email: '',
+      email: "",
     },
-  })
+  });
 
   // 提交設定
   async function onSubmitSettings(data: EmailSettingsFormData) {
     startTransition(async () => {
       try {
-        const result = await updateEmailSettings(data)
+        const result = await updateEmailSettings(data);
 
         if (result.success) {
-          toast.success('設定已儲存')
+          toast.success("設定已儲存");
         } else {
-          toast.error(result.error ?? '儲存設定失敗')
+          toast.error(result.error ?? "儲存設定失敗");
         }
       } catch {
-        toast.error('操作失敗，請稍後再試')
+        toast.error("操作失敗，請稍後再試");
       }
-    })
+    });
   }
 
   // 發送測試郵件
   async function onSendTestEmail(data: TestEmailFormData) {
-    setIsSendingTest(true)
-    setTestResult(null)
+    setIsSendingTest(true);
+    setTestResult(null);
 
     try {
-      const response = await fetch('/api/admin/email/test', {
-        method: 'POST',
+      const response = await fetch("/api/admin/email/test", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email: data.email }),
-      })
+      });
 
-      const result = await response.json()
+      const result = await response.json();
 
       if (result.success) {
         setTestResult({
           success: true,
           message: `測試郵件已發送至 ${data.email}`,
-        })
-        toast.success('測試郵件已發送')
-        testForm.reset()
+        });
+        toast.success("測試郵件已發送");
+        testForm.reset();
       } else {
         setTestResult({
           success: false,
-          message: result.error || '發送失敗',
-        })
-        toast.error(result.error || '發送測試郵件失敗')
+          message: result.error || "發送失敗",
+        });
+        toast.error(result.error || "發送測試郵件失敗");
       }
     } catch {
       setTestResult({
         success: false,
-        message: '發送失敗，請檢查網路連線',
-      })
-      toast.error('發送測試郵件失敗')
+        message: "發送失敗，請檢查網路連線",
+      });
+      toast.error("發送測試郵件失敗");
     } finally {
-      setIsSendingTest(false)
+      setIsSendingTest(false);
     }
   }
 
@@ -153,11 +153,11 @@ export function EmailSettingsForm({
               variant="outline"
               className={
                 isConfigured
-                  ? 'border-green-500 text-green-600 bg-green-50'
-                  : 'border-[#F5A524] text-[#F5A524] bg-[#F5A524]/10'
+                  ? "border-green-500 text-green-600 bg-green-50"
+                  : "border-[#F5A524] text-[#F5A524] bg-[#F5A524]/10"
               }
             >
-              {isConfigured ? '已設定' : '未設定'}
+              {isConfigured ? "已設定" : "未設定"}
             </Badge>
           </div>
         </CardHeader>
@@ -230,7 +230,8 @@ export function EmailSettingsForm({
                           />
                         </FormControl>
                         <FormDescription className="text-[#A3A3A3]">
-                          Email 顯示的發送者名稱，例如：我的課程平台 &lt;hello@example.com&gt;
+                          Email 顯示的發送者名稱，例如：我的課程平台
+                          &lt;hello@example.com&gt;
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -248,13 +249,14 @@ export function EmailSettingsForm({
                         <FormControl>
                           <Input
                             type="email"
-                            placeholder="ray@ray-realms.com"
+                            placeholder="noreply@learn.solo.tw"
                             className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#F5A524] focus-visible:ring-[#F5A524]/20"
                             {...field}
                           />
                         </FormControl>
                         <FormDescription className="text-[#A3A3A3]">
-                          用於寄送系統郵件的發送者地址，若未填寫則使用環境變數 EMAIL_FROM
+                          用於寄送系統郵件的發送者地址，若未填寫則使用環境變數
+                          EMAIL_FROM
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -265,14 +267,16 @@ export function EmailSettingsForm({
                     <p className="text-sm font-medium text-[#0A0A0A]">
                       Resend API Key
                     </p>
-                    <div className={`rounded-lg border p-3 text-sm ${
-                      isConfigured
-                        ? 'border-green-200 bg-green-50 text-green-700'
-                        : 'border-red-200 bg-red-50 text-red-700'
-                    }`}>
+                    <div
+                      className={`rounded-lg border p-3 text-sm ${
+                        isConfigured
+                          ? "border-green-200 bg-green-50 text-green-700"
+                          : "border-red-200 bg-red-50 text-red-700"
+                      }`}
+                    >
                       {isConfigured
-                        ? '已透過環境變數 RESEND_API_KEY 設定'
-                        : '未設定，請在環境變數中加入 RESEND_API_KEY'}
+                        ? "已透過環境變數 RESEND_API_KEY 設定"
+                        : "未設定，請在環境變數中加入 RESEND_API_KEY"}
                     </div>
                   </div>
 
@@ -370,8 +374,8 @@ export function EmailSettingsForm({
                     <div
                       className={`rounded-xl p-4 ${
                         testResult.success
-                          ? 'bg-green-50 border border-green-200'
-                          : 'bg-red-50 border border-red-200'
+                          ? "bg-green-50 border border-green-200"
+                          : "bg-red-50 border border-red-200"
                       }`}
                     >
                       <div className="flex items-start gap-3">
@@ -384,11 +388,11 @@ export function EmailSettingsForm({
                           <p
                             className={`text-sm font-medium ${
                               testResult.success
-                                ? 'text-green-600'
-                                : 'text-red-600'
+                                ? "text-green-600"
+                                : "text-red-600"
                             }`}
                           >
-                            {testResult.success ? '發送成功' : '發送失敗'}
+                            {testResult.success ? "發送成功" : "發送失敗"}
                           </p>
                           <p className="text-sm text-[#525252] mt-1">
                             {testResult.message}
@@ -404,5 +408,5 @@ export function EmailSettingsForm({
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

@@ -44,7 +44,7 @@ const STEPS = [
   { id: 'analytics', label: '追蹤像素', icon: BarChart3 },
 ] as const
 
-type GatewayType = 'stripe' | 'payuni' | ''
+type GatewayType = 'payuni' | ''
 
 export function SetupClient({ user }: SetupClientProps) {
   const router = useRouter()
@@ -56,8 +56,6 @@ export function SetupClient({ user }: SetupClientProps) {
   const [siteName, setSiteName] = useState('')
   const [contactEmail, setContactEmail] = useState('')
   const [paymentGateway, setPaymentGateway] = useState<GatewayType>('')
-  const [stripeSecretKey, setStripeSecretKey] = useState('')
-  const [stripeWebhookSecret, setStripeWebhookSecret] = useState('')
   const [payuniMerchantId, setPayuniMerchantId] = useState('')
   const [payuniHashKey, setPayuniHashKey] = useState('')
   const [payuniHashIV, setPayuniHashIV] = useState('')
@@ -82,8 +80,6 @@ export function SetupClient({ user }: SetupClientProps) {
       siteName: siteName || undefined,
       contactEmail: contactEmail || undefined,
       paymentGateway: paymentGateway || undefined,
-      stripeSecretKey: stripeSecretKey || undefined,
-      stripeWebhookSecret: stripeWebhookSecret || undefined,
       payuniMerchantId: payuniMerchantId || undefined,
       payuniHashKey: payuniHashKey || undefined,
       payuniHashIV: payuniHashIV || undefined,
@@ -238,25 +234,11 @@ export function SetupClient({ user }: SetupClientProps) {
                     金流設定
                   </CardTitle>
                   <CardDescription className="text-[#525252]">
-                    選擇金流服務提供商。如果還沒有金流帳號，可以先跳過，之後到「設定 → 金流」再設定。
+                    設定 PAYUNi 統一金流。如果還沒有金流帳號，可以先跳過，之後到「設定 → 金流」再設定。
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setPaymentGateway(paymentGateway === 'stripe' ? '' : 'stripe')}
-                      className={`flex-1 rounded-xl border-2 p-4 text-left transition-all ${
-                        paymentGateway === 'stripe'
-                          ? 'border-[#F5A524] bg-[#F5A524]/5'
-                          : 'border-[#E5E5E5] hover:border-[#A3A3A3]'
-                      }`}
-                    >
-                      <p className="font-semibold text-[#0A0A0A]">Stripe</p>
-                      <p className="text-xs text-[#525252] mt-1">
-                        國際金流，支援信用卡、Apple Pay
-                      </p>
-                    </button>
                     <button
                       type="button"
                       onClick={() => setPaymentGateway(paymentGateway === 'payuni' ? '' : 'payuni')}
@@ -268,46 +250,12 @@ export function SetupClient({ user }: SetupClientProps) {
                     >
                       <p className="font-semibold text-[#0A0A0A]">PAYUNi 統一金流</p>
                       <p className="text-xs text-[#525252] mt-1">
-                        台灣在地金流，支援超商代碼、ATM
+                        台灣在地金流，支援信用卡、超商代碼、ATM
                       </p>
                     </button>
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Stripe 詳細設定 */}
-              {paymentGateway === 'stripe' && (
-                <Card className="bg-white border border-[#E5E5E5] rounded-xl">
-                  <CardHeader>
-                    <CardTitle className="text-[#0A0A0A] text-base">Stripe 設定</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label className="text-[#0A0A0A]">Secret Key</Label>
-                      <Input
-                        type="password"
-                        value={stripeSecretKey}
-                        onChange={(e) => setStripeSecretKey(e.target.value)}
-                        placeholder="sk_test_... 或 sk_live_..."
-                        className="border-[#E5E5E5] font-mono text-sm"
-                      />
-                      <p className="text-xs text-[#A3A3A3]">
-                        Stripe Dashboard → Developers → API Keys
-                      </p>
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-[#0A0A0A]">Webhook Signing Secret</Label>
-                      <Input
-                        type="password"
-                        value={stripeWebhookSecret}
-                        onChange={(e) => setStripeWebhookSecret(e.target.value)}
-                        placeholder="whsec_..."
-                        className="border-[#E5E5E5] font-mono text-sm"
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
 
               {/* PAYUNi 詳細設定 */}
               {paymentGateway === 'payuni' && (
