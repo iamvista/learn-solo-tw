@@ -224,13 +224,13 @@ export function EmailSettingsForm({
                         </FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="我的課程平臺"
+                            placeholder="自由人學院"
                             className="bg-white border-[#E5E5E5] text-[#0A0A0A] placeholder:text-[#A3A3A3] focus:border-[#C41E3A] focus-visible:ring-[#C41E3A]/20"
                             {...field}
                           />
                         </FormControl>
                         <FormDescription className="text-[#A3A3A3]">
-                          Email 顯示的發送者名稱，例如：我的課程平臺
+                          Email 顯示的發送者名稱，例如：自由人學院
                           &lt;hello@example.com&gt;
                         </FormDescription>
                         <FormMessage />

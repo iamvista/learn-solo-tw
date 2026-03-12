@@ -32,7 +32,7 @@ export interface PublicSiteSettings {
 export const PUBLIC_SITE_DEFAULTS: PublicSiteSettings = {
   siteName: "自由人學院",
   siteLogo: "/icon.png",
-  contactEmail: "support@example.com",
+  contactEmail: "iamvista@gmail.com",
   brandDisplayName: "自由人學院",
   brandSubtitle: "",
   googleLoginEnabled: false,

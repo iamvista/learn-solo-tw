@@ -144,7 +144,7 @@ export default async function TermsPage() {
 
       <h3>八、聯絡我們</h3>
       <p>
-        倘若發現任何違反本條款之情事，或有任何疑問，請聯繫電子郵件：
+        倘若發現任何違反本條款之情事，或有任何疑問，請聯絡信箱：
         <a href={`mailto:${contactEmail}`}>{contactEmail}</a>。
       </p>
     </LegalPageLayout>

@@ -147,7 +147,7 @@ export function purchaseConfirmationTemplate(
         <!-- Footer -->
         <div style="${footerStyles}">
           <p style="margin: 0 0 10px 0;">
-            憒?隞颱???嚗??舐鼠??摰Ｘ???
+            如有任何問題，歡迎隨時<a href="mailto:iamvista@gmail.com" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
           </p>
           <p style="margin: 0; color: #999; font-size: 12px;">
             &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
@@ -229,7 +229,7 @@ export function passwordResetTemplate(
         <!-- Footer -->
         <div style="${footerStyles}">
           <p style="margin: 0 0 10px 0;">
-            憒?隞颱???嚗??舐鼠??摰Ｘ???
+            如有任何問題，歡迎隨時<a href="mailto:iamvista@gmail.com" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
           </p>
           <p style="margin: 0; color: #999; font-size: 12px;">
             &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
@@ -288,7 +288,7 @@ export function guestActivationTemplate(
 
         <div style="${footerStyles}">
           <p style="margin: 0 0 10px 0;">
-            憒?隞颱???嚗???甇支縑隞嗆??舐鼠摰Ｘ?
+            如有任何問題，歡迎隨時<a href="mailto:iamvista@gmail.com" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
           </p>
           <p style="margin: 0; color: #999; font-size: 12px;">
             &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
@@ -363,7 +363,7 @@ export function testEmailTemplate(branding?: Partial<EmailBranding>): string {
         <!-- Footer -->
         <div style="${footerStyles}">
           <p style="margin: 0 0 10px 0;">
-            ?銝撠葫閰阡隞?          </p>
+            此為測試信件，Email 設定正常運作。
           <p style="margin: 0; color: #999; font-size: 12px;">
             &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
           </p>
@@ -536,7 +536,7 @@ export function welcomeUserTemplate(
         <!-- Footer -->
         <div style="${footerStyles}">
           <p style="margin: 0 0 10px 0;">
-            如有任何問題，歡迎隨時聯繫我們。
+            如有任何問題，歡迎隨時<a href="mailto:iamvista@gmail.com" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
           </p>
           <p style="margin: 0; color: #999; font-size: 12px;">
             &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
