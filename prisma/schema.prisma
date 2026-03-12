@@ -29,6 +29,7 @@ model User {
   isGuest          Boolean   @default(false)
   guestActivatedAt DateTime?
   guestSource      String?
+  adminNotes       String?   @db.Text // 管理員備註
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 
@@ -484,6 +485,9 @@ enum AdminAction {
   PROCESS_REFUND
   UPDATE_USER_ROLE
   UPDATE_SETTINGS
+  UPDATE_USER
+  DELETE_USER
+  UPDATE_ADMIN_NOTES
 }
 
 model AdminLog {
