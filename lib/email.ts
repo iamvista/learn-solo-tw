@@ -83,9 +83,12 @@ async function getSenderName(): Promise<string> {
 
 async function getEmailBranding(): Promise<EmailBranding> {
   try {
-    const [siteName, siteLogo] = await Promise.all([
+    const [siteName, siteLogo, contactEmail] = await Promise.all([
       prisma.siteSetting.findUnique({ where: { key: SETTING_KEYS.SITE_NAME } }),
       prisma.siteSetting.findUnique({ where: { key: SETTING_KEYS.SITE_LOGO } }),
+      prisma.siteSetting.findUnique({
+        where: { key: SETTING_KEYS.CONTACT_EMAIL },
+      }),
     ]);
 
     const appUrl = getAppUrl();
@@ -93,12 +96,14 @@ async function getEmailBranding(): Promise<EmailBranding> {
     return {
       siteName: siteName?.value || "自由人學院",
       siteLogo: siteLogo?.value || `${appUrl}/icon.png`,
+      contactEmail: contactEmail?.value || "iamvista@gmail.com",
     };
   } catch {
     const appUrl = getAppUrl();
     return {
       siteName: "自由人學院",
       siteLogo: `${appUrl}/icon.png`,
+      contactEmail: "iamvista@gmail.com",
     };
   }
 }

@@ -9,12 +9,14 @@ const appUrl = getAppUrl();
 export interface EmailBranding {
   siteName: string;
   siteLogo: string;
+  contactEmail: string;
 }
 
 function getEmailBranding(branding?: Partial<EmailBranding>): EmailBranding {
   return {
     siteName: branding?.siteName || "自由人學院",
     siteLogo: branding?.siteLogo || `${appUrl}/icon.png`,
+    contactEmail: branding?.contactEmail || "iamvista@gmail.com",
   };
 }
 
@@ -148,7 +150,7 @@ export function purchaseConfirmationTemplate(
         <!-- Footer -->
         <div style="${footerStyles}">
           <p style="margin: 0 0 10px 0;">
-            如有任何問題，歡迎隨時<a href="mailto:iamvista@gmail.com" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
+            如有任何問題，歡迎隨時<a href="mailto:${resolved.contactEmail}" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
           </p>
           <p style="margin: 0; color: #999; font-size: 12px;">
             &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
@@ -233,7 +235,7 @@ export function passwordResetTemplate(
         <!-- Footer -->
         <div style="${footerStyles}">
           <p style="margin: 0 0 10px 0;">
-            如有任何問題，歡迎隨時<a href="mailto:iamvista@gmail.com" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
+            如有任何問題，歡迎隨時<a href="mailto:${resolved.contactEmail}" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
           </p>
           <p style="margin: 0; color: #999; font-size: 12px;">
             &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
@@ -295,7 +297,7 @@ export function guestActivationTemplate(
 
         <div style="${footerStyles}">
           <p style="margin: 0 0 10px 0;">
-            如有任何問題，歡迎隨時<a href="mailto:iamvista@gmail.com" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
+            如有任何問題，歡迎隨時<a href="mailto:${resolved.contactEmail}" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
           </p>
           <p style="margin: 0; color: #999; font-size: 12px;">
             &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
@@ -545,7 +547,7 @@ export function welcomeUserTemplate(
         <!-- Footer -->
         <div style="${footerStyles}">
           <p style="margin: 0 0 10px 0;">
-            如有任何問題，歡迎隨時<a href="mailto:iamvista@gmail.com" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
+            如有任何問題，歡迎隨時<a href="mailto:${resolved.contactEmail}" style="color: #C41E3A; text-decoration: none;">聯繫我們</a>。
           </p>
           <p style="margin: 0; color: #999; font-size: 12px;">
             &copy; ${new Date().getFullYear()} ${resolved.siteName}. All rights reserved.
