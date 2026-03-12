@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: {
       absolute: siteName,
     },
-    description: `${siteName} — 探索課程、購買學習並追蹤進度的線上課程平臺。`,
+    description: `${siteName} — 不寫程式也能做出自己的 App。探索 AI 時代的實作課程，從零到上架。`,
     alternates: {
       canonical: appUrl,
     },
@@ -33,16 +33,20 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   // 取得所有已發佈課程和設定
-  const [courses, { siteName, siteLogo }] = await Promise.all([
-    getPublishedCourses(),
-    getPublicSiteSettings(),
-  ]);
+  const [courses, { siteName, siteLogo, contactEmail, footerSections }] =
+    await Promise.all([getPublishedCourses(), getPublicSiteSettings()]);
 
   const appUrl = getAppUrl();
 
   // 取得主打課程 (預設取第一個，或指定 slug)
   const mainCourse =
     courses.length > 0 ? await getCourseBySlug(courses[0].slug) : null;
+
+  // 從 footer 中提取社群連結作為 Organization sameAs
+  const socialLinks = footerSections
+    .flatMap((section) => section.links)
+    .map((link) => link.url)
+    .filter((url) => url.startsWith("http"));
 
   const organizationJsonLd = {
     "@context": "https://schema.org",
@@ -51,6 +55,13 @@ export default async function HomePage() {
     url: appUrl,
     logo: `${appUrl}${siteLogo || "/icon.png"}`,
     description: `${siteName} — 線上課程平臺`,
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: contactEmail,
+      contactType: "customer service",
+      availableLanguage: "zh-TW",
+    },
+    ...(socialLinks.length > 0 ? { sameAs: socialLinks } : {}),
   };
 
   const websiteJsonLd = {
@@ -66,10 +77,29 @@ export default async function HomePage() {
     },
   };
 
+  // 課程列表結構化資料（影響 Google 課程輪播）
+  const courseListJsonLd =
+    courses.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "精選課程",
+          numberOfItems: courses.length,
+          itemListElement: courses.map((course, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            url: `${appUrl}/courses/${course.slug}`,
+            name: course.title,
+            ...(course.coverImage ? { image: course.coverImage } : {}),
+          })),
+        }
+      : null;
+
   return (
     <main className="flex flex-col bg-white">
       <JsonLd data={organizationJsonLd} />
       <JsonLd data={websiteJsonLd} />
+      {courseListJsonLd && <JsonLd data={courseListJsonLd} />}
 
       {/* 1. Hero Section - 與課程銷售頁風格一致 */}
       {mainCourse ? (

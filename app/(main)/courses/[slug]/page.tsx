@@ -196,12 +196,20 @@ export default async function CoursePage({
     inLanguage: "zh-TW",
     courseMode: "online",
     isAccessibleForFree: priceResult.finalPrice === 0,
+    numberOfLessons: course.lessonCount,
+    timeRequired: courseWorkload,
+    educationalLevel: "Beginner",
+    learningResourceType: "Online Course",
+    teaches: course.description || course.title,
     offers: {
       "@type": "Offer",
       price: priceResult.finalPrice,
       priceCurrency: "TWD",
       availability: "https://schema.org/InStock",
       url: `${baseUrl}/courses/${slug}`,
+      ...(priceResult.isOnSale && priceResult.countdownTarget
+        ? { validThrough: priceResult.countdownTarget.toISOString() }
+        : {}),
     },
     aggregateRating: {
       "@type": "AggregateRating",
@@ -216,6 +224,11 @@ export default async function CoursePage({
       instructor: {
         "@type": "Person",
         name: instructorName,
+      },
+      courseSchedule: {
+        "@type": "Schedule",
+        repeatFrequency: "P1D",
+        repeatCount: 365,
       },
     },
   };

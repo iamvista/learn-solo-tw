@@ -2,61 +2,61 @@
 // 根佈局
 // 設定全域 metadata 和樣式
 
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import Script from 'next/script'
-import { Toaster } from '@/components/ui/sonner'
-import { getPublicSiteSettings } from '@/lib/site-settings-public'
-import { getAnalyticsSettings } from '@/lib/analytics-settings'
-import { getAppUrl } from '@/lib/app-url'
-import { PostHogInitializer } from '@/components/common/posthog-initializer'
-import './globals.css'
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
+import { Toaster } from "@/components/ui/sonner";
+import { getPublicSiteSettings } from "@/lib/site-settings-public";
+import { getAnalyticsSettings } from "@/lib/analytics-settings";
+import { getAppUrl } from "@/lib/app-url";
+import { PostHogInitializer } from "@/components/common/posthog-initializer";
+import "./globals.css";
 
 // Meta Pixel ID 現在從 getAnalyticsSettings() 讀取（DB 優先，env fallback）
 
 // 載入字體
 const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-})
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 // 網站 metadata
 export async function generateMetadata(): Promise<Metadata> {
-  const appUrl = getAppUrl()
-  const { siteName, siteLogo } = await getPublicSiteSettings()
+  const appUrl = getAppUrl();
+  const { siteName, siteLogo } = await getPublicSiteSettings();
 
   return {
     metadataBase: new URL(appUrl),
     title: {
-      default: siteName || '線上課程平臺',
-      template: `%s | ${siteName || '線上課程平臺'}`,
+      default: siteName || "線上課程平臺",
+      template: `%s | ${siteName || "線上課程平臺"}`,
     },
-    description: '一個可自訂品牌與課程內容的線上課程平臺。',
-    keywords: ['線上課程', '課程平臺', '教學平臺'],
-    authors: [{ name: siteName || '自由人學院' }],
-    creator: siteName || '自由人學院',
+    description: `${siteName} — 不寫程式也能做出自己的 App。探索 AI 時代的程式實作課程。`,
+    keywords: [siteName, "線上課程", "AI 課程", "程式教學", "App 開發"],
+    authors: [{ name: siteName || "自由人學院" }],
+    creator: siteName || "自由人學院",
     openGraph: {
-      type: 'website',
-      locale: 'zh_TW',
+      type: "website",
+      locale: "zh_TW",
       url: appUrl,
-      siteName: siteName || '線上課程平臺',
-      title: siteName || '線上課程平臺',
-      description: '一個可自訂品牌與課程內容的線上課程平臺。',
+      siteName: siteName || "線上課程平臺",
+      title: siteName || "線上課程平臺",
+      description: `${siteName} — 不寫程式也能做出自己的 App。探索 AI 時代的程式實作課程。`,
     },
     twitter: {
-      card: 'summary_large_image',
-      title: siteName || '線上課程平臺',
-      description: '一個可自訂品牌與課程內容的線上課程平臺。',
+      card: "summary_large_image",
+      title: siteName || "線上課程平臺",
+      description: `${siteName} — 不寫程式也能做出自己的 App。探索 AI 時代的程式實作課程。`,
     },
     icons: {
-      icon: siteLogo || '/icon.png',
-      shortcut: siteLogo || '/icon.png',
-      apple: siteLogo || '/icon.png',
+      icon: siteLogo || "/icon.png",
+      shortcut: siteLogo || "/icon.png",
+      apple: siteLogo || "/icon.png",
     },
     robots: {
       index: true,
@@ -65,15 +65,15 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: appUrl,
     },
-  }
+  };
 }
 
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
-  const analytics = await getAnalyticsSettings()
+  const analytics = await getAnalyticsSettings();
 
   return (
     <html lang="zh-TW">
@@ -100,7 +100,7 @@ export default async function RootLayout({
               <img
                 height="1"
                 width="1"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
                 src={`https://www.facebook.com/tr?id=${analytics.metaPixelId}&ev=PageView&noscript=1`}
                 alt=""
               />
@@ -143,5 +143,5 @@ export default async function RootLayout({
         <Toaster />
       </body>
     </html>
-  )
+  );
 }
