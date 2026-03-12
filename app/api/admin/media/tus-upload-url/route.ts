@@ -3,8 +3,8 @@
 // 前端 tus-js-client 的 endpoint 直接指向這個 route
 // 此 route 負責加上 Authorization header 並轉發 Cloudflare 回傳的 Location header
 
-import { NextResponse } from 'next/server'
-import { auth } from '@/lib/auth'
+import { NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
 
 /**
  * POST /api/admin/media/tus-upload-url
@@ -15,79 +15,87 @@ import { auth } from '@/lib/auth'
 export async function POST(request: Request) {
   try {
     // 驗證用戶權限
-    const session = await auth()
+    const session = await auth();
 
     if (!session?.user) {
-      return new Response(null, { status: 401 })
+      return new Response(null, { status: 401 });
     }
 
-    const userRole = session.user.role
-    if (userRole !== 'ADMIN' && userRole !== 'EDITOR') {
-      return new Response(null, { status: 403 })
+    const userRole = session.user.role;
+    if (userRole !== "ADMIN" && userRole !== "EDITOR") {
+      return new Response(null, { status: 403 });
     }
 
-    const accountId = process.env.CLOUDFLARE_ACCOUNT_ID
-    const apiToken = process.env.CLOUDFLARE_API_TOKEN
+    const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+    const apiToken = process.env.CLOUDFLARE_API_TOKEN;
 
     if (!accountId || !apiToken) {
       return NextResponse.json(
-        { success: false, error: '缺少 Cloudflare 設定' },
-        { status: 500 }
-      )
+        { success: false, error: "缺少 Cloudflare 設定" },
+        { status: 500 },
+      );
     }
 
     // 轉發前端 tus-js-client 的 headers 到 Cloudflare
-    const uploadLength = request.headers.get('Upload-Length')
-    const uploadMetadata = request.headers.get('Upload-Metadata')
+    const uploadLength = request.headers.get("Upload-Length");
+    const uploadMetadata = request.headers.get("Upload-Metadata");
 
     const cfHeaders: Record<string, string> = {
       Authorization: `Bearer ${apiToken}`,
-      'Tus-Resumable': '1.0.0',
-    }
+      "Tus-Resumable": "1.0.0",
+    };
 
     if (uploadLength) {
-      cfHeaders['Upload-Length'] = uploadLength
+      cfHeaders["Upload-Length"] = uploadLength;
     }
     if (uploadMetadata) {
-      cfHeaders['Upload-Metadata'] = uploadMetadata
+      cfHeaders["Upload-Metadata"] = uploadMetadata;
     }
 
-    const endpoint = `https://api.cloudflare.com/client/v4/accounts/${accountId}/stream?direct_user=true`
+    const endpoint = `https://api.cloudflare.com/client/v4/accounts/${accountId}/stream?direct_user=true`;
 
     const cfResponse = await fetch(endpoint, {
-      method: 'POST',
+      method: "POST",
       headers: cfHeaders,
-    })
+    });
 
     if (!cfResponse.ok) {
-      const errorText = await cfResponse.text()
-      console.error('Cloudflare TUS 建立失敗:', cfResponse.status, errorText)
-      return new Response(errorText, { status: cfResponse.status })
+      const errorText = await cfResponse.text();
+      console.error("Cloudflare TUS 建立失敗:", cfResponse.status, errorText);
+      return new Response(errorText, { status: cfResponse.status });
     }
 
     // Cloudflare 回傳 201 Created，Location header 包含一次性上傳 URL
-    const location = cfResponse.headers.get('Location')
+    const location = cfResponse.headers.get("Location");
 
     if (!location) {
-      return new Response('未收到 Cloudflare 上傳 URL', { status: 502 })
+      return new Response("未收到 Cloudflare 上傳 URL", { status: 502 });
     }
 
     // 回傳帶有 Location header 和 CORS headers 的 response
     // tus-js-client 會自動讀取 Location header
+    const origin = request.headers.get("Origin") || "";
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+    const allowedOrigin =
+      origin && appUrl && origin === new URL(appUrl).origin
+        ? origin
+        : appUrl || origin;
+
     return new Response(null, {
       status: 201,
       headers: {
         Location: location,
-        'Tus-Resumable': '1.0.0',
-        'Access-Control-Expose-Headers':
-          'Location, Tus-Resumable, Upload-Offset',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Origin': '*',
+        "Tus-Resumable": "1.0.0",
+        "Access-Control-Expose-Headers":
+          "Location, Tus-Resumable, Upload-Offset",
+        "Access-Control-Allow-Headers":
+          "Content-Type, Upload-Length, Upload-Metadata, Tus-Resumable, Upload-Offset",
+        "Access-Control-Allow-Origin": allowedOrigin,
       },
-    })
+    });
   } catch (error) {
-    console.error('TUS 代理端點失敗:', error)
-    return new Response('取得上傳端點時發生錯誤', { status: 500 })
+    console.error("TUS 代理端點失敗:", error);
+    return new Response("取得上傳端點時發生錯誤", { status: 500 });
   }
 }
 
@@ -95,17 +103,23 @@ export async function POST(request: Request) {
  * OPTIONS /api/admin/media/tus-upload-url
  * 處理 CORS preflight 請求
  */
-export async function OPTIONS() {
+export async function OPTIONS(request: Request) {
+  const origin = request.headers.get("Origin") || "";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+  const allowedOrigin =
+    origin && appUrl && origin === new URL(appUrl).origin
+      ? origin
+      : appUrl || origin;
+
   return new Response(null, {
     status: 204,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers':
-        'Content-Type, Upload-Length, Upload-Metadata, Tus-Resumable, Upload-Offset',
-      'Access-Control-Expose-Headers':
-        'Location, Tus-Resumable, Upload-Offset',
-      'Access-Control-Max-Age': '86400',
+      "Access-Control-Allow-Origin": allowedOrigin,
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers":
+        "Content-Type, Upload-Length, Upload-Metadata, Tus-Resumable, Upload-Offset",
+      "Access-Control-Expose-Headers": "Location, Tus-Resumable, Upload-Offset",
+      "Access-Control-Max-Age": "86400",
     },
-  })
+  });
 }

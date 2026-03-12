@@ -11,10 +11,26 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { courseFAQs } from "@/lib/constants/faq";
+import { JsonLd } from "@/components/common/json-ld";
 
 export function FAQSection() {
+  // FAQPage JSON-LD 結構化資料
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: courseFAQs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <section className="bg-[#FAFAFA] py-10 sm:py-14 lg:py-24">
+      <JsonLd data={faqJsonLd} />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         {/* 標題 */}
         <div className="text-center">

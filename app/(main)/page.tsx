@@ -2,59 +2,69 @@
 // 前臺首頁
 // Solo Academy Design System - 官網首頁佈局：Hero + 課程列表
 
-import type { Metadata } from 'next'
-import { getPublishedCourses, getCourseBySlug } from '@/lib/actions/public-courses'
-import { LandingHeroSection } from '@/components/main/landing'
-import { CourseGrid, CourseGridEmpty } from '@/components/main/course-grid'
-import { JsonLd } from '@/components/common/json-ld'
-import { getAppUrl } from '@/lib/app-url'
+import type { Metadata } from "next";
+import {
+  getPublishedCourses,
+  getCourseBySlug,
+} from "@/lib/actions/public-courses";
+import { LandingHeroSection } from "@/components/main/landing";
+import { CourseGrid, CourseGridEmpty } from "@/components/main/course-grid";
+import { JsonLd } from "@/components/common/json-ld";
+import { getAppUrl } from "@/lib/app-url";
+import { getPublicSiteSettings } from "@/lib/site-settings-public";
 
 // 強制動態渲染（建置時無法連接 Zeabur 內部資料庫）
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: {
-    absolute: '線上課程平臺',
-  },
-  description: '探索課程、購買學習並追蹤進度的線上課程平臺。',
-  alternates: {
-    canonical: getAppUrl(),
-  },
-}
+export async function generateMetadata(): Promise<Metadata> {
+  const { siteName } = await getPublicSiteSettings();
+  const appUrl = getAppUrl();
 
-const appUrl = getAppUrl()
-
-const organizationJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: '自由人學院',
-  url: appUrl,
-  logo: `${appUrl}/icon.png`,
-  description: '線上課程平臺',
-}
-
-const websiteJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: '線上課程平臺',
-  url: appUrl,
-  description: '探索課程並開始學習',
-  inLanguage: 'zh-TW',
-  publisher: {
-    '@type': 'Organization',
-    name: '自由人學院',
-  },
+  return {
+    title: {
+      absolute: siteName,
+    },
+    description: `${siteName} — 探索課程、購買學習並追蹤進度的線上課程平臺。`,
+    alternates: {
+      canonical: appUrl,
+    },
+  };
 }
 
 export default async function HomePage() {
-  // 取得所有已發佈課程
-  const courses = await getPublishedCourses()
-  
+  // 取得所有已發佈課程和設定
+  const [courses, { siteName, siteLogo }] = await Promise.all([
+    getPublishedCourses(),
+    getPublicSiteSettings(),
+  ]);
+
+  const appUrl = getAppUrl();
+
   // 取得主打課程 (預設取第一個，或指定 slug)
-  // 如果沒有課程，則傳入 null 或處理空狀態
-  const mainCourse = courses.length > 0 
-    ? await getCourseBySlug(courses[0].slug)
-    : null
+  const mainCourse =
+    courses.length > 0 ? await getCourseBySlug(courses[0].slug) : null;
+
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteName,
+    url: appUrl,
+    logo: `${appUrl}${siteLogo || "/icon.png"}`,
+    description: `${siteName} — 線上課程平臺`,
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteName,
+    url: appUrl,
+    description: `${siteName} — 探索課程並開始學習`,
+    inLanguage: "zh-TW",
+    publisher: {
+      "@type": "Organization",
+      name: siteName,
+    },
+  };
 
   return (
     <main className="flex flex-col bg-white">
@@ -63,10 +73,7 @@ export default async function HomePage() {
 
       {/* 1. Hero Section - 與課程銷售頁風格一致 */}
       {mainCourse ? (
-        <LandingHeroSection 
-          course={mainCourse} 
-          minimal={true}
-        />
+        <LandingHeroSection course={mainCourse} minimal={true} />
       ) : (
         // fallback hero if no courses exist
         <section className="bg-white py-20 text-center">
@@ -92,7 +99,7 @@ export default async function HomePage() {
               從零基礎到精通，開始你的學習旅程
             </p>
           </div>
-          
+
           {courses.length > 0 ? (
             <CourseGrid courses={courses} showTitle={false} />
           ) : (
@@ -113,5 +120,5 @@ export default async function HomePage() {
         </div>
       </section>
     </main>
-  )
+  );
 }
