@@ -419,7 +419,7 @@ export async function getEmailSettings(): Promise<{
   ]);
 
   const fromEmail =
-    emailFromSetting?.value || process.env.EMAIL_FROM || "noreply@example.com";
+    emailFromSetting?.value || process.env.EMAIL_FROM || "noreply@localhost";
   const resendApiKey = process.env.RESEND_API_KEY || "";
 
   return {

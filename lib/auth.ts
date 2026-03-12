@@ -224,7 +224,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
      * 當用戶透過 OAuth 首次登入時觸發（新用戶註冊）
      */
     async createUser({ user }) {
-      console.log(`新用戶註冊: ${user.email}`);
+      // 新用戶註冊（由 PostHog 追蹤，不需 console 輸出）
 
       // PostHog: 追蹤 OAuth 註冊
       if (user.id) {
@@ -303,10 +303,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             where: { id: user.id },
             data: { isGuest: false, guestActivatedAt: new Date() },
           });
-          console.log(
-            `[Auth] Guest 帳號已透過 ${account.provider} OAuth 升級:`,
-            user.email,
-          );
+          // Guest 帳號已透過 OAuth 升級（不需 console 輸出）
         }
       }
     },

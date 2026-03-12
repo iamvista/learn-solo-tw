@@ -29,9 +29,9 @@ async function getEmailFrom(): Promise<string> {
     const setting = await prisma.siteSetting.findUnique({
       where: { key: SETTING_KEYS.EMAIL_FROM },
     });
-    return setting?.value || process.env.EMAIL_FROM || "noreply@example.com";
+    return setting?.value || process.env.EMAIL_FROM || "noreply@localhost";
   } catch {
-    return process.env.EMAIL_FROM || "noreply@example.com";
+    return process.env.EMAIL_FROM || "noreply@localhost";
   }
 }
 
