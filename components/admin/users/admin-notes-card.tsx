@@ -1,26 +1,33 @@
 // components/admin/users/admin-notes-card.tsx
 // 管理員備註卡片
-// 可編輯的備註區域，支援 dirty check
+// 可編輯的備註區域，支援 dirty check + 修改歷史
 
 "use client";
 
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { updateAdminNotes } from "@/lib/actions/users";
+import type { AdminNotesHistoryItem } from "@/lib/actions/users";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { StickyNote, Loader2, Save } from "lucide-react";
+import { StickyNote, Loader2, Save, History, ChevronDown } from "lucide-react";
 
 interface AdminNotesCardProps {
   userId: string;
   initialNotes: string | null;
+  history?: AdminNotesHistoryItem[];
 }
 
-export function AdminNotesCard({ userId, initialNotes }: AdminNotesCardProps) {
+export function AdminNotesCard({
+  userId,
+  initialNotes,
+  history = [],
+}: AdminNotesCardProps) {
   const [isPending, startTransition] = useTransition();
   const [notes, setNotes] = useState(initialNotes || "");
-  const savedNotes = initialNotes || "";
+  const [savedNotes, setSavedNotes] = useState(initialNotes || "");
+  const [showHistory, setShowHistory] = useState(false);
   const isDirty = notes !== savedNotes;
 
   const handleSave = () => {
@@ -32,6 +39,7 @@ export function AdminNotesCard({ userId, initialNotes }: AdminNotesCardProps) {
         });
 
         if (result.success) {
+          setSavedNotes(notes.trim() || "");
           toast.success("備註已儲存");
         } else {
           toast.error(result.error ?? "儲存失敗");
@@ -39,6 +47,15 @@ export function AdminNotesCard({ userId, initialNotes }: AdminNotesCardProps) {
       } catch {
         toast.error("儲存備註時發生錯誤");
       }
+    });
+  };
+
+  const formatDate = (date: Date) => {
+    return new Date(date).toLocaleString("zh-TW", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -70,7 +87,7 @@ export function AdminNotesCard({ userId, initialNotes }: AdminNotesCardProps) {
           </Button>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-3">
         <Textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
@@ -79,9 +96,50 @@ export function AdminNotesCard({ userId, initialNotes }: AdminNotesCardProps) {
           maxLength={5000}
           className="bg-white border-[#E5E5E5] text-[#0A0A0A] rounded-lg resize-none placeholder:text-[#A3A3A3]"
         />
-        <p className="text-xs text-[#A3A3A3] mt-2 text-right">
-          {notes.length} / 5000
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="text-xs text-[#A3A3A3]">
+            {notes.length} / 5000
+          </p>
+          {history.length > 0 && (
+            <button
+              onClick={() => setShowHistory(!showHistory)}
+              className="flex items-center gap-1 text-xs text-[#A3A3A3] hover:text-[#525252] transition-colors"
+            >
+              <History className="h-3 w-3" />
+              修改紀錄 ({history.length})
+              <ChevronDown
+                className={`h-3 w-3 transition-transform ${showHistory ? "rotate-180" : ""}`}
+              />
+            </button>
+          )}
+        </div>
+
+        {/* 修改歷史 */}
+        {showHistory && history.length > 0 && (
+          <div className="border-t border-[#E5E5E5] pt-3 space-y-2">
+            {history.map((item) => (
+              <div
+                key={item.id}
+                className="text-xs text-[#525252] flex items-start gap-2"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-[#A3A3A3] mt-1.5 flex-shrink-0" />
+                <div className="min-w-0">
+                  <span className="font-medium text-[#0A0A0A]">
+                    {item.adminName}
+                  </span>
+                  <span className="text-[#A3A3A3] ml-1">
+                    {formatDate(item.createdAt)}
+                  </span>
+                  {item.notes !== null && (
+                    <p className="text-[#525252] mt-0.5 line-clamp-2">
+                      {item.notes || "（清除備註）"}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

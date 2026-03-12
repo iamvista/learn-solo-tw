@@ -9,6 +9,8 @@ import {
   getUserById,
   getUserProgress,
   getCourseRecommendations,
+  getAdminNotesHistory,
+  getUserActivityTimeline,
 } from "@/lib/actions/users";
 import { UserInfoCard } from "@/components/admin/users/user-info-card";
 import { UserPurchases } from "@/components/admin/users/user-purchases";
@@ -19,6 +21,7 @@ import { EditUserDialog } from "@/components/admin/users/edit-user-dialog";
 import { DeleteUserDialog } from "@/components/admin/users/delete-user-dialog";
 import { AdminNotesCard } from "@/components/admin/users/admin-notes-card";
 import { CourseRecommendations } from "@/components/admin/users/course-recommendations";
+import { ActivityTimeline } from "@/components/admin/users/activity-timeline";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
@@ -46,11 +49,15 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
     notFound();
   }
 
-  // 取得學習進度和課程推薦（並行）
-  const [progress, recommendations] = await Promise.all([
-    getUserProgress(id),
-    getCourseRecommendations(id),
-  ]);
+  // 取得學習進度、課程推薦、備註歷史、活動時間軸（並行）
+  const [progress, recommendations, notesHistory, timeline] = await Promise.all(
+    [
+      getUserProgress(id),
+      getCourseRecommendations(id),
+      getAdminNotesHistory(id),
+      getUserActivityTimeline(id),
+    ],
+  );
 
   // 取得最後活動時間（從學習進度中取得最新的 lastWatchAt）
   const lastActiveAt =
@@ -128,7 +135,11 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
             purchaseCount={user.purchases.length}
             lastActiveAt={lastActiveAt}
           />
-          <AdminNotesCard userId={id} initialNotes={user.adminNotes} />
+          <AdminNotesCard
+            userId={id}
+            initialNotes={user.adminNotes}
+            history={notesHistory}
+          />
         </div>
 
         {/* 右側：購買記錄和學習進度 */}
@@ -141,6 +152,9 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
 
           {/* 課程推薦分析 */}
           <CourseRecommendations recommendations={recommendations} />
+
+          {/* 活動時間軸 */}
+          <ActivityTimeline events={timeline} />
         </div>
       </div>
     </div>

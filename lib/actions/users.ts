@@ -839,7 +839,9 @@ export async function updateAdminNotes(data: UpdateAdminNotesData) {
       data: { adminNotes: adminNotes ?? null },
     });
 
-    await logAdminAction(admin.id, "UPDATE_ADMIN_NOTES", userId);
+    await logAdminAction(admin.id, "UPDATE_ADMIN_NOTES", userId, {
+      notes: adminNotes ?? null,
+    });
 
     revalidatePath(`/admin/users/${userId}`);
 
@@ -902,7 +904,33 @@ export async function getCourseRecommendations(
     return [];
   }
 
-  // 3. 找出這些學員購買了哪些「該學員未購買」的課程
+  // 3. 計算每位共同購買者的課程完成率（作為權重）
+  const buyerProgress = await prisma.lessonProgress.findMany({
+    where: {
+      userId: { in: sharedBuyerIds },
+      completed: true,
+    },
+    select: { userId: true, lessonId: true },
+  });
+
+  // 每位買家完成的課程單元數
+  const buyerCompletionCount = new Map<string, number>();
+  for (const p of buyerProgress) {
+    buyerCompletionCount.set(
+      p.userId,
+      (buyerCompletionCount.get(p.userId) || 0) + 1,
+    );
+  }
+
+  // 計算權重：完成越多的學員推薦越有參考價值
+  // 權重 = 1 + log2(1 + completedLessons)，至少為 1
+  const buyerWeight = new Map<string, number>();
+  for (const buyerId of sharedBuyerIds) {
+    const completed = buyerCompletionCount.get(buyerId) || 0;
+    buyerWeight.set(buyerId, 1 + Math.log2(1 + completed));
+  }
+
+  // 4. 找出這些學員購買了哪些「該學員未購買」的課程
   const otherPurchases = await prisma.purchase.findMany({
     where: {
       userId: { in: sharedBuyerIds },
@@ -912,20 +940,32 @@ export async function getCourseRecommendations(
     select: { userId: true, courseId: true },
   });
 
-  // 4. 計算每門未購課程的交叉購買數
+  // 5. 計算每門未購課程的加權交叉購買分數
   const courseCountMap = new Map<string, Set<string>>();
+  const courseWeightMap = new Map<string, number>();
   for (const p of otherPurchases) {
     if (!courseCountMap.has(p.courseId)) {
       courseCountMap.set(p.courseId, new Set());
+      courseWeightMap.set(p.courseId, 0);
     }
     courseCountMap.get(p.courseId)!.add(p.userId);
+    courseWeightMap.set(
+      p.courseId,
+      (courseWeightMap.get(p.courseId) || 0) + (buyerWeight.get(p.userId) || 1),
+    );
   }
 
   if (courseCountMap.size === 0) {
     return [];
   }
 
-  // 5. 取得課程資訊
+  // 6. 計算總權重（用於百分比計算）
+  const totalWeight = Array.from(buyerWeight.values()).reduce(
+    (sum, w) => sum + w,
+    0,
+  );
+
+  // 7. 取得課程資訊
   const courseIds = Array.from(courseCountMap.keys());
   const courses = await prisma.course.findMany({
     where: {
@@ -943,18 +983,21 @@ export async function getCourseRecommendations(
 
   const totalSharedBuyers = sharedBuyerIds.length;
 
-  // 6. 組裝結果，按交叉購買率降序排列
+  // 8. 組裝結果，按加權交叉購買率降序排列
   const recommendations: CourseRecommendation[] = courses
     .map((course) => {
       const buyers = courseCountMap.get(course.id);
       const count = buyers?.size || 0;
+      const weight = courseWeightMap.get(course.id) || 0;
+      // 加權百分比：用加權分數 / 總權重，而非簡單人數比
+      const weightedRate = Math.round((weight / totalWeight) * 100);
       return {
         courseId: course.id,
         courseTitle: course.title,
         coverImage: course.coverImage,
         price: course.price,
         salePrice: course.salePrice,
-        crossSellRate: Math.round((count / totalSharedBuyers) * 100),
+        crossSellRate: weightedRate,
         crossSellCount: count,
         totalBuyersOfSharedCourses: totalSharedBuyers,
       };
@@ -963,4 +1006,199 @@ export async function getCourseRecommendations(
     .slice(0, 10);
 
   return recommendations;
+}
+
+// ==================== 備註歷史 ====================
+
+/**
+ * 備註歷史項目
+ */
+export interface AdminNotesHistoryItem {
+  id: string;
+  adminName: string;
+  createdAt: Date;
+  notes: string | null;
+}
+
+/**
+ * 取得管理員備註修改歷史
+ */
+export async function getAdminNotesHistory(
+  userId: string,
+): Promise<AdminNotesHistoryItem[]> {
+  await requireAdminAuth();
+
+  const logs = await prisma.adminLog.findMany({
+    where: {
+      action: "UPDATE_ADMIN_NOTES",
+      targetId: userId,
+    },
+    orderBy: { createdAt: "desc" },
+    take: 10,
+    include: {
+      admin: { select: { name: true, email: true } },
+    },
+  });
+
+  return logs.map((log) => ({
+    id: log.id,
+    adminName: log.admin.name || log.admin.email,
+    createdAt: log.createdAt,
+    notes:
+      ((log.details as Record<string, unknown>)?.notes as string | null) ??
+      null,
+  }));
+}
+
+// ==================== 活動時間軸 ====================
+
+/**
+ * 活動時間軸事件
+ */
+export interface TimelineEvent {
+  id: string;
+  type:
+    | "account_created"
+    | "purchase"
+    | "grant_access"
+    | "revoke_access"
+    | "role_change"
+    | "user_update"
+    | "notes_update"
+    | "lesson_complete";
+  title: string;
+  description?: string;
+  createdAt: Date;
+  actor?: string;
+}
+
+/**
+ * 取得學員活動時間軸
+ */
+export async function getUserActivityTimeline(
+  userId: string,
+): Promise<TimelineEvent[]> {
+  await requireAdminAuth();
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { createdAt: true },
+  });
+
+  if (!user) return [];
+
+  // 並行查詢
+  const [adminLogs, purchases, recentCompletions] = await Promise.all([
+    // 管理員操作日誌
+    prisma.adminLog.findMany({
+      where: { targetId: userId },
+      orderBy: { createdAt: "desc" },
+      take: 30,
+      include: {
+        admin: { select: { name: true, email: true } },
+      },
+    }),
+    // 購買/授權記錄
+    prisma.purchase.findMany({
+      where: { userId },
+      include: {
+        course: { select: { title: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+    // 最近完成的課程單元
+    prisma.lessonProgress.findMany({
+      where: { userId, completed: true },
+      orderBy: { lastWatchAt: "desc" },
+      take: 10,
+      include: {
+        lesson: {
+          select: {
+            title: true,
+            chapter: {
+              select: {
+                course: { select: { title: true } },
+              },
+            },
+          },
+        },
+      },
+    }),
+  ]);
+
+  const events: TimelineEvent[] = [];
+
+  // 帳號建立
+  events.push({
+    id: `created-${userId}`,
+    type: "account_created",
+    title: "帳號建立",
+    createdAt: user.createdAt,
+  });
+
+  // 管理員操作
+  const actionLabels: Record<
+    string,
+    { type: TimelineEvent["type"]; label: string }
+  > = {
+    GRANT_ACCESS: { type: "grant_access", label: "授權課程" },
+    REVOKE_ACCESS: { type: "revoke_access", label: "撤銷課程權限" },
+    UPDATE_USER_ROLE: { type: "role_change", label: "變更角色" },
+    UPDATE_USER: { type: "user_update", label: "編輯資料" },
+    UPDATE_ADMIN_NOTES: { type: "notes_update", label: "更新備註" },
+  };
+
+  for (const log of adminLogs) {
+    const mapping = actionLabels[log.action];
+    if (!mapping) continue;
+
+    const details = log.details as Record<string, unknown> | null;
+    let description: string | undefined;
+
+    if (log.action === "GRANT_ACCESS" && details) {
+      description = `課程：${details.courseTitle}`;
+    } else if (log.action === "REVOKE_ACCESS" && details) {
+      description = `課程：${details.courseTitle}`;
+    } else if (log.action === "UPDATE_USER_ROLE" && details) {
+      description = `${details.from} → ${details.to}`;
+    }
+
+    events.push({
+      id: log.id,
+      type: mapping.type,
+      title: mapping.label,
+      description,
+      createdAt: log.createdAt,
+      actor: log.admin.name || log.admin.email,
+    });
+  }
+
+  // 購買記錄（排除手動授權的，因為已在 AdminLog 中）
+  for (const purchase of purchases) {
+    if (!purchase.grantedBy) {
+      events.push({
+        id: `purchase-${purchase.id}`,
+        type: "purchase",
+        title: "購買課程",
+        description: purchase.course.title,
+        createdAt: purchase.createdAt,
+      });
+    }
+  }
+
+  // 完成的單元
+  for (const progress of recentCompletions) {
+    events.push({
+      id: `lesson-${progress.id}`,
+      type: "lesson_complete",
+      title: "完成單元",
+      description: `${progress.lesson.chapter.course.title} — ${progress.lesson.title}`,
+      createdAt: progress.lastWatchAt,
+    });
+  }
+
+  // 按時間排序（最新在前）
+  events.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+  return events.slice(0, 50);
 }

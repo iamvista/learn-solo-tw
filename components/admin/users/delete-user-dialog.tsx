@@ -24,6 +24,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Input } from "@/components/ui/input";
 import { Trash2, Loader2 } from "lucide-react";
 
 interface DeleteUserDialogProps {
@@ -42,6 +43,7 @@ export function DeleteUserDialog({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
 
   const handleConfirm = () => {
     startTransition(async () => {
@@ -87,18 +89,24 @@ export function DeleteUserDialog({
     );
   }
 
+  const handleOpenChange = (isOpen: boolean) => {
+    if (isOpen) setConfirmText("");
+    setOpen(isOpen);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{triggerButton}</DialogTrigger>
       <DialogContent className="bg-white border-[#E5E5E5] rounded-xl">
         <DialogHeader>
           <DialogTitle className="text-[#0A0A0A]">確認刪除學員</DialogTitle>
           <DialogDescription className="text-[#525252]">
-            即將刪除學員「{displayName}」。此操作無法復原，該學員的帳號、學習進度等資料將永久刪除。
+            即將刪除學員「{displayName}
+            」。此操作無法復原，該學員的帳號、學習進度等資料將永久刪除。
           </DialogDescription>
         </DialogHeader>
 
-        <div className="py-4">
+        <div className="space-y-4 py-4">
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <p className="text-sm text-red-800 font-medium">請確認以下事項：</p>
             <ul className="text-sm text-red-700 mt-2 space-y-1 list-disc list-inside">
@@ -106,6 +114,20 @@ export function DeleteUserDialog({
               <li>該學員的帳號和所有相關資料將永久刪除</li>
               <li>此操作無法復原</li>
             </ul>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-[#0A0A0A] mb-2 block">
+              請輸入學員 Email{" "}
+              <span className="font-mono text-red-600">{userEmail}</span>{" "}
+              以確認刪除
+            </label>
+            <Input
+              value={confirmText}
+              onChange={(e) => setConfirmText(e.target.value)}
+              placeholder={userEmail}
+              className="bg-white border-[#E5E5E5] text-[#0A0A0A] rounded-lg font-mono"
+            />
           </div>
         </div>
 
@@ -119,7 +141,7 @@ export function DeleteUserDialog({
           </Button>
           <Button
             onClick={handleConfirm}
-            disabled={isPending}
+            disabled={isPending || confirmText !== userEmail}
             variant="destructive"
             className="rounded-lg"
           >
