@@ -2,7 +2,7 @@
 // 網站 Logo 元件
 // 極簡黑白灰設計
 
-'use client'
+"use client";
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -14,7 +14,7 @@ interface LogoProps {
 }
 
 export function Logo({ className, size = "md" }: LogoProps) {
-  const { siteLogo, brandDisplayName, brandSubtitle } = usePublicSiteSettings()
+  const { siteLogo, brandDisplayName, brandSubtitle } = usePublicSiteSettings();
 
   const sizeConfig = {
     sm: { image: 24, text: "text-sm" },
@@ -29,20 +29,24 @@ export function Logo({ className, size = "md" }: LogoProps) {
       href="/"
       className={cn(
         "flex items-center gap-2 transition-opacity hover:opacity-80",
-        className
+        className,
       )}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={siteLogo || '/icon.png'}
-        alt={brandDisplayName || 'Brand'}
+        src={siteLogo || "/icon.png"}
+        alt={brandDisplayName || "Brand"}
         width={config.image}
         height={config.image}
         className="rounded-full overflow-hidden"
       />
       <div className={cn("flex flex-col leading-tight", config.text)}>
-        <span className="font-bold text-sm text-neutral-700">{brandDisplayName}</span>
-        <span className="font-bold text-sm text-neutral-700">{brandSubtitle}</span>
+        <span className="font-bold text-sm text-neutral-700">
+          {brandDisplayName}
+        </span>
+        {brandSubtitle && (
+          <span className="text-xs text-neutral-500">{brandSubtitle}</span>
+        )}
       </div>
     </Link>
   );
