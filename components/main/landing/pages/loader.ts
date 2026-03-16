@@ -7,8 +7,7 @@ import type { LandingPageProps } from './types'
 // 銷售頁元件 registry
 // 新增課程時在此加入對應的 import
 const landingPages: Record<string, () => Promise<{ default: ComponentType<LandingPageProps> }>> = {
-  // 新增課程銷售頁時，在此註冊：
-  // 'course-slug': () => import('./course-slug'),
+  'vibe-coding': () => import('./vibe-coding'),
 }
 
 /**
