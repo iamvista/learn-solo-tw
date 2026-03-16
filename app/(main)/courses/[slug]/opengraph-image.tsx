@@ -16,23 +16,36 @@ export default async function Image({
 }) {
   const { slug } = await params;
 
-  const course = await prisma.course.findFirst({
-    where: { slug },
-    select: {
-      title: true,
-      subtitle: true,
-      salePrice: true,
-      price: true,
-      saleLabel: true,
-      instructorName: true,
-    },
-  });
+  let title = "課程";
+  let subtitle = "";
+  let price: number | null = null;
+  let saleLabel: string | null = null;
+  let instructor = "自由人學院";
 
-  const title = course?.title || "課程";
-  const subtitle = course?.subtitle || "";
-  const price = course?.salePrice || course?.price;
-  const saleLabel = course?.saleLabel;
-  const instructor = course?.instructorName || "自由人學院";
+  try {
+    const course = await prisma.course.findFirst({
+      where: { slug },
+      select: {
+        title: true,
+        subtitle: true,
+        salePrice: true,
+        price: true,
+        saleLabel: true,
+        instructorName: true,
+      },
+    });
+
+    if (course) {
+      title = (course.title || "課程").slice(0, 100);
+      subtitle = (course.subtitle || "").slice(0, 200);
+      price = course.salePrice || course.price;
+      saleLabel = course.saleLabel ? course.saleLabel.slice(0, 30) : null;
+      instructor = (course.instructorName || "自由人學院").slice(0, 50);
+    }
+  } catch (err) {
+    console.error("OG image: failed to fetch course data:", err);
+    // Fallback values already set above
+  }
 
   return new ImageResponse(
     (

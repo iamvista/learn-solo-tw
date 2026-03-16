@@ -33,15 +33,37 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  // 取得所有已發佈課程和設定
-  const [courses, { siteName, siteLogo, contactEmail, footerSections }] =
-    await Promise.all([getPublishedCourses(), getPublicSiteSettings()]);
+  // 取得所有已發佈課程和設定（加入 fallback 防止 DB 斷線導致整頁崩潰）
+  let courses: Awaited<ReturnType<typeof getPublishedCourses>> = [];
+  let siteName = "自由人學院";
+  let siteLogo = "/icon.png";
+  let contactEmail = "";
+  let footerSections: Array<{ title: string; links: Array<{ label: string; url: string }> }> = [];
+
+  try {
+    const [fetchedCourses, settings] = await Promise.all([
+      getPublishedCourses(),
+      getPublicSiteSettings(),
+    ]);
+    courses = fetchedCourses;
+    siteName = settings.siteName;
+    siteLogo = settings.siteLogo;
+    contactEmail = settings.contactEmail;
+    footerSections = settings.footerSections;
+  } catch (err) {
+    console.error("Homepage: failed to fetch data:", err);
+  }
 
   const appUrl = getAppUrl();
 
   // 取得主打課程 (預設取第一個，或指定 slug)
-  const mainCourse =
-    courses.length > 0 ? await getCourseBySlug(courses[0].slug) : null;
+  let mainCourse: Awaited<ReturnType<typeof getCourseBySlug>> | null = null;
+  try {
+    mainCourse =
+      courses.length > 0 ? await getCourseBySlug(courses[0].slug) : null;
+  } catch (err) {
+    console.error("Homepage: failed to fetch main course:", err);
+  }
 
   // 從 footer 中提取社群連結作為 Organization sameAs
   const socialLinks = footerSections
