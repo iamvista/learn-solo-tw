@@ -17,6 +17,7 @@ import {
 } from "@/lib/rate-limit";
 import { calculatePrice } from "@/lib/utils/price";
 import { getPostHogClient } from "@/lib/posthog-server";
+import { validateCoupon } from "@/lib/actions/coupons";
 
 const GUEST_SOURCE = "checkout_email";
 
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { courseId, email, name } = validationResult.data;
+    const { courseId, email, name, couponCode } = validationResult.data;
 
     // 4. 決定此次購買對應的使用者
     let purchaserUserId = loggedInUserId;
@@ -217,13 +218,38 @@ export async function POST(request: NextRequest) {
     }
 
     // 8. 計算當前價格（使用統一的價格計算邏輯）
-    const { finalPrice: currentAmount, isOnSale } = calculatePrice({
+    const { finalPrice: priceBeforeCoupon, isOnSale } = calculatePrice({
       originalPrice: course.price,
       salePrice: course.salePrice,
       saleEndAt: course.saleEndAt,
       saleCycleEnabled: course.saleCycleEnabled,
       saleCycleDays: course.saleCycleDays,
     });
+
+    // 8.5 優惠券折扣
+    let currentAmount = priceBeforeCoupon;
+    let couponId: string | null = null;
+    let couponDiscount = 0;
+
+    if (couponCode) {
+      const couponResult = await validateCoupon(
+        couponCode,
+        courseId,
+        priceBeforeCoupon,
+        purchaserUserId,
+      );
+
+      if (!couponResult.valid) {
+        return NextResponse.json(
+          { error: couponResult.error, code: "COUPON_INVALID" },
+          { status: 400 },
+        );
+      }
+
+      couponId = couponResult.couponId!;
+      couponDiscount = couponResult.discountAmount!;
+      currentAmount = couponResult.finalPrice!;
+    }
 
     // 8.1 零元課程不走付款流程，引導使用免費註冊
     if (currentAmount === 0) {
@@ -285,6 +311,8 @@ export async function POST(request: NextRequest) {
           courseId,
           amount: currentAmount,
           originalAmount: course.price,
+          couponId,
+          couponDiscount: couponDiscount > 0 ? couponDiscount : null,
           status: "PENDING",
           paymentGateway: gateway.type,
           clientIpAddress:

@@ -6,7 +6,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Loader2, ArrowLeft, ShieldCheck } from "lucide-react";
+import { Loader2, ArrowLeft, ShieldCheck, Tag, X, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import posthog from "posthog-js";
@@ -54,6 +54,17 @@ export function CheckoutClient({
   const [guestName, setGuestName] = useState(user.name || "");
   const [guestOptionTracked, setGuestOptionTracked] = useState(false);
 
+  // 優惠券狀態
+  const [couponCode, setCouponCode] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [couponError, setCouponError] = useState<string | null>(null);
+  const [appliedCoupon, setAppliedCoupon] = useState<{
+    code: string;
+    name: string;
+    discountAmount: number;
+    finalPrice: number;
+  } | null>(null);
+
   // PostHog: 結帳頁瀏覽事件（頁面載入時觸發，與 checkout_initiated 按鈕點擊區分）
   useEffect(() => {
     posthog.capture("checkout_page_viewed", {
@@ -91,6 +102,62 @@ export function CheckoutClient({
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [course.id, course.slug, course.title, course.finalPrice]);
+
+  /**
+   * 驗證優惠碼
+   */
+  async function handleApplyCoupon() {
+    const code = couponCode.trim();
+    if (!code) return;
+
+    setCouponLoading(true);
+    setCouponError(null);
+
+    try {
+      const response = await fetch("/api/coupon/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, courseId: course.id }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setCouponError(result.error || "優惠碼無效");
+        return;
+      }
+
+      setAppliedCoupon({
+        code: result.code,
+        name: result.name,
+        discountAmount: result.discountAmount,
+        finalPrice: result.finalPrice,
+      });
+
+      posthog.capture("coupon_applied", {
+        course_id: course.id,
+        coupon_code: result.code,
+        discount_amount: result.discountAmount,
+        final_price: result.finalPrice,
+      });
+    } catch {
+      setCouponError("驗證失敗，請稍後再試");
+    } finally {
+      setCouponLoading(false);
+    }
+  }
+
+  /**
+   * 移除已套用的優惠碼
+   */
+  function handleRemoveCoupon() {
+    setAppliedCoupon(null);
+    setCouponCode("");
+    setCouponError(null);
+  }
+
+  // 實際要付的金額（優惠券折抵後）
+  const displayPrice = appliedCoupon ? appliedCoupon.finalPrice : course.finalPrice;
 
   /**
    * 處理付款
@@ -134,6 +201,7 @@ export function CheckoutClient({
                 email: guestEmail.trim().toLowerCase(),
                 ...(guestName.trim() ? { name: guestName.trim() } : {}),
               }),
+          ...(appliedCoupon ? { couponCode: appliedCoupon.code } : {}),
         }),
       });
 
@@ -366,6 +434,68 @@ export function CheckoutClient({
             </p>
           )}
 
+          {/* 優惠碼 */}
+          <div className="mt-6 space-y-2">
+            <label className="text-sm font-medium text-[#0A0A0A]">
+              優惠碼
+            </label>
+            {appliedCoupon ? (
+              <div className="flex items-center justify-between rounded-xl border border-green-200 bg-green-50 px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                  <span className="text-sm font-medium text-green-700">
+                    {appliedCoupon.code}
+                  </span>
+                  <span className="text-sm text-green-600">
+                    已折抵 {formatPrice(appliedCoupon.discountAmount)}
+                  </span>
+                </div>
+                <button
+                  onClick={handleRemoveCoupon}
+                  className="rounded-full p-1 text-green-600 hover:bg-green-100"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                <Input
+                  value={couponCode}
+                  onChange={(e) => {
+                    setCouponCode(e.target.value.toUpperCase());
+                    setCouponError(null);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleApplyCoupon();
+                    }
+                  }}
+                  placeholder="輸入優惠碼"
+                  className="h-12 flex-1 rounded-xl border-[#E5E5E5]"
+                />
+                <Button
+                  onClick={handleApplyCoupon}
+                  disabled={couponLoading || !couponCode.trim()}
+                  variant="outline"
+                  className="h-12 rounded-xl border-[#E5E5E5] px-5"
+                >
+                  {couponLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <>
+                      <Tag className="mr-1.5 h-3.5 w-3.5" />
+                      套用
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+            {couponError && (
+              <p className="text-xs text-red-500">{couponError}</p>
+            )}
+          </div>
+
           {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
 
           <Button
@@ -419,10 +549,16 @@ export function CheckoutClient({
               <span>小計</span>
               <span>{formatPrice(course.finalPrice)}</span>
             </div>
+            {appliedCoupon && (
+              <div className="flex justify-between text-sm text-green-600">
+                <span>優惠券折抵（{appliedCoupon.code}）</span>
+                <span>-{formatPrice(appliedCoupon.discountAmount)}</span>
+              </div>
+            )}
             <div className="flex items-center justify-between border-t border-[#E5E5E5] pt-3">
               <span className="font-semibold text-[#0A0A0A]">總計</span>
               <span className="text-2xl font-bold text-[#0A0A0A]">
-                {formatPrice(course.finalPrice)}
+                {formatPrice(displayPrice)}
               </span>
             </div>
           </div>
