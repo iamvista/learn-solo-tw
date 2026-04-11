@@ -7,6 +7,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { VideoPlayer, type VideoPlayerHandle } from "./video-player";
+import type { VideoWatermarkPayload } from "@/lib/video-watermark";
 import { ActionBar } from "./action-bar";
 import { LessonContent } from "./lesson-content";
 import { ChapterSidebar } from "./chapter-sidebar";
@@ -41,6 +42,7 @@ interface PlayerLayoutProps {
   completedLessons: string[];
   courseSlug: string;
   courseProgress?: CourseProgressStats;
+  watermark?: VideoWatermarkPayload;
 }
 
 export function PlayerLayout({
@@ -50,6 +52,7 @@ export function PlayerLayout({
   completedLessons: initialCompletedLessons,
   courseSlug,
   courseProgress: initialCourseProgress,
+  watermark,
 }: PlayerLayoutProps) {
   // 側邊欄開關狀態（手機版 Sheet）
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -359,6 +362,7 @@ export function PlayerLayout({
                 videoDuration={lesson.videoDuration}
                 onComplete={handleVideoComplete}
                 onTimeUpdate={setCurrentVideoTime}
+                watermark={watermark}
               />
             )}
 

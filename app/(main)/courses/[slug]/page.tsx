@@ -19,6 +19,7 @@ import { JsonLd } from "@/components/common/json-ld";
 import { loadLandingPage } from "@/components/main/landing/pages/loader";
 import { getPublicSiteSettings } from "@/lib/site-settings-public";
 import { getAppUrl } from "@/lib/app-url";
+import { getReviewStats, getReviews, getUserReview } from "@/lib/actions/reviews";
 
 // 強制動態渲染
 export const dynamic = "force-dynamic";
@@ -291,6 +292,13 @@ export default async function CoursePage({
     </>
   );
 
+  // === 評價資料 ===
+  const [reviewStats, reviewsResult, userReview] = await Promise.all([
+    getReviewStats(course.id),
+    getReviews(course.id, { limit: 10 }),
+    getUserReview(course.id),
+  ]);
+
   // === 銷售頁渲染 ===
   const mode = course.landingPageMode ?? "react";
 
@@ -326,6 +334,11 @@ export default async function CoursePage({
         saleCycleDays={course.saleCycleDays}
         showCountdown={course.showCountdown}
         shouldAutoEnroll={shouldAutoEnroll}
+        reviewStats={reviewStats}
+        initialReviews={reviewsResult.reviews}
+        initialHasMore={reviewsResult.hasMore}
+        userReview={userReview}
+        currentUserId={session?.user?.id}
       />
     </div>
   );

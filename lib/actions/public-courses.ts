@@ -89,6 +89,9 @@ export interface CourseDetail {
   courseWorkload: string | null
   ratingValue: string | null
   ratingCount: string | null
+  // 評價設定
+  enableReviews: boolean
+  showReviews: boolean
 }
 
 /**
@@ -193,6 +196,8 @@ export async function getCourseBySlug(
     courseWorkload: course.courseWorkload,
     ratingValue: course.ratingValue,
     ratingCount: course.ratingCount,
+    enableReviews: course.enableReviews,
+    showReviews: course.showReviews,
   }
 }
 

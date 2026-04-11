@@ -16,6 +16,9 @@ import { PlayerLayout } from "@/components/main/player/player-layout";
 import { JsonLd } from "@/components/common/json-ld";
 import { getAppUrl } from "@/lib/app-url";
 import { getPublicSiteSettings } from "@/lib/site-settings-public";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { buildVideoWatermarkLines, type VideoWatermarkPayload } from "@/lib/video-watermark";
 
 // 強制動態渲染
 export const dynamic = "force-dynamic";
@@ -100,6 +103,30 @@ export default async function LessonPage({ params }: LessonPageProps) {
     notFound();
   }
 
+  // 浮水印設定
+  const session = await auth();
+  const watermarkSetting = await prisma.courseVideoWatermarkSetting.findUnique({
+    where: { courseId: lesson.chapter.course.id },
+  });
+
+  let watermark: VideoWatermarkPayload | undefined;
+  if (watermarkSetting?.enabled && session?.user?.email) {
+    watermark = {
+      enabled: true,
+      viewerEmail: session.user.email,
+      courseTitle: lesson.chapter.course.title,
+      showEmail: watermarkSetting.showEmail,
+      showCourseTitle: watermarkSetting.showCourseTitle,
+      showTimestamp: watermarkSetting.showTimestamp,
+      emailDisplayMode: watermarkSetting.emailDisplayMode,
+      opacityPercent: watermarkSetting.opacityPercent,
+      textSize: watermarkSetting.textSize,
+      movementMode: watermarkSetting.movementMode,
+      moveIntervalSec: watermarkSetting.moveIntervalSec,
+      tamperPauseEnabled: watermarkSetting.tamperPauseEnabled,
+    };
+  }
+
   // JSON-LD 結構化資料
   const baseUrl = getAppUrl();
   const { siteName } = await getPublicSiteSettings();
@@ -163,6 +190,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
         completedLessons={completedLessons}
         courseSlug={slug}
         courseProgress={courseProgress}
+        watermark={watermark}
       />
     </>
   );

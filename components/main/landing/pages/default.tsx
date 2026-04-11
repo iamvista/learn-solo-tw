@@ -11,6 +11,7 @@ import type { LandingPageProps } from './types'
 import { formatPrice } from '@/lib/utils/price'
 import { CurriculumPreview, StickyCTA, FreeCourseCTA, AutoEnrollHandler } from '@/components/main/landing'
 import { PurchasedCurriculumList } from '@/components/main/player/curriculum-list'
+import { ReviewSection } from '@/components/main/landing/review-section'
 
 export default function DefaultLanding({
   course,
@@ -21,6 +22,11 @@ export default function DefaultLanding({
   originalPrice,
   isOnSale,
   shouldAutoEnroll,
+  reviewStats,
+  initialReviews,
+  initialHasMore,
+  userReview,
+  currentUserId,
 }: LandingPageProps) {
   // 已購買
   if (purchaseStatus.isPurchased) {
@@ -127,6 +133,22 @@ export default function DefaultLanding({
 
       {/* 課程大綱 */}
       <CurriculumPreview course={course} />
+
+      {/* 學員評價 */}
+      {reviewStats && initialReviews && (
+        <ReviewSection
+          courseId={course.id}
+          reviewStats={reviewStats}
+          initialReviews={initialReviews}
+          initialHasMore={initialHasMore ?? false}
+          userReview={userReview ?? null}
+          isPurchased={purchaseStatus.isPurchased}
+          isLoggedIn={isLoggedIn}
+          enableReviews={course.enableReviews ?? false}
+          showReviews={course.showReviews ?? false}
+          currentUserId={currentUserId}
+        />
+      )}
 
       {/* 底部 CTA */}
       <section className="bg-[#0A0A0A] py-16 text-white">
