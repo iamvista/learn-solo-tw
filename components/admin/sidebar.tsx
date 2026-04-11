@@ -24,6 +24,7 @@ import {
   BarChart3,
   Settings,
   MessageCircle,
+  Ticket,
   Sun,
   Moon,
 } from "lucide-react";
@@ -62,6 +63,12 @@ const sidebarItems = [
     href: "/admin/users",
     icon: Users,
     adminOnly: false,
+  },
+  {
+    title: "優惠券",
+    href: "/admin/coupons",
+    icon: Ticket,
+    adminOnly: true,
   },
   {
     title: "訂單管理",

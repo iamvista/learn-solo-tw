@@ -34,6 +34,14 @@ export const SETTING_KEYS = {
   PAYUNI_HASH_KEY: "payuni_hash_key",
   PAYUNI_HASH_IV: "payuni_hash_iv",
   PAYUNI_TEST_MODE: "payuni_test_mode",
+  // Email / SMTP 設定
+  EMAIL_PROVIDER: "email_provider",
+  RESEND_API_KEY: "resend_api_key",
+  SMTP_HOST: "smtp_host",
+  SMTP_PORT: "smtp_port",
+  SMTP_USER: "smtp_user",
+  SMTP_PASS: "smtp_pass",
+  SMTP_SECURE: "smtp_secure",
   // Header / Footer 版面設定 (JSON)
   HEADER_LEFT_LINKS: "header_left_links",
   HEADER_RIGHT_LINKS: "header_right_links",

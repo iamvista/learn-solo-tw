@@ -16,6 +16,8 @@ import { Play, Loader2, AlertCircle } from "lucide-react";
 import { useProgress } from "@/hooks/use-progress";
 import { useWatchTime } from "@/hooks/use-watch-time";
 import posthog from "posthog-js";
+import { VideoWatermarkOverlay } from "@/components/main/player/video-watermark-overlay";
+import type { VideoWatermarkPayload } from "@/lib/video-watermark";
 
 interface VideoPlayerProps {
   videoId: string | null;
@@ -25,6 +27,8 @@ interface VideoPlayerProps {
   onComplete?: () => void;
   /** 當影片時間更新時的回調 */
   onTimeUpdate?: (currentTime: number) => void;
+  /** 浮水印設定（啟用時顯示防盜浮水印） */
+  watermark?: VideoWatermarkPayload;
 }
 
 /**
@@ -47,9 +51,11 @@ interface StreamTokenResponse {
 
 export const VideoPlayer = forwardRef<VideoPlayerHandle, VideoPlayerProps>(
   function VideoPlayer(
-    { videoId, title, lessonId, videoDuration, onComplete, onTimeUpdate },
+    { videoId, title, lessonId, videoDuration, onComplete, onTimeUpdate, watermark },
     ref
   ) {
+    // 影片容器 ref（用於浮水印定位）
+    const containerRef = useRef<HTMLDivElement>(null);
     // 簽名 URL 狀態（用於 Stream 組件的 src）
     const [streamData, setStreamData] = useState<{
       signedUrl: string;
@@ -307,7 +313,7 @@ export const VideoPlayer = forwardRef<VideoPlayerHandle, VideoPlayerProps>(
     }
 
     return (
-      <div className=" bg-black aspect-video">
+      <div ref={containerRef} className="relative bg-black aspect-video">
         <Stream
           height="100%"
           src={streamData.signedUrl}
@@ -320,6 +326,18 @@ export const VideoPlayer = forwardRef<VideoPlayerHandle, VideoPlayerProps>(
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleEnded}
         />
+        {watermark?.enabled && (
+          <VideoWatermarkOverlay
+            watermark={watermark}
+            containerRef={containerRef}
+            onTamper={() => {
+              // 暫停影片播放
+              if (streamRef.current) {
+                streamRef.current.pause();
+              }
+            }}
+          />
+        )}
       </div>
     );
   }

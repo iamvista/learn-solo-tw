@@ -49,11 +49,19 @@ model User {
   guestActivationTokens GuestActivationToken[]
   passwordResetTokens   PasswordResetToken[]
 
+  // 優惠券兌換記錄
+  couponRedemptions CouponRedemption[]
+
   // 管理員操作日誌
   adminLogs AdminLog[]
 
   // 觀看時間紀錄
   watchTimeLogs WatchTimeLog[]
+
+  // 課程評價
+  reviews         CourseReview[]
+  reviewHelpfuls  ReviewHelpful[]
+  reviewReports   ReviewReport[]
 
   @@index([phone])
   @@index([isGuest])
@@ -107,6 +115,27 @@ enum LessonStatus {
   COMING_SOON // 製作中
 }
 
+enum VideoProvider {
+  YOUTUBE
+  CLOUDFLARE
+}
+
+enum WatermarkEmailDisplayMode {
+  FULL
+  MASKED
+}
+
+enum WatermarkTextSize {
+  SM
+  MD
+  LG
+}
+
+enum WatermarkMovementMode {
+  STANDARD
+  AGGRESSIVE
+}
+
 model Course {
   id          String  @id @default(cuid())
   title       String
@@ -154,6 +183,10 @@ model Course {
   // 購買通知
   notifyAdminOnPurchase Boolean @default(false) // 有人購買時是否寄 Email 通知管理員
 
+  // 評價設定
+  enableReviews Boolean @default(false) // 是否啟用評價功能（關閉後學員無法評價，所有入口消失）
+  showReviews   Boolean @default(false) // 是否在銷售頁顯示評價區塊（需先啟用評價功能）
+
   status    CourseStatus @default(DRAFT)
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
@@ -163,6 +196,32 @@ model Course {
   purchases     Purchase[]
   welcomeEmail  CourseWelcomeEmail?
   emailDelivery EmailDeliveryLog[]
+  coupons       Coupon[] @relation("CouponCourses")
+  reviews       CourseReview[]
+  videoWatermarkSetting CourseVideoWatermarkSetting?
+}
+
+model CourseVideoWatermarkSetting {
+  id String @id @default(cuid())
+  courseId String @unique
+
+  enabled            Boolean                   @default(false)
+  showEmail          Boolean                   @default(true)
+  showCourseTitle    Boolean                   @default(true)
+  showTimestamp      Boolean                   @default(true)
+  emailDisplayMode   WatermarkEmailDisplayMode @default(FULL)
+  opacityPercent     Int                       @default(18)
+  textSize           WatermarkTextSize         @default(MD)
+  movementMode       WatermarkMovementMode     @default(STANDARD)
+  moveIntervalSec    Int                       @default(12)
+  tamperPauseEnabled Boolean                   @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([enabled])
 }
 
 model Chapter {
@@ -186,9 +245,13 @@ model Lesson {
   title     String
   content   String? @db.Text // Markdown 內容
 
-  // Cloudflare Stream
-  videoId       String? // Cloudflare Stream Video ID
-  videoDuration Int? // 影片長度（秒）
+  // Legacy Cloudflare Stream field kept for backward compatibility
+  videoId        String?        // Cloudflare Stream Video ID
+  videoProvider  VideoProvider?
+  videoSourceId  String?
+  videoUrl       String?
+  videoThumbnail String?
+  videoDuration  Int? // 影片長度（秒）
 
   isFree    Boolean  @default(false) // 是否免費試閱
   order     Int      @default(0)
@@ -274,6 +337,64 @@ model WatchTimeLog {
   @@index([userId, lessonId, createdAt])
 }
 
+// ==================== 課程評價 ====================
+
+model CourseReview {
+  id       String  @id @default(cuid())
+  courseId String
+  userId   String
+  rating   Int // 1-5 星
+  content  String? @db.Text // 文字評價（選填）
+
+  isVisible    Boolean @default(true) // 老師可隱藏個別評價
+  helpfulCount Int     @default(0) // 有用投票數（冗餘計數）
+
+  // 老師回覆
+  replyContent String?   @db.Text
+  replyAt      DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  course   Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  helpfuls ReviewHelpful[]
+  reports  ReviewReport[]
+
+  @@unique([userId, courseId])
+  @@index([courseId])
+  @@index([userId])
+}
+
+model ReviewHelpful {
+  id       String @id @default(cuid())
+  reviewId String
+  userId   String
+
+  createdAt DateTime @default(now())
+
+  review CourseReview @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, reviewId])
+  @@index([reviewId])
+}
+
+model ReviewReport {
+  id       String @id @default(cuid())
+  reviewId String
+  userId   String
+  reason   String // 舉報原因
+
+  createdAt DateTime @default(now())
+
+  review CourseReview @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, reviewId])
+  @@index([reviewId])
+}
+
 // ==================== 金流系統 ====================
 
 enum OrderStatus {
@@ -335,6 +456,10 @@ model Order {
   utmCampaign String? // 活動名稱
   utmContent  String? // 廣告內容
   utmTerm     String? // 關鍵字
+
+  // 優惠券
+  couponId       String? // 使用的優惠券 ID
+  couponDiscount Int? // 優惠券折抵金額
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -430,6 +555,64 @@ model PasswordResetToken {
 
   @@index([userId, createdAt])
   @@index([expiresAt])
+}
+
+// ==================== 優惠券系統 ====================
+
+enum DiscountType {
+  AMOUNT // 固定金額折扣
+  PERCENT // 百分比折扣
+}
+
+model Coupon {
+  id          String  @id @default(cuid())
+  name        String // 優惠券名稱（內部識別）
+  code        String  @unique // 優惠碼（大寫，用戶輸入時自動轉大寫比對）
+  description String? // 說明（選填）
+
+  // 折扣設定（二擇一）
+  discountType     DiscountType // AMOUNT 或 PERCENT
+  amountOff        Int? // 固定折抵金額（元）
+  percentOff       Int? // 百分比折扣（1-100）
+  maxDiscountAmount Int? // 百分比折扣的金額上限（選填）
+
+  // 使用限制
+  maxRedemptions Int?    @default(0) // 總兌換次數上限（0=無限）
+  timesRedeemed  Int     @default(0) // 已兌換次數
+  maxPerUser     Int?    @default(0) // 每人使用上限（0=無限）
+  minimumAmount  Int? // 最低消費金額（選填）
+  firstTimeOnly  Boolean @default(false) // 僅限首次購買用戶
+
+  // 時間與狀態
+  active    Boolean   @default(true)
+  startsAt  DateTime? // 生效時間（null=立即生效）
+  expiresAt DateTime? // 到期時間（null=永不到期）
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 適用課程（空=全站適用）
+  courses     Course[] @relation("CouponCourses")
+  redemptions CouponRedemption[]
+
+  @@index([code])
+  @@index([active])
+}
+
+model CouponRedemption {
+  id       String @id @default(cuid())
+  couponId String
+  userId   String
+  orderId  String
+  amount   Int // 實際折抵金額
+
+  createdAt DateTime @default(now())
+
+  coupon Coupon @relation(fields: [couponId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@index([couponId, userId])
+  @@index([orderId])
 }
 
 // ==================== 媒體資源 ====================

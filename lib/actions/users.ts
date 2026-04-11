@@ -14,12 +14,14 @@ import {
   updateUserSchema,
   deleteUserSchema,
   updateAdminNotesSchema,
+  importStudentsSchema,
   type GrantAccessData,
   type RevokeAccessData,
   type UpdateRoleData,
   type UpdateUserData,
   type DeleteUserData,
   type UpdateAdminNotesData,
+  type ImportStudentsData,
 } from "@/lib/validations/user";
 import type { UserRole, User, Purchase, Course } from "@prisma/client";
 
@@ -1201,4 +1203,198 @@ export async function getUserActivityTimeline(
   events.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   return events.slice(0, 50);
+}
+
+// ==================== 批次匯入學員 ====================
+
+/**
+ * 匯入結果
+ */
+export interface ImportStudentsResult {
+  success: boolean;
+  error?: string;
+  summary?: {
+    totalRows: number;
+    newUsers: number;
+    existingUsers: number;
+    newGrants: number;
+    alreadyGranted: number;
+    errors: { row: number; email: string; error: string }[];
+  };
+}
+
+/**
+ * 批次匯入學員
+ * - 根據 email 判斷是否為既有用戶，若不存在則建立新帳號
+ * - 自動為所有匯入的學員授權指定課程
+ * - 已擁有該課程的學員會跳過（不重複授權）
+ */
+export async function importStudents(
+  data: ImportStudentsData
+): Promise<ImportStudentsResult> {
+  try {
+    const currentUser = await requireAdminAuth();
+
+    // 驗證資料
+    const validatedData = importStudentsSchema.parse(data);
+    const { students, courseId } = validatedData;
+
+    // 檢查課程是否存在
+    const course = await prisma.course.findUnique({
+      where: { id: courseId },
+      select: { id: true, title: true },
+    });
+
+    if (!course) {
+      return { success: false, error: "課程不存在" };
+    }
+
+    const summary = {
+      totalRows: students.length,
+      newUsers: 0,
+      existingUsers: 0,
+      newGrants: 0,
+      alreadyGranted: 0,
+      errors: [] as { row: number; email: string; error: string }[],
+    };
+
+    // 取得所有 email，批次查詢既有用戶
+    const emails = students.map((s) => s.email.toLowerCase());
+    const existingUsers = await prisma.user.findMany({
+      where: { email: { in: emails } },
+      select: { id: true, email: true },
+    });
+    const existingUserMap = new Map(
+      existingUsers.map((u) => [u.email.toLowerCase(), u])
+    );
+
+    // 批次查詢該課程的現有授權
+    const existingPurchases = await prisma.purchase.findMany({
+      where: {
+        courseId,
+        userId: { in: existingUsers.map((u) => u.id) },
+        revokedAt: null,
+      },
+      select: { userId: true },
+    });
+    const purchasedUserIds = new Set(existingPurchases.map((p) => p.userId));
+
+    // 逐筆處理
+    for (let i = 0; i < students.length; i++) {
+      const student = students[i];
+      const emailLower = student.email.toLowerCase();
+
+      try {
+        let userId: string;
+
+        const existingUser = existingUserMap.get(emailLower);
+        if (existingUser) {
+          userId = existingUser.id;
+          summary.existingUsers++;
+
+          // 更新姓名和電話（如果之前沒有）
+          const updateData: { name?: string; phone?: string } = {};
+          if (student.name) {
+            const userDetail = await prisma.user.findUnique({
+              where: { id: userId },
+              select: { name: true, phone: true },
+            });
+            if (!userDetail?.name) updateData.name = student.name;
+            if (!userDetail?.phone && student.phone)
+              updateData.phone = student.phone;
+          }
+          if (Object.keys(updateData).length > 0) {
+            await prisma.user.update({
+              where: { id: userId },
+              data: updateData,
+            });
+          }
+        } else {
+          // 建立新用戶
+          const newUser = await prisma.user.create({
+            data: {
+              email: emailLower,
+              name: student.name,
+              phone: student.phone || null,
+            },
+          });
+          userId = newUser.id;
+          summary.newUsers++;
+          existingUserMap.set(emailLower, { id: userId, email: emailLower });
+        }
+
+        // 檢查是否已有授權
+        if (purchasedUserIds.has(userId)) {
+          summary.alreadyGranted++;
+          continue;
+        }
+
+        // 再次確認（處理新建用戶被重複 email 匯入的情況）
+        const existingPurchase = await prisma.purchase.findUnique({
+          where: {
+            userId_courseId: { userId, courseId },
+          },
+        });
+
+        if (existingPurchase && !existingPurchase.revokedAt) {
+          summary.alreadyGranted++;
+          purchasedUserIds.add(userId);
+          continue;
+        }
+
+        if (existingPurchase && existingPurchase.revokedAt) {
+          // 恢復已撤銷的授權
+          await prisma.purchase.update({
+            where: { id: existingPurchase.id },
+            data: {
+              revokedAt: null,
+              grantedBy: currentUser.id as string,
+            },
+          });
+        } else {
+          // 建立授權
+          await prisma.purchase.create({
+            data: {
+              userId,
+              courseId,
+              grantedBy: currentUser.id as string,
+            },
+          });
+        }
+
+        summary.newGrants++;
+        purchasedUserIds.add(userId);
+      } catch (error) {
+        summary.errors.push({
+          row: i + 1,
+          email: student.email,
+          error: error instanceof Error ? error.message : "處理失敗",
+        });
+      }
+    }
+
+    // 記錄操作日誌
+    await logAdminAction(currentUser.id as string, "GRANT_ACCESS", courseId, {
+      action: "BATCH_IMPORT",
+      courseTitle: course.title,
+      totalRows: summary.totalRows,
+      newUsers: summary.newUsers,
+      newGrants: summary.newGrants,
+      alreadyGranted: summary.alreadyGranted,
+      errors: summary.errors.length,
+    });
+
+    // 重新驗證快取
+    revalidatePath("/admin/users");
+
+    return { success: true, summary };
+  } catch (error) {
+    console.error("批次匯入學員失敗:", error);
+
+    if (error instanceof Error) {
+      return { success: false, error: error.message };
+    }
+
+    return { success: false, error: "匯入時發生錯誤" };
+  }
 }

@@ -95,3 +95,27 @@ export const updateAdminNotesSchema = z.object({
 });
 
 export type UpdateAdminNotesData = z.infer<typeof updateAdminNotesSchema>;
+
+/**
+ * 批次匯入學員的單筆資料 Schema
+ */
+export const importStudentRowSchema = z.object({
+  name: z.string().min(1, { message: "姓名必填" }),
+  email: z.string().email({ message: "請輸入有效的 Email" }),
+  phone: z.string().optional(),
+});
+
+export type ImportStudentRow = z.infer<typeof importStudentRowSchema>;
+
+/**
+ * 批次匯入學員 Schema
+ */
+export const importStudentsSchema = z.object({
+  students: z
+    .array(importStudentRowSchema)
+    .min(1, { message: "至少需要一筆學員資料" })
+    .max(1000, { message: "每次最多匯入 1,000 筆" }),
+  courseId: z.string().min(1, { message: "請選擇課程" }),
+});
+
+export type ImportStudentsData = z.infer<typeof importStudentsSchema>;
