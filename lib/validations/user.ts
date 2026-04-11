@@ -100,9 +100,17 @@ export type UpdateAdminNotesData = z.infer<typeof updateAdminNotesSchema>;
  * 批次匯入學員的單筆資料 Schema
  */
 export const importStudentRowSchema = z.object({
-  name: z.string().min(1, { message: "姓名必填" }),
+  name: z
+    .string()
+    .min(1, { message: "姓名必填" })
+    .max(100, { message: "姓名不可超過 100 字" })
+    .transform((v) => v.replace(/<[^>]*>/g, "").trim()), // 移除 HTML 標籤
   email: z.string().email({ message: "請輸入有效的 Email" }),
-  phone: z.string().optional(),
+  phone: z
+    .string()
+    .max(20, { message: "電話不可超過 20 字" })
+    .transform((v) => v.replace(/<[^>]*>/g, "").trim()) // 移除 HTML 標籤
+    .optional(),
 });
 
 export type ImportStudentRow = z.infer<typeof importStudentRowSchema>;

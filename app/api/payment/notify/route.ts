@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
 
     // 金流通知已收到，由後續流程處理
 
-    // 查詢訂單
+    // 查詢訂單（含優惠券資訊）
     const order = await prisma.order.findUnique({
       where: { orderNo: merTradeNo },
       select: {
@@ -78,6 +78,8 @@ export async function POST(request: NextRequest) {
         status: true,
         clientIpAddress: true,
         clientUserAgent: true,
+        couponId: true,
+        couponDiscount: true,
       },
     });
 
@@ -131,7 +133,7 @@ export async function POST(request: NextRequest) {
           throw new Error("ORDER_ALREADY_PROCESSED");
         }
 
-        // 付款成功：建立 Purchase 記錄
+        // 付款成功：建立 Purchase 記錄 + 優惠券兌換
         if (isSuccess) {
           const existingPurchase = await tx.purchase.findUnique({
             where: {
@@ -157,6 +159,60 @@ export async function POST(request: NextRequest) {
                 orderId: order.id,
               },
             });
+          }
+
+          // 優惠券兌換：建立 CouponRedemption 並遞增 timesRedeemed
+          if (order.couponId && order.couponDiscount) {
+            // 重新驗證優惠券是否仍有效（C2: 防止 TOCTOU）
+            const coupon = await tx.coupon.findUnique({
+              where: { id: order.couponId },
+            });
+
+            if (coupon && coupon.active) {
+              // 防止重複兌換（冪等性）
+              const existingRedemption =
+                await tx.couponRedemption.findFirst({
+                  where: {
+                    couponId: order.couponId,
+                    orderId: order.id,
+                  },
+                });
+
+              if (!existingRedemption) {
+                // 檢查總兌換次數（原子操作避免競態）
+                const canRedeem =
+                  !coupon.maxRedemptions ||
+                  coupon.maxRedemptions === 0 ||
+                  coupon.timesRedeemed < coupon.maxRedemptions;
+
+                if (canRedeem) {
+                  await tx.couponRedemption.create({
+                    data: {
+                      couponId: order.couponId,
+                      userId: order.userId,
+                      orderId: order.id,
+                      amount: order.couponDiscount,
+                    },
+                  });
+
+                  await tx.coupon.update({
+                    where: { id: order.couponId },
+                    data: {
+                      timesRedeemed: { increment: 1 },
+                    },
+                  });
+                } else {
+                  // 優惠券已達上限，記錄但不阻擋付款
+                  console.warn(
+                    `[PAYUNi Notify] 優惠券 ${coupon.code} 已達兌換上限，訂單 ${order.orderNo} 的優惠券兌換跳過`,
+                  );
+                }
+              }
+            } else {
+              console.warn(
+                `[PAYUNi Notify] 優惠券 ${order.couponId} 已失效，訂單 ${order.orderNo} 的優惠券兌換跳過`,
+              );
+            }
           }
         }
       });

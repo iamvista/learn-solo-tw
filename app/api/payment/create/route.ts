@@ -276,13 +276,16 @@ export async function POST(request: NextRequest) {
       });
 
       if (pendingOrder) {
-        if (pendingOrder.amount !== currentAmount) {
+        if (
+          pendingOrder.amount !== currentAmount ||
+          pendingOrder.couponId !== couponId
+        ) {
           await tx.order.update({
             where: { id: pendingOrder.id },
             data: { status: "CANCELLED" },
           });
           console.log(
-            "[Payment Create] 價格變動，取消舊訂單:",
+            "[Payment Create] 價格或優惠券變動，取消舊訂單:",
             pendingOrder.orderNo,
           );
         } else {

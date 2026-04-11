@@ -8,9 +8,29 @@ import { prisma } from '@/lib/prisma'
 import { validateCouponSchema } from '@/lib/validations/coupon'
 import { validateCoupon } from '@/lib/actions/coupons'
 import { calculatePrice } from '@/lib/utils/price'
+import {
+  checkRateLimit,
+  getIdentifier,
+  getRateLimitHeaders,
+  RATE_LIMIT_CONFIGS,
+} from '@/lib/rate-limit'
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting：防止暴力枚舉優惠碼
+    const identifier = getIdentifier(request)
+    const rateLimitResult = checkRateLimit(
+      `coupon-validate:${identifier}`,
+      RATE_LIMIT_CONFIGS.auth // 每分鐘 10 次，與認證同級
+    )
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: '請求過於頻繁，請稍後再試' },
+        { status: 429, headers: getRateLimitHeaders(rateLimitResult) }
+      )
+    }
+
     const body = await request.json()
     const validationResult = validateCouponSchema.safeParse(body)
 

@@ -608,8 +608,8 @@ model CouponRedemption {
 
   createdAt DateTime @default(now())
 
-  coupon Coupon @relation(fields: [couponId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
+  coupon Coupon @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([couponId, userId])
   @@index([orderId])
