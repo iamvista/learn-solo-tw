@@ -23,6 +23,7 @@ import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Eye, Users, X } from 'lucide-react'
 import { BatchGrantAccessDialog } from './batch-grant-access-dialog'
+import { ImportStudentsDialog } from './import-students-dialog'
 
 interface UserTableProps {
   users: UserWithPurchaseCount[]
@@ -84,6 +85,11 @@ export function UserTable({ users }: UserTableProps) {
 
   return (
     <>
+      {/* 匯入學員按鈕 */}
+      <div className="mb-4 flex justify-end">
+        <ImportStudentsDialog />
+      </div>
+
       {/* 批次操作列 */}
       {selectedIds.size > 0 && (
         <div className="mb-4 flex items-center gap-3 rounded-lg border border-[#C41E3A]/20 bg-[#C41E3A]/5 px-4 py-3">
